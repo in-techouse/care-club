@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/firstname"
-            android:inputTye="textPersonName"
+            android:inputType="textPersonName"
             android:id="@+id/fname"
             android:layout_weight="1"
             android:padding="12dp"

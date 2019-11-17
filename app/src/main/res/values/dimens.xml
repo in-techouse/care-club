@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="headingbg">18sp</dimen>
+    <dimen name="headingpadding">17sp</dimen>
+    <dimen name="heading">17sp</dimen>
+    <dimen name="margin">12sp</dimen>
+</resources>

@@ -3,7 +3,12 @@
     <string name="enter_email">Enter email</string>
     <string name="firstname">enter firstname</string>
     <string name="last_name">enter last name</string>
-    <string name="enter_password">enter password</string>
+    <string name="enter_password">Enter password</string>
     <string name="forgotten_password">you have forgotton your password please enter email to change your password</string>
     <string name="send">Send</string>
+    <string name="LogIn" />
+    <string name="signin">SignIn</string>
+    <string name="create_an_aaccount">Create an aaccount</string>
+    <string name="forget_password">Forget Password</string>
+    <string name="log_in">Log-In</string>
 </resources>
