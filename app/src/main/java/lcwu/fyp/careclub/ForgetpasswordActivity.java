@@ -20,6 +20,10 @@ public class ForgetpasswordActivity extends AppCompatActivity implements View.On
 
         email=findViewById(R.id.email);
         forgottonpass=findViewById(R.id.send);
+
+        forgottonpass.setOnClickListener(this);
+
+
     }
 
     @Override
