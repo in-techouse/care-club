@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     Button signin ;
-    TextView forgetpassword;
+    TextView forgetpassword,signup;
     EditText email, password;
 
     @Override
@@ -22,8 +22,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         signin = findViewById(R.id.signin);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
+        signup=findViewById(R.id.signup);
         forgetpassword = findViewById(R.id.forgetpassword);
+
+
         signin.setOnClickListener(this);
+        signup.setOnClickListener(this);
         forgetpassword.setOnClickListener(this);
     }
 
@@ -46,6 +50,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
          break;
+            case R.id.signup:{
+                Intent it=new Intent(LoginActivity.this,RegistrationActivity.class);
+                startActivity(it);
+                break;
+            }
             case R.id.forgetpassword: {
                 Intent it=new Intent(LoginActivity.this,ForgetpasswordActivity.class);
                 startActivity(it);

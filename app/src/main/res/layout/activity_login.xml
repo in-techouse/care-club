@@ -67,6 +67,16 @@
             android:textAlignment="center"
             android:textSize="@dimen/headingpadding" />
         <TextView
+            android:id="@+id/signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/headingpadding"
+            android:background="@color/headingbg1"
+            android:padding="@dimen/headingpadding"
+            android:text="@string/signup"
+            android:textAlignment="center"
+            android:textSize="@dimen/headingpadding" />
+        <TextView
             android:id="@+id/forgetpassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

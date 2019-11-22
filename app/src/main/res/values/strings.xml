@@ -11,4 +11,5 @@
     <string name="create_an_aaccount">Create an aaccount</string>
     <string name="forget_password">Forget Password</string>
     <string name="log_in">Log-In</string>
+    <string name="signup">SignUp</string>
 </resources>
