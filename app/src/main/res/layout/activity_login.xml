@@ -15,8 +15,8 @@
             android:text="@string/log_in"
             android:textSize="@dimen/headingpadding"
             android:padding="@dimen/headingpadding"
-            android:background="@color/headingbg1"
-            android:textColor="@color/headingclr1"
+            android:background="@color/bg"
+            android:textColor="@color/headingclr"
             android:textAlignment="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,6 +33,7 @@
                 android:inputType="textEmailAddress"
                 android:padding="@dimen/headingpadding"
                 android:textAlignment="center"
+
                 android:textColor="@color/headingclr"
                 android:textSize="@dimen/headingbg"
                 android:layout_margin="@dimen/margin"/>
@@ -61,30 +62,39 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/headingpadding"
-            android:background="@color/headingbg1"
+            android:background="@color/bg"
+            android:textColor="@color/headingclr"
             android:padding="@dimen/headingpadding"
             android:text="@string/signin"
             android:textAlignment="center"
             android:textSize="@dimen/headingpadding" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="3"
+            android:orientation="horizontal">
         <TextView
+            android:layout_weight="1"
             android:id="@+id/signup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/headingpadding"
-            android:background="@color/headingbg1"
+            android:background="@color/bg"
+            android:textColor="@color/headingclr"
             android:padding="@dimen/headingpadding"
             android:text="@string/signup"
             android:textAlignment="center"
             android:textSize="@dimen/headingpadding" />
         <TextView
+            android:layout_weight="1"
             android:id="@+id/forgetpassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/headingpadding"
-            android:background="@color/headingbg1"
+            android:background="@color/bg"
             android:padding="@dimen/headingpadding"
             android:text="@string/forget_password"
             android:textAlignment="center"
-            android:textSize="@dimen/headingpadding" />
+            android:textSize="@dimen/headingpadding" /></LinearLayout>
     </LinearLayout>
 </ScrollView>
