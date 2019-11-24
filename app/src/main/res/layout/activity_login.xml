@@ -68,6 +68,13 @@
             android:text="@string/signin"
             android:textAlignment="center"
             android:textSize="@dimen/headingpadding" />
+        <ProgressBar
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Loginprogress"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -92,6 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/headingpadding"
             android:background="@color/bg"
+            android:textColor="@color/headingclr"
             android:padding="@dimen/headingpadding"
             android:text="@string/forget_password"
             android:textAlignment="center"
