@@ -3,7 +3,10 @@ package lcwu.fyp.careclub;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -48,34 +51,42 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         int id = v.getId();
         switch (id) {
             case R.id.signin: {
-                 strEmail = email.getText().toString();
-                 strPassword = password.getText().toString();
-                 Boolean flag=isValid();
-                 if (flag){
-                     loginprogress.setVisibility(View.VISIBLE);
-                     signin.setVisibility(View.GONE);
-                     //Firebase
-                     FirebaseAuth auth =FirebaseAuth.getInstance();
-                     auth.signInWithEmailAndPassword(strEmail,strPassword)
-                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                                 @Override
-                                 public void onSuccess(AuthResult authResult) {
-                                     loginprogress.setVisibility(View.GONE);
-                                     signin.setVisibility(View.VISIBLE);
-                                     Log.e("login","success");
-                                 }
-                             }).addOnFailureListener(new OnFailureListener() {
+
+                boolean isconn=isConnected();
+
+                if(!isconn){
+                    //show Erroe Message,because no internet found
+                    return;
+                }
+                strEmail = email.getText().toString();
+                strPassword = password.getText().toString();
+                Boolean flag = isValid();
+                if (flag) {
+                    loginprogress.setVisibility(View.VISIBLE);
+                    signin.setVisibility(View.GONE);
+                    //Firebase
+                    FirebaseAuth auth = FirebaseAuth.getInstance();
+                    auth.signInWithEmailAndPassword(strEmail, strPassword)
+                            .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
-                                public void onFailure(@NonNull Exception e) {
+                                public void onSuccess(AuthResult authResult) {
                                     loginprogress.setVisibility(View.GONE);
                                     signin.setVisibility(View.VISIBLE);
-                                    Log.e("login","failure " +e.getMessage());
+                                    Log.e("login", "success");
                                 }
-                                });
-                 }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            loginprogress.setVisibility(View.GONE);
+                            signin.setVisibility(View.VISIBLE);
+                            Log.e("login", "failure " + e.getMessage());
+                        }
+                    });
 
+
+                }
+                break;
             }
-         break;
             case R.id.signup:{
                 Intent it=new Intent(LoginActivity.this,RegistrationActivity.class);
                 startActivity(it);
@@ -107,6 +118,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             password.setError(null);
         }
         return flag;
+    }
+    // Check Internet Connection
+    private boolean isConnected(){
+        boolean connected = false;
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED || connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
+            connected = true;
+        else
+            connected = false;
+        return  connected;
     }
 }
 
