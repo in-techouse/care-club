@@ -18,6 +18,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.shreyaspatil.MaterialDialog.MaterialDialog;
+import com.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
 Button signup;
@@ -71,6 +73,9 @@ String strfname,strlname,strpass,strcpass,stremail;
                                 signupprogress.setVisibility(View.GONE);
                                 signup.setVisibility(View.VISIBLE);
                                 Log.e("Registeration","success");
+                                Intent it=new Intent(RegistrationActivity.this,Dashboard.class);
+                                startActivity(it);
+                                finish();
 
                             }
                         }).addOnFailureListener(new OnFailureListener() {
@@ -79,6 +84,27 @@ String strfname,strlname,strpass,strcpass,stremail;
                                 signupprogress.setVisibility(View.GONE);
                                 signup.setVisibility(View.VISIBLE);
                                 Log.e("Registeration","Failure"+e.getMessage());
+                                MaterialDialog mDialog = new MaterialDialog.Builder(RegistrationActivity.this)
+                                        .setTitle("Error")
+                                        .setMessage(e.getMessage())
+                                        .setCancelable(false)
+                                        .setPositiveButton("Ok", R.drawable.ic_action_okay, new MaterialDialog.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int which) {
+                                                dialogInterface.dismiss();
+                                                // Delete Operation
+                                            }
+                                        })
+                                        .setNegativeButton("Close", R.drawable.ic_action_close, new MaterialDialog.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int which) {
+                                                dialogInterface.dismiss();
+                                            }
+                                        })
+                                        .build();
+
+                                // Show Dialog
+                                mDialog.show();
                             }
                         });
 

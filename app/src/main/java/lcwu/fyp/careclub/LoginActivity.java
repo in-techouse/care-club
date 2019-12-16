@@ -21,8 +21,13 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.shreyaspatil.MaterialDialog.MaterialDialog;
+import com.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
+
+import lcwu.fyp.careclub.director.Helpers;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+    Helpers h1;
     Button signin ;
     TextView forgetpassword,signup;
     EditText email, password;
@@ -44,6 +49,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         signin.setOnClickListener(this);
         signup.setOnClickListener(this);
         forgetpassword.setOnClickListener(this);
+
+
+        h1 = new Helpers();
     }
 
     @Override
@@ -52,10 +60,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (id) {
             case R.id.signin: {
 
-                boolean isconn=isConnected();
+                boolean isconn=h1.isConnected(LoginActivity.this);
 
                 if(!isconn){
                     //show Erroe Message,because no internet found
+                    MaterialDialog mDialog = new MaterialDialog.Builder(this)
+                            .setTitle("Internet Error")
+                            .setMessage("No internet connection found... Check your internet and Try again later ")
+                            .setCancelable(false)
+                            .setPositiveButton("Ok", R.drawable.ic_action_okay, new MaterialDialog.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int which) {
+                                    dialogInterface.dismiss();
+                                    // Delete Operation
+                                }
+                            })
+                            .setNegativeButton("Close", R.drawable.ic_action_close, new MaterialDialog.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int which) {
+                                    dialogInterface.dismiss();
+                                }
+                            })
+                            .build();
+
+                    // Show Dialog
+                    mDialog.show();
                     return;
                 }
                 strEmail = email.getText().toString();
@@ -73,6 +102,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     loginprogress.setVisibility(View.GONE);
                                     signin.setVisibility(View.VISIBLE);
                                     Log.e("login", "success");
+                                    Intent it=new Intent(LoginActivity.this,Dashboard.class);
+                                    startActivity(it);
+                                    finish();
+
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -80,6 +113,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             loginprogress.setVisibility(View.GONE);
                             signin.setVisibility(View.VISIBLE);
                             Log.e("login", "failure " + e.getMessage());
+                            MaterialDialog mDialog = new MaterialDialog.Builder(LoginActivity.this)
+                                    .setTitle("Error")
+                                    .setMessage(e.getMessage())
+                                    .setCancelable(false)
+                                    .setPositiveButton("Ok", R.drawable.ic_action_okay, new MaterialDialog.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int which) {
+                                            dialogInterface.dismiss();
+                                            // Delete Operation
+                                        }
+                                    })
+                                    .setNegativeButton("Close", R.drawable.ic_action_close, new MaterialDialog.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int which) {
+                                            dialogInterface.dismiss();
+                                        }
+                                    })
+                                    .build();
+
+                            // Show Dialog
+                            mDialog.show();
                         }
                     });
 
@@ -120,14 +174,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return flag;
     }
     // Check Internet Connection
-    private boolean isConnected(){
-        boolean connected = false;
-        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED || connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
-            connected = true;
-        else
-            connected = false;
-        return  connected;
-    }
+
 }
 
