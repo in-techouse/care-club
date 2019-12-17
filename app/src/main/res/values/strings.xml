@@ -15,4 +15,5 @@
     <string name="title_activity_dashboard">Dashboard</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
+    <string name="enter_phone_number">Enter Phone Number</string>
 </resources>

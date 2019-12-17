@@ -15,8 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="REGISTERATION FORM"
-        android:background="#164055"
-        android:textColor="#f44336"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/text"
         android:textSize="22dp"
         android:textAlignment="center"
         android:padding="12dp"
@@ -72,6 +72,20 @@
             android:padding="12dp"
             android:layout_margin="12dp"
             android:inputType="textEmailAddress"/>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/phoneno"
+                android:layout_weight="1"
+                android:hint="@string/enter_phone_number"
+                android:padding="12dp"
+                android:layout_margin="12dp"
+                android:inputType="phone"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
@@ -105,16 +119,20 @@
             android:layout_margin="12dp"
             android:inputType="textPassword"/>
 
+
     </com.google.android.material.textfield.TextInputLayout>
-    <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/rgstrbtn"
-            android:layout_weight="1"
-            android:text="signup"
-            android:textSize="22dp"
-            android:padding="12dp"
-            android:layout_margin="12dp" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rgstrbtn"
+        android:layout_weight="1"
+        android:textColor="@color/text"
+        android:background="@color/colorPrimary"
+        android:text="signup"
+        android:textSize="22dp"
+        android:padding="12dp"
+        android:layout_margin="12dp"/>
+
     <ProgressBar
             android:visibility="gone"
             android:layout_width="wrap_content"

@@ -2,6 +2,7 @@ package lcwu.fyp.careclub;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,11 +23,12 @@ import com.shreyaspatil.MaterialDialog.MaterialDialog;
 import com.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
-Button signup;
+AppCompatButton signup;
 ProgressBar signupprogress;
 TextView gotologin;
-EditText fname,lname,pass,cpass,email;
-String strfname,strlname,strpass,strcpass,stremail;
+EditText fname,lname,pass,cpass,email,phoneno;
+String strfname,strlname,strpass,strcpass,stremail, strphoneno;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +38,7 @@ String strfname,strlname,strpass,strcpass,stremail;
         gotologin=findViewById(R.id.gotologin);
         fname=findViewById(R.id.fname);
         lname=findViewById(R.id.lname);
+        phoneno=findViewById(R.id.phoneno);
         pass=findViewById(R.id.pass);
         cpass=findViewById(R.id.cpass);
         email=findViewById(R.id.email);
@@ -57,6 +60,7 @@ String strfname,strlname,strpass,strcpass,stremail;
             strpass=pass.getText().toString();
             strcpass=cpass.getText().toString();
             stremail=email.getText().toString();
+            strphoneno=phoneno.getText().toString();
 
            boolean flag=isValid();
            if(flag) {
@@ -131,6 +135,13 @@ String strfname,strlname,strpass,strcpass,stremail;
             }
             if (strlname.length()<3){
                 lname.setError("Enter valid last name");
+                flag=false;
+            }
+            else {
+                lname.setError(null);
+            }
+            if (strphoneno.length()<12){
+                phoneno.setError("Enter valid last name");
                 flag=false;
             }
             else {
