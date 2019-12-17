@@ -33,7 +33,6 @@
                 android:inputType="textEmailAddress"
                 android:padding="@dimen/headingpadding"
                 android:textAlignment="center"
-
                 android:textColor="@color/headingclr"
                 android:textSize="@dimen/headingbg"
                 android:layout_margin="@dimen/margin"/>
