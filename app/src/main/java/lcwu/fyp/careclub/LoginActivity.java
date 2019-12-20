@@ -2,6 +2,7 @@ package lcwu.fyp.careclub;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Context;
 import android.content.Intent;
@@ -28,7 +29,7 @@ import lcwu.fyp.careclub.director.Helpers;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     Helpers h1;
-    Button signin ;
+    AppCompatButton signin ;
     TextView forgetpassword,signup;
     EditText email, password;
     String strEmail,strPassword;

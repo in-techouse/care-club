@@ -6,7 +6,6 @@
     <string name="enter_password">Enter Password</string>
     <string name="forgotten_password">you have forgotton your password please enter email to change your password</string>
     <string name="send">Send</string>
-    <string name="LogIn" />
     <string name="signin">SignIn</string>
     <string name="create_an_aaccount">Create An Account</string>
     <string name="forget_password">Forget Password</string>

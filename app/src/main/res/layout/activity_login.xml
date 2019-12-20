@@ -15,8 +15,8 @@
             android:text="@string/log_in"
             android:textSize="@dimen/headingpadding"
             android:padding="@dimen/headingpadding"
-            android:background="@color/bg"
-            android:textColor="@color/headingclr"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/text"
             android:textAlignment="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,17 +56,19 @@
                 android:textSize="@dimen/headingbg"
                 android:layout_margin="@dimen/margin"/>
         </com.google.android.material.textfield.TextInputLayout>
-        <Button
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/signin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/headingpadding"
-            android:background="@color/bg"
-            android:textColor="@color/headingclr"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/text"
             android:padding="@dimen/headingpadding"
             android:text="@string/signin"
             android:textAlignment="center"
-            android:textSize="@dimen/headingpadding" />
+            android:textSize="@dimen/headingpadding"/>
+
         <ProgressBar
             android:visibility="gone"
             android:layout_width="wrap_content"
@@ -85,8 +87,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/headingpadding"
-            android:background="@color/bg"
-            android:textColor="@color/headingclr"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/text"
             android:padding="@dimen/headingpadding"
             android:text="@string/signup"
             android:textAlignment="center"
@@ -97,8 +99,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/headingpadding"
-            android:background="@color/bg"
-            android:textColor="@color/headingclr"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/text"
             android:padding="@dimen/headingpadding"
             android:text="@string/forget_password"
             android:textAlignment="center"
