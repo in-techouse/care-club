@@ -1,4 +1,4 @@
-package lcwu.fyp.careclub;
+package lcwu.fyp.careclub.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +15,8 @@ import android.widget.Switch;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+
+import lcwu.fyp.careclub.R;
 
 public class ForgetpasswordActivity extends AppCompatActivity implements View.OnClickListener {
 

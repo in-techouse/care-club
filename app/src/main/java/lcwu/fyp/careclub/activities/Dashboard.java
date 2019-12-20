@@ -1,4 +1,4 @@
-package lcwu.fyp.careclub;
+package lcwu.fyp.careclub.activities;
 
 import android.os.Bundle;
 
@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import lcwu.fyp.careclub.R;
 import lcwu.fyp.careclub.ui.main.SectionsPagerAdapter;
 
 public class Dashboard extends AppCompatActivity {
