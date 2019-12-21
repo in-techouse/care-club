@@ -17,10 +17,14 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.shreyaspatil.MaterialDialog.MaterialDialog;
 import com.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 
 import lcwu.fyp.careclub.R;
+import lcwu.fyp.careclub.director.Helpers;
+import lcwu.fyp.careclub.model.User;
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
 AppCompatButton signup;
@@ -28,7 +32,7 @@ ProgressBar signupprogress;
 TextView gotologin;
 EditText fname,lname,pass,cpass,email,phoneno;
 String strfname,strlname,strpass,strcpass,stremail, strphoneno;
-
+Helpers helpers;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,81 +51,74 @@ String strfname,strlname,strpass,strcpass,stremail, strphoneno;
         signup.setOnClickListener(this);
         gotologin.setOnClickListener(this);
 
+        helpers=new Helpers();
+
     }
 
     @Override
     public void onClick(View v) {
-        int id=v.getId();
-        switch (id){
-       case R.id.rgstrbtn:
-       {
-            strfname=fname.getText().toString();
-            strlname=lname.getText().toString();
-            strpass=pass.getText().toString();
-            strcpass=cpass.getText().toString();
-            stremail=email.getText().toString();
-            strphoneno=phoneno.getText().toString();
+        int id = v.getId();
+        switch (id) {
+            case R.id.rgstrbtn: {
+                boolean isConn = helpers.isConnected(RegistrationActivity.this);
+                if (!isConn) {
+                    helpers.showError(RegistrationActivity.this, "Internet Error", "Internet Error");
+                    return;
+                }
+                    strfname = fname.getText().toString();
+                    strlname = lname.getText().toString();
+                    strpass = pass.getText().toString();
+                    strcpass = cpass.getText().toString();
+                    stremail = email.getText().toString();
+                    strphoneno = phoneno.getText().toString();
 
-           boolean flag=isValid();
-           if(flag) {
-               signupprogress.setVisibility(View.VISIBLE);
-               signup.setVisibility(View.GONE);
-                //Firebase
-               Log.e("Registeration","Gooning to start");
+                    boolean flag = isValid();
+                    if (flag) {
+                        signupprogress.setVisibility(View.VISIBLE);
+                        signup.setVisibility(View.GONE);
+                        //Firebase
+                        Log.e("Registeration", "Gooning to start");
 
-               FirebaseAuth auth = FirebaseAuth.getInstance();
-                auth.createUserWithEmailAndPassword(stremail,strcpass)
-                        .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                            @Override
-                            public void onSuccess(AuthResult authResult) {
-                                signupprogress.setVisibility(View.GONE);
-                                signup.setVisibility(View.VISIBLE);
-                                Log.e("Registeration","success");
-                                Intent it=new Intent(RegistrationActivity.this,Dashboard.class);
-                                startActivity(it);
-                                finish();
+                        FirebaseAuth auth = FirebaseAuth.getInstance();
+                        auth.createUserWithEmailAndPassword(stremail, strcpass)
+                                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                                    @Override
+                                    public void onSuccess(AuthResult authResult) {
+                                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                                        User user = new User();
+//                                        reference.child("Users").setValue()
 
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
+//                                signupprogress.setVisibility(View.GONE);
+//                                signup.setVisibility(View.VISIBLE);
+//                                Log.e("Registeration","success");
+//                                Intent it=new Intent(RegistrationActivity.this,Dashboard.class);
+//                                startActivity(it);
+//                                finish();
+
+
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
+                                helpers.showError(RegistrationActivity.this,"Title",e.getMessage());
                                 signupprogress.setVisibility(View.GONE);
                                 signup.setVisibility(View.VISIBLE);
-                                Log.e("Registeration","Failure"+e.getMessage());
-                                MaterialDialog mDialog = new MaterialDialog.Builder(RegistrationActivity.this)
-                                        .setTitle("Error")
-                                        .setMessage(e.getMessage())
-                                        .setCancelable(false)
-                                        .setPositiveButton("Ok", R.drawable.ic_action_okay, new MaterialDialog.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialogInterface, int which) {
-                                                dialogInterface.dismiss();
-                                                // Delete Operation
-                                            }
-                                        })
-                                        .setNegativeButton("Close", R.drawable.ic_action_close, new MaterialDialog.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialogInterface, int which) {
-                                                dialogInterface.dismiss();
-                                            }
-                                        })
-                                        .build();
-
-                                // Show Dialog
-                                mDialog.show();
+                                Log.e("Registeration", "Failure" + e.getMessage());
+                                helpers.showError(RegistrationActivity.this, "Registration Failed", e.getMessage());
                             }
                         });
 
-           }
-           break;
-       }
-            case R.id.gotologin:
-            {
-                Intent i = new Intent(RegistrationActivity.this,LoginActivity.class);
-                startActivity(i);
-                break;
+                    }
+                    break;
+                }
+                case R.id.gotologin: {
+                    Intent i = new Intent(RegistrationActivity.this, LoginActivity.class);
+                    startActivity(i);
+                    break;
+                }
             }
-        }}
+        }
+
         private boolean isValid()
         {
             boolean flag=true;
