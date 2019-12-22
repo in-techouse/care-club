@@ -122,7 +122,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             else{
                                                 loginprogress.setVisibility(View.GONE);
                                                 signin.setVisibility(View.VISIBLE);
-                                                Log.e("login", "failed");
+                                                h1.showError(LoginActivity.this, "Login Failed", "Something Went Wrong");
 
                                             }
 
@@ -132,7 +132,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         public void onCancelled(@NonNull DatabaseError databaseError) {
                                             loginprogress.setVisibility(View.GONE);
                                             signin.setVisibility(View.VISIBLE);
-                                            Log.e("login", "failed");
+                                            h1.showError(LoginActivity.this, "Login Failed", "Something Went Wrong");
 
                                         }
                                     });
