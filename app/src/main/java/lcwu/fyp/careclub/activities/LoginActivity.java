@@ -27,6 +27,7 @@ import com.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 
 import lcwu.fyp.careclub.R;
 import lcwu.fyp.careclub.director.Helpers;
+import lcwu.fyp.careclub.director.Session;
 import lcwu.fyp.careclub.model.User;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -106,16 +107,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
                                     DatabaseReference reference= FirebaseDatabase.getInstance().getReference();
-                                    User user=new User();
+                                    final User user=new User();
                                     reference.child("User").addValueEventListener(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                             if(dataSnapshot.getValue() != null){
+                                                // Data is Valid
+                                               User u = dataSnapshot.getValue(User.class);
+                                                Session session= new Session(LoginActivity.this);
+                                                session.setSession(user);
+                                                // Start Dashboard activity
 
                                             }
                                             else{
                                                 loginprogress.setVisibility(View.GONE);
-                                               signin.setVisibility(View.VISIBLE);
+                                                signin.setVisibility(View.VISIBLE);
+                                                Log.e("login", "failed");
+
                                             }
 
                                         }
@@ -123,7 +131,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         @Override
                                         public void onCancelled(@NonNull DatabaseError databaseError) {
                                             loginprogress.setVisibility(View.GONE);
-                                         signin.setVisibility(View.VISIBLE);
+                                            signin.setVisibility(View.VISIBLE);
+                                            Log.e("login", "failed");
 
                                         }
                                     });
