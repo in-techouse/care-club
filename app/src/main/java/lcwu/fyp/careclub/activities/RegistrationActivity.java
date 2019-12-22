@@ -86,7 +86,12 @@ Helpers helpers;
                                     public void onSuccess(AuthResult authResult) {
                                         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
                                         User user = new User();
-//                                        reference.child("Users").setValue()
+                                    reference.child("Users").setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+
+                                        }
+                                    });
 
 //                                signupprogress.setVisibility(View.GONE);
 //                                signup.setVisibility(View.VISIBLE);
@@ -100,7 +105,6 @@ Helpers helpers;
                                 }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                helpers.showError(RegistrationActivity.this,"Title",e.getMessage());
                                 signupprogress.setVisibility(View.GONE);
                                 signup.setVisibility(View.VISIBLE);
                                 Log.e("Registeration", "Failure" + e.getMessage());
@@ -138,7 +142,7 @@ Helpers helpers;
                 lname.setError(null);
             }
             if (strphoneno.length()<12){
-                phoneno.setError("Enter valid last name");
+                phoneno.setError("Enter valid phone number");
                 flag=false;
             }
             else {
