@@ -38,7 +38,26 @@ public class AuthenticatedSectionsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        return PlaceholderFragment.newInstance(position + 1);
+        switch (position){
+            case 0:
+            {
+                return ngo;
+
+            }
+            case 1:
+            {
+                return product;
+            }
+            case 2:
+            {
+                return donation;
+            }
+            case 3:
+            {
+                return profile;
+            }
+        }
+        return null;
     }
 
     @Nullable
