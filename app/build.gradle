@@ -36,6 +36,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:19.2.0'
     implementation 'com.google.firebase:firebase-storage:19.1.0'
     implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
     // Material Dialog Library
     implementation 'com.shreyaspatil:MaterialDialog:1.0.0'
 
