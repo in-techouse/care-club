@@ -108,7 +108,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 public void onSuccess(AuthResult authResult) {
                                     DatabaseReference reference= FirebaseDatabase.getInstance().getReference();
                                     final User user=new User();
-                                    reference.child("User").addValueEventListener(new ValueEventListener() {
+                                    String id = strEmail.replace("@","-");
+                                    id =id.replace(".","_");
+                                    reference.child("Users").child(id).addValueEventListener(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                             if(dataSnapshot.getValue() != null){
@@ -116,7 +118,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                User u = dataSnapshot.getValue(User.class);
                                                 Session session= new Session(LoginActivity.this);
                                                 session.setSession(user);
-                                                // Start Dashboard activity
+                                                Intent it=new Intent(LoginActivity.this,Dashboard.class);
+                                                startActivity(it);
+                                                finish();
 
                                             }
                                             else{
