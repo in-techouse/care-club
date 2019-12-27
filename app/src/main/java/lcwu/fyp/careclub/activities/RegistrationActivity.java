@@ -24,6 +24,7 @@ import com.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 
 import lcwu.fyp.careclub.R;
 import lcwu.fyp.careclub.director.Helpers;
+import lcwu.fyp.careclub.director.Session;
 import lcwu.fyp.careclub.model.User;
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
@@ -80,16 +81,35 @@ Helpers helpers;
                         Log.e("Registeration", "Gooning to start");
 
                         FirebaseAuth auth = FirebaseAuth.getInstance();
-                        auth.createUserWithEmailAndPassword(stremail, strcpass)
+                        auth.createUserWithEmailAndPassword(stremail, strpass)
                                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                     @Override
                                     public void onSuccess(AuthResult authResult) {
                                         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-                                        User user = new User();
-                                    reference.child("Users").setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        final User user = new User();
+                                        user.setFname(strfname);
+                                        user.setLname(strlname);
+                                        user.setPhone(strphoneno);
+                                        user.setEmail(stremail);
+                                        String id=stremail.replace("@","-");
+                                        id=id.replace(".","_");
+                                        user.setId(id);
+                                    reference.child("Users").child(id).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-
+                                            Session session=new Session(RegistrationActivity.this);
+                                            session.setSession(user);
+                                            //Start dashboard activity
+                                            Intent intent=new Intent(RegistrationActivity.this,Dashboard.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            signupprogress.setVisibility(View.GONE);
+                                            signup.setVisibility(View.VISIBLE);
+                                            helpers.showError(RegistrationActivity.this, "Registration Failed", e.getMessage());
                                         }
                                     });
 
@@ -141,7 +161,7 @@ Helpers helpers;
             else {
                 lname.setError(null);
             }
-            if (strphoneno.length()<12){
+            if (strphoneno.length()<11){
                 phoneno.setError("Enter valid phone number");
                 flag=false;
             }
