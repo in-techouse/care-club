@@ -9,18 +9,27 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import lcwu.fyp.careclub.R;
+import lcwu.fyp.careclub.fragment.My_Donations;
+import lcwu.fyp.careclub.fragment.My_Products;
+import lcwu.fyp.careclub.fragment.My_Profile;
+import lcwu.fyp.careclub.fragment.Ngos;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
+public class AuthenticatedSectionsPagerAdapter extends FragmentPagerAdapter {
+
+    My_Profile profile=new My_Profile();
+    My_Donations donation=new My_Donations();
+    My_Products product=new My_Products();
+    Ngos ngo=new Ngos();
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2};
+    private static final int[] TAB_TITLES = new int[]{R.string.NGOs, R.string.My_Products,R.string.My_Donations,R.string.My_profile};
     private final Context mContext;
 
-    public SectionsPagerAdapter(Context context, FragmentManager fm) {
+    public AuthenticatedSectionsPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
         mContext = context;
     }
@@ -41,6 +50,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // Show 2 total pages.
-        return 2;
+        return 4;
     }
 }

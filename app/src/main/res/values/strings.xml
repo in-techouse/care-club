@@ -18,4 +18,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="NGOs">Ngo</string>
+    <string name="My_Products">myproduct</string>
+    <string name="My_Donations">mydonations</string>
+    <string name="My_profile">myprofile</string>
 </resources>
