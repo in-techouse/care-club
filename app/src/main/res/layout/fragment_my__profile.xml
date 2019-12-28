@@ -22,44 +22,38 @@
     <TextView
         android:layout_marginTop="5dp"
         android:id="@+id/first_name"
-        android:text="Enter First Name"
+        android:text="First Name"
         android:textAlignment="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <TextView
         android:layout_marginTop="5dp"
         android:id="@+id/last_name"
-        android:text=" Enter Last Name"
+        android:text=" Last Name"
         android:textAlignment="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <TextView
         android:layout_marginTop="5dp"
         android:id="@+id/email"
-        android:text="Enter Email"
+        android:text="Email"
         android:textAlignment="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <TextView
         android:layout_marginTop="5dp"
         android:id="@+id/phoneno"
-        android:text="Enter Phone No"
+        android:text="Phone No"
         android:textAlignment="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <TextView
         android:layout_marginTop="5dp"
         android:id="@+id/password"
-        android:text="Enter Password"
+        android:text="Password"
         android:textAlignment="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <TextView
-        android:layout_marginTop="5dp"
-        android:id="@+id/confirm_password"
-        android:text="Enter Confirm Password "
-        android:textAlignment="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+
 
 </LinearLayout>
