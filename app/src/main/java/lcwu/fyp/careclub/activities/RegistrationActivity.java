@@ -99,7 +99,7 @@ Helpers helpers;
                                         public void onSuccess(Void aVoid) {
                                             Session session=new Session(RegistrationActivity.this);
                                             session.setSession(user);
-                                            //Start dashboard activity
+                                            //Start dashboard activity'
                                             Intent intent=new Intent(RegistrationActivity.this,Dashboard.class);
                                             startActivity(intent);
                                             finish();
