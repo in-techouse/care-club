@@ -8,6 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/mainlayout"
         android:orientation="vertical">
 
         <ProgressBar
@@ -24,9 +25,16 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/emptylayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No NGO's Record Found"
+
+            />
     </LinearLayout>
 
 

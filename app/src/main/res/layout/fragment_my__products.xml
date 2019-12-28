@@ -8,6 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/mainlayout"
         android:orientation="vertical">
 
     </LinearLayout>
@@ -24,8 +25,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:id="@+id/emptylayout"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No Product Record Found"
+
+            />
 
     </LinearLayout>
 
