@@ -8,6 +8,7 @@ import com.viksaa.sssplash.lib.cnst.Flags;
 import com.viksaa.sssplash.lib.model.ConfigSplash;
 
 import lcwu.fyp.careclub.R;
+import lcwu.fyp.careclub.director.Session;
 
 public class SplashActivity extends AwesomeSplash {
 
@@ -38,8 +39,19 @@ public class SplashActivity extends AwesomeSplash {
 
     @Override
     public void animationsFinished() {
-        Intent it = new Intent(SplashActivity.this, LoginActivity.class);
-        startActivity(it);
-        finish();
+        Session session=new Session(SplashActivity.this);
+        Intent it;
+        if (session.getSession()==null)
+        {
+            it = new Intent(SplashActivity.this, LoginActivity.class);
+            startActivity(it);
+            finish();
+    }
+        else
+            {
+            it=new Intent(SplashActivity.this,Dashboard.class);
+            startActivity(it);
+            finish();
+        }
     }
 }
