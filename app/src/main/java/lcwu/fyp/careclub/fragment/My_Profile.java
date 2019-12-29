@@ -1,6 +1,7 @@
 package lcwu.fyp.careclub.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import lcwu.fyp.careclub.R;
+import lcwu.fyp.careclub.activities.EditUserProfile;
 import lcwu.fyp.careclub.director.Helpers;
 import lcwu.fyp.careclub.director.Session;
 import lcwu.fyp.careclub.model.User;
@@ -20,11 +22,11 @@ import lcwu.fyp.careclub.model.User;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class My_Profile extends Fragment {
+public class My_Profile extends Fragment implements View.OnClickListener {
     private Session session;
     private User user;
     private Helpers helpers;
-    TextView fname,lname,email,phoneno;
+    TextView fname,lname,email,phoneno,edit;
 
 
 
@@ -42,6 +44,9 @@ public class My_Profile extends Fragment {
         lname =root.findViewById(R.id.last_name);
         email=root.findViewById(R.id.email);
         phoneno=root.findViewById(R.id.phoneno);
+        edit=root.findViewById(R.id.edit);
+
+        edit.setOnClickListener(this);
 
         helpers=new Helpers();
         session=new Session(getActivity());
@@ -58,4 +63,17 @@ public class My_Profile extends Fragment {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        int id=v.getId();
+        switch (id){
+            case R.id.edit:{
+                Intent it=new Intent(getActivity(),EditUserProfile.class);
+                startActivity(it);
+
+            }
+        }
+
+
+    }
 }
