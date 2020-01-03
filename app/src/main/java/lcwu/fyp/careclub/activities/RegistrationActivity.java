@@ -166,7 +166,7 @@ Helpers helpers;
                 flag=false;
             }
             else {
-                lname.setError(null);
+                phoneno.setError(null);
             }
             if (strpass.length()<6){
                 pass.setError("Enter valid password");

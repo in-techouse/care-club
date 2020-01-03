@@ -1,18 +1,39 @@
 package lcwu.fyp.careclub.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import lcwu.fyp.careclub.R;
+import lcwu.fyp.careclub.director.Helpers;
+import lcwu.fyp.careclub.director.Session;
+import lcwu.fyp.careclub.fragment.My_Profile;
+import lcwu.fyp.careclub.model.User;
 
-public class EditUserProfile extends AppCompatActivity {
+public class EditUserProfile extends AppCompatActivity implements View.OnClickListener {
+    private Session session;
+    private Helpers helpers;
+    private User user;
+    EditText fname, lname, email, phoneno;
+    String strfname, strlname, strphoneno;
+    Button update;
+    ProgressBar pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +42,27 @@ public class EditUserProfile extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fname = findViewById(R.id.fname);
+        lname = findViewById(R.id.lname);
+        email = findViewById(R.id.email);
+        phoneno = findViewById(R.id.phoneno);
+        update = findViewById(R.id.updatebtn);
+        pb = findViewById(R.id.progressbar);
+
+        update.setOnClickListener(this);
+
+        helpers = new Helpers();
+        session = new Session(EditUserProfile.this);
+        user = session.getSession();
+
+
+        fname.setText(user.getFname());
+        lname.setText(user.getLname());
+        email.setText(user.getEmail());
+        phoneno.setText(user.getPhone());
+
+
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -30,4 +71,80 @@ public class EditUserProfile extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.updatebtn: {
+                boolean isConn = helpers.isConnected(EditUserProfile.this);
+                if (!isConn) {
+                    helpers.showError(EditUserProfile.this, "Internet Error", "Internet Error");
+                    return;
+                }
+                strfname = fname.getText().toString();
+                strlname = lname.getText().toString();
+                strphoneno = phoneno.getText().toString();
+
+                boolean flag = isValid();
+                if (flag) {
+                    //Show progress bar
+                    pb.setVisibility(View.VISIBLE);
+                    update.setVisibility(View.GONE);
+
+
+
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                    user.setFname(strfname);
+                    user.setLname(strlname);
+                    user.setPhone(strphoneno);
+                    reference.child("Users").child(user.getId()).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            session.setSession(user);
+                            //Start dashboard activity'
+                            Intent intent=new Intent(EditUserProfile.this,Dashboard.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            pb.setVisibility(View.GONE);
+                            update.setVisibility(View.VISIBLE);
+                            helpers.showError(EditUserProfile.this, "Registration Failed", e.getMessage());
+                        }
+                    });
+
+                }
+            }
+
+
+        }
+    }
+
+    private boolean isValid() {
+        boolean flag = true;
+        if (strfname.length() < 3) {
+            fname.setError("enter a valid first name");
+            flag = false;
+
+        } else {
+            fname.setError(null);
+        }
+        if (strlname.length() < 3) {
+            lname.setError("Enter valid last name");
+            flag = false;
+        } else {
+            lname.setError(null);
+        }
+        if (strphoneno.length() < 11) {
+            phoneno.setError("Enter valid phone number");
+            flag = false;
+        } else {
+            phoneno.setError(null);
+        }
+        return flag;
+    }
+
 }
