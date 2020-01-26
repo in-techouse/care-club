@@ -8,36 +8,30 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/mainlayout"
+        android:id="@+id/loading"
         android:orientation="vertical">
-
         <ProgressBar
-            android:id="@+id/ngoprogress"
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/ngos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/emptylayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:text="No NGO's Record Found"
-            android:textAlignment="center"
-            android:textSize="25dp" />
+            android:text="Loading NGO's"
+            android:textAlignment="gravity"
+            android:gravity="center"/>
     </LinearLayout>
+    <TextView
+        android:id="@+id/noRecordFound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25dp"
+        android:textAlignment="center"
+        android:text="No NOG's Record Found" />
 
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/ngos"/>
 </LinearLayout>
