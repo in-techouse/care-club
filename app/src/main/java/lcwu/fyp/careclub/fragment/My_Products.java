@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import lcwu.fyp.careclub.R;
 
@@ -19,11 +20,9 @@ import lcwu.fyp.careclub.R;
  */
 public class My_Products extends Fragment {
 
-ProgressBar pb;
-RecyclerView rv;
-    LinearLayout mainlayout;
-    LinearLayout emptylayout;
-
+private  LinearLayout loading;
+private RecyclerView products;
+private TextView noRecordFound;
     public My_Products() {
         // Required empty public constructor
     }
@@ -34,8 +33,9 @@ RecyclerView rv;
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root= inflater.inflate(R.layout.fragment_my__products, container, false);
-        pb=root.findViewById(R.id.productprogressbar);
-        rv=root.findViewById(R.id.products);
+        loading=root.findViewById(R.id.loading);
+        products=root.findViewById(R.id.products);
+        noRecordFound=root.findViewById(R.id.noRecordFound);
         return root;
 
     }

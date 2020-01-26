@@ -68,7 +68,7 @@ public class AuthenticatedSectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        // Show 2 total pages.
+        // Show 4 total pages.
         return 4;
     }
 }
