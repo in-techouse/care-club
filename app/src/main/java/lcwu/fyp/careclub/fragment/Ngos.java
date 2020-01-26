@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import lcwu.fyp.careclub.R;
 
@@ -18,11 +19,9 @@ import lcwu.fyp.careclub.R;
  * A simple {@link Fragment} subclass.
  */
 public class Ngos extends Fragment {
-    ProgressBar pb;
-    RecyclerView rv;
-    LinearLayout mainlayout;
-    LinearLayout emptylayout;
-
+    private LinearLayout loading;
+    private TextView noRecordFound;
+    private RecyclerView ngos;
     public Ngos() {
         // Required empty public constructor
     }
@@ -33,8 +32,9 @@ public class Ngos extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root= inflater.inflate(R.layout.fragment_ngos, container, false);
-        pb=root.findViewById(R.id.ngoprogress);
-        rv=root.findViewById(R.id.ngos);
+        loading = root.findViewById(R.id.loading);
+        noRecordFound = root.findViewById(R.id.noRecordFound);
+        ngos = root.findViewById(R.id.ngos);
 
 
         return root;
