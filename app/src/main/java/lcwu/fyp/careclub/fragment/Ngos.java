@@ -26,6 +26,7 @@ import java.util.List;
 import lcwu.fyp.careclub.R;
 import lcwu.fyp.careclub.director.Helpers;
 import lcwu.fyp.careclub.director.Session;
+import lcwu.fyp.careclub.model.Donations;
 import lcwu.fyp.careclub.model.User;
 
 /**
@@ -38,7 +39,7 @@ public class Ngos extends Fragment {
     private Session session;
     private User  user;
     private Helpers helpers;
-    private List<Ngos> Ngos;
+    private List<Ngos> data;
     private DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("NGOS");
 
 
@@ -60,7 +61,7 @@ public class Ngos extends Fragment {
         session=new Session(getActivity());
         user=session.getSession();
         helpers=new Helpers();
-        Ngos=new ArrayList<>();
+        data=new ArrayList<>();
         LoadNgos();
 
 
@@ -78,6 +79,20 @@ public class Ngos extends Fragment {
            reference.addValueEventListener(new ValueEventListener() {
                @Override
                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                   for(DataSnapshot d: dataSnapshot.getChildren()){
+                       Ngos ngos=d.getValue(Ngos.class);
+                       if(ngos!=null){
+                           data.add(ngos);
+                       }
+                   }if(data.size()>0){
+                       ngos.setVisibility(View.VISIBLE);
+                       noRecordFound.setVisibility(View.GONE);
+                   }
+                   else{
+                      ngos.setVisibility(View.GONE);
+                       noRecordFound.setVisibility(View.VISIBLE);
+                   }
+                   loading.setVisibility(View.GONE);
 
                }
 

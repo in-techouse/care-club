@@ -39,7 +39,7 @@ public class My_Donations extends Fragment {
     private Session session;
     private User user;
     private Helpers helpers;
-    private List<Donations> Donations;
+    private List<Donations> data;
     private DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("Donations");
 
 
@@ -60,7 +60,7 @@ public class My_Donations extends Fragment {
         session=new Session(getActivity());
         user=session.getSession();
         helpers=new Helpers();
-        Donations=new ArrayList<>();
+        data=new ArrayList<>();
         LoadDonations();
 
 
@@ -77,6 +77,21 @@ public class My_Donations extends Fragment {
         reference.orderByChild("userId").equalTo(user.getId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot d: dataSnapshot.getChildren()){
+                    Donations donations=d.getValue(Donations.class);
+                    if(donations!=null){
+                        data.add(donations);
+                    }
+                }
+                if(data.size()>0){
+                    donations.setVisibility(View.VISIBLE);
+                    noRecordFound.setVisibility(View.GONE);
+                }
+                else{
+                    donations.setVisibility(View.GONE);
+                    noRecordFound.setVisibility(View.VISIBLE);
+                }
+                loading.setVisibility(View.GONE);
 
             }
 
