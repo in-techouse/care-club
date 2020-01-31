@@ -40,7 +40,7 @@ private TextView noRecordFound;
 private Session session;
 private Helpers helpers;
 private User user;
-private List<Products> product;
+private List<Products> data;
 private DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("Products");
     public My_Products() {
         // Required empty public constructor
@@ -58,7 +58,7 @@ private DatabaseReference reference= FirebaseDatabase.getInstance().getReference
         session = new Session(getActivity());
         helpers = new Helpers();
         user=session.getSession();
-        product = new ArrayList<>();
+        data = new ArrayList<>();
         loadProducts();
         return root;
     }
@@ -74,6 +74,24 @@ private DatabaseReference reference= FirebaseDatabase.getInstance().getReference
         reference.orderByChild("userid").equalTo(user.getId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //get children from datasnapshot
+                for(DataSnapshot d:dataSnapshot.getChildren()){
+                    Products products=d.getValue(Products.class);
+                    if(products!=null)
+                    {
+                        data.add(products);
+                    }
+                }
+                if(data.size()>0){
+                    products.setVisibility(View.VISIBLE);
+                    noRecordFound.setVisibility(View.GONE);
+                }
+                else {
+                    products.setVisibility(View.GONE);
+                    noRecordFound.setVisibility(View.VISIBLE);
+
+                }
+                loading.setVisibility(View.GONE);
 
             }
 
