@@ -31,7 +31,7 @@ public class Dashboard extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent it= new Intent(Dashboard.this,AddProduct.class);
+                Intent it= new Intent(Dashboard.this, AddProduct.class);
                 startActivity(it);
 
             }
