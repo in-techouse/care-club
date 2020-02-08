@@ -9,8 +9,15 @@ import android.os.Bundle;
 
 import com.asksira.bsimagepicker.BSImagePicker;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -22,6 +29,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,16 +40,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import lcwu.fyp.careclub.R;
+import lcwu.fyp.careclub.director.Helpers;
+import lcwu.fyp.careclub.director.Session;
+import lcwu.fyp.careclub.model.Products;
+import lcwu.fyp.careclub.model.User;
 
 public class AddProduct extends AppCompatActivity implements BSImagePicker.ImageLoaderDelegate, BSImagePicker.OnMultiImageSelectedListener,View.OnClickListener{
     private List<Uri>productImages;
     private SliderAdapter adapter;
     AppCompatButton submitproduct;
-    EditText name,description,address,phoneno;
+    EditText name,description,address,phoneno,category,qunatity;
     ProgressBar submitproductprogessbar;
+    String straddress,strpname,strdescription,strphone,strquantity,strcategory;
+    Helpers helpers;
+    User user;
+    Session session;
+    private Products product;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,10 +70,17 @@ public class AddProduct extends AppCompatActivity implements BSImagePicker.Image
         description=findViewById(R.id.description);
         address=findViewById(R.id.address);
         phoneno=findViewById(R.id.phoneno);
+        category=findViewById(R.id.category);
+        qunatity=findViewById(R.id.quantity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         SliderView sliderView = findViewById(R.id.imageSlider);
         submitproduct.setOnClickListener(this);
+        helpers = new Helpers();
+        session=new Session(AddProduct.this);
+        user=session.getSession();
+        product = new Products();
+
          adapter = new SliderAdapter(AddProduct.this);
         sliderView.setSliderAdapter(adapter);
 
@@ -135,12 +160,162 @@ public class AddProduct extends AppCompatActivity implements BSImagePicker.Image
     @Override
     public void onClick(View v) {
 
+        int id = v.getId();
+        switch (id) {
+            case R.id.submitProduct: {
+                boolean isConn = helpers.isConnected(AddProduct.this);
+                if (!isConn) {
+                    helpers.showError(AddProduct.this, "Internet Error", "Internet Error");
+                    return;
+                }
+                strpname = name.getText().toString();
+                strphone = phoneno.getText().toString();
+                straddress = address.getText().toString();
+                strdescription = description.getText().toString();
+                strcategory=category.getText().toString();
+                strquantity=qunatity.getText().toString();
+
+                boolean flag = isValid();
+                if (flag) {
+                    submitproductprogessbar.setVisibility(View.VISIBLE);
+                    submitproduct.setVisibility(View.GONE);
+                    uploadImage(productImages.get(0));
+
+                }
+            }
+
+        }
+    }
+
+    private void uploadImage(Uri imagePath){
+        final StorageReference storageReference= FirebaseStorage.getInstance().getReference().child("Products").child(product.getId());
+        Calendar calendar=Calendar.getInstance();
+        storageReference.child(calendar.getTimeInMillis()+"").putFile(imagePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Log.e("Profile","in OnSuccess"+uri.toString());
+                        product.getImages().add(uri.toString());
+                        submitproductprogessbar.setVisibility(View.GONE);
+                        submitproduct.setVisibility(View.VISIBLE);
+                        saveToDatabase();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("Profile","DownloadUrl:"+e.getMessage());
+                        submitproductprogessbar.setVisibility(View.VISIBLE);
+                        submitproduct.setVisibility(View.GONE);
+                        helpers.showError(AddProduct.this,"Error","Something Went Wrong.\n Please Try Again");
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("Profile","UploadImageUrl:"+e.getMessage());
+                submitproductprogessbar.setVisibility(View.GONE);
+                submitproduct.setVisibility(View.VISIBLE);
+                helpers.showError(AddProduct.this,"Error","Something Went Wrong.\n Please Try Again");
+            }
+
+        });
+    }
+        private void saveToDatabase(){
+        submitproductprogessbar.setVisibility(View.VISIBLE);
+        submitproduct.setVisibility(View.GONE);
+        product.setName(strpname);
+        product.setAddress(straddress);
+        product.setDescription(strdescription);
+        product.setCategory(strcategory);
+        product.setPhoneno(strphone);
+        product.setQuantityOfProducts(Integer.parseInt(strquantity));
+            DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child("Products");
+            String id  = databaseReference.push().getKey();
+            product.setId(id);
+            databaseReference.child(product.getId()).setValue(product).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    submitproductprogessbar.setVisibility(View.VISIBLE);
+                    submitproduct.setVisibility(View.GONE);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    submitproductprogessbar.setVisibility(View.GONE);
+                    submitproduct.setVisibility(View.VISIBLE);
+                    helpers.showError(AddProduct.this,"Error","Something Went Wrong.\n Please Try Again");
+
+                }
+            });
+
+
+
+        }
+
+
+    private boolean isValid()
+    {
+        boolean flag=true;
+        if(strpname.length()<3){
+            name.setError("enter a valid Product name");
+            flag=false;
+
+        }
+        else {
+            name.setError(null);
+        }
+        if(strdescription.length()<15){
+            description.setError("enter a valid Description");
+            flag=false;
+
+        }
+        else {
+            description.setError(null);
+        }
+        if(strphone.length()<11){
+            phoneno.setError("enter a valid PhoneNo");
+            flag=false;
+
+        }
+        else {
+            phoneno.setError(null);
+        }
+        if(straddress.length()<15){
+            address.setError("enter a valid Address");
+            flag=false;
+
+        }
+        else {
+            address.setError(null);
+        }
+        if(strcategory.length()<4){
+            category.setError("enter a valid Category");
+            flag=false;
+
+        }
+        else {
+            category.setError(null);
+        }
+        if(strquantity.length()<1){
+            qunatity.setError("enter a valid quantity");
+            flag=false;
+
+        }
+        else {
+            qunatity.setError(null);
+        }
+        return flag;
+
 
     }
 
     public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapterVH> {
 
         private Context context;
+
         public SliderAdapter(Context context) {
             this.context = context;
         }
@@ -177,5 +352,6 @@ public class AddProduct extends AppCompatActivity implements BSImagePicker.Image
                 this.itemView = itemView;
             }
         }
+
     }
 }

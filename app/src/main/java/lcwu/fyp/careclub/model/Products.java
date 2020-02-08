@@ -1,14 +1,30 @@
 package lcwu.fyp.careclub.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Products implements Serializable {
-    private String id,name,category;
+    private String id;
+    private String name;
+    private String category;
+    private String address;
+    private String description, phoneno;
     private int quantityOfProducts;
     private List<String>images;
 
     public Products() {
+    }
+
+    public Products(String id, String name, String category, String address, String description, String phoneno, int quantityOfProducts, List<String> images) {
+        this.id = id;
+        this.name = name;
+        this.category = category;
+        this.address = address;
+        this.description = description;
+        this.phoneno = phoneno;
+        this.quantityOfProducts = quantityOfProducts;
+        this.images = images;
     }
 
     public String getId() {
@@ -35,6 +51,30 @@ public class Products implements Serializable {
         this.category = category;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPhoneno() {
+        return phoneno;
+    }
+
+    public void setPhoneno(String phoneno) {
+        this.phoneno = phoneno;
+    }
+
     public int getQuantityOfProducts() {
         return quantityOfProducts;
     }
@@ -48,14 +88,6 @@ public class Products implements Serializable {
     }
 
     public void setImages(List<String> images) {
-        this.images = images;
-    }
-
-    public Products(String id, String name, String category, int quantityOfProducts, List<String> images) {
-        this.id = id;
-        this.name = name;
-        this.category = category;
-        this.quantityOfProducts = quantityOfProducts;
         this.images = images;
     }
 }
