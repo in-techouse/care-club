@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Care Club</string>
     <string name="enter_email">Enter Email</string>
-    <string name="firstname">Enter FirstName</string>
-    <string name="last_name">Enter lastName</string>
+    <string name="firstname">Enter First Name</string>
+    <string name="last_name">Enter Last Name</string>
     <string name="enter_password">Enter Password</string>
-    <string name="forgotten_password">you have forgotton your password please enter email to change your password</string>
+    <string name="forgotten_password">Have forgotten your password? Enter email, a password recovery email will be sent to your account.</string>
     <string name="send">Send</string>
     <string name="signin">SignIn</string>
     <string name="create_an_aaccount">Create An Account</string>
@@ -19,9 +19,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="NGOs">Ngo</string>
-    <string name="My_Products">myproduct</string>
-    <string name="My_Donations">mydonations</string>
-    <string name="My_profile">myprofile</string>
+    <string name="My_Products">my\nproducts</string>
+    <string name="My_Donations">my\ndonations</string>
+    <string name="My_profile">profile</string>
     <string name="title_activity_edit_user_profile">EditUserProfile</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
@@ -113,5 +113,14 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_add_product">AddProduct</string>
+    <string name="title_activity_add_product">New Product</string>
+
+    <string-array name="categories">
+        <item>Select your product category</item>
+        <item>Clothes</item>
+        <item>Electronic</item>
+        <item>Mobile</item>
+        <item>Furniture</item>
+        <item>Grocery</item>
+    </string-array>
 </resources>

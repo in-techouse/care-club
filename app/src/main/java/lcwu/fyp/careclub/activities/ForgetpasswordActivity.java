@@ -2,37 +2,40 @@ package lcwu.fyp.careclub.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Switch;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-
+import com.shreyaspatil.MaterialDialog.MaterialDialog;
+import com.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 import lcwu.fyp.careclub.R;
+import lcwu.fyp.careclub.director.Helpers;
 
 public class ForgetpasswordActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button forgottonpass;
+    Button send;
     String stremail;
     EditText email;
-    ProgressBar forgetprogress;
+    ProgressBar forgetpass;
+    Helpers helpers;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgetpassword);
 
         email=findViewById(R.id.email);
-        forgottonpass=findViewById(R.id.send);
+        send=findViewById(R.id.send);
+        forgetpass = findViewById(R.id.forgetpass);
 
-        forgottonpass.setOnClickListener(this);
+        send.setOnClickListener(this);
+        helpers = new Helpers();
 
 
     }
@@ -43,32 +46,31 @@ public class ForgetpasswordActivity extends AppCompatActivity implements View.On
         switch(id){
             case R.id.send:{
                  stremail=email.getText().toString();
-                 boolean flag=forgetpass();
+                 boolean flag = isValid();
 
-                 if(flag==true){
-                     forgetprogress.setVisibility(View.VISIBLE);
-                     forgottonpass.setVisibility(View.GONE);
+                 if(flag){
+                     forgetpass.setVisibility(View.VISIBLE);
+                     send.setVisibility(View.GONE);
                      Log.e("Recover pass","Gooning to start");
                      FirebaseAuth auth=FirebaseAuth.getInstance();
                      auth.sendPasswordResetEmail(stremail).addOnSuccessListener(new OnSuccessListener<Void>() {
                          @Override
                          public void onSuccess(Void aVoid) {
-                             forgetprogress.setVisibility(View.GONE);
-                             forgottonpass.setVisibility(View.VISIBLE);
+                             forgetpass.setVisibility(View.GONE);
+                             send.setVisibility(View.VISIBLE);
                              Log.e("Recover password","success");
+                             showSuccessMessage();
 
                          }
                      }).addOnFailureListener(new OnFailureListener() {
                          @Override
                          public void onFailure(@NonNull Exception e) {
-                             forgetprogress.setVisibility(View.GONE);
-                             forgottonpass.setVisibility(View.VISIBLE);
+                             forgetpass.setVisibility(View.GONE);
+                             send.setVisibility(View.VISIBLE);
                              Log.e("Recover password","Failure"+e.getMessage());
+                             helpers.showError(ForgetpasswordActivity.this, "ERROR", e.getMessage());
                          }
                      });
-                 {
-
-                     }
 
 
                  }
@@ -76,15 +78,59 @@ public class ForgetpasswordActivity extends AppCompatActivity implements View.On
             }
         }
     }
-    private boolean forgetpass(){
+
+    private void showSuccessMessage(){
+        MaterialDialog mDialog = new MaterialDialog.Builder(ForgetpasswordActivity.this)
+                .setTitle("FORGOT PASSWORD")
+                .setMessage("A password recovery email has been sent to your account")
+                .setCancelable(false)
+                .setPositiveButton("Ok", R.drawable.ic_action_okay, new MaterialDialog.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int which) {
+                        dialogInterface.dismiss();
+                        // Delete Operation
+                        finish();
+                    }
+                })
+                .setNegativeButton("Close", R.drawable.ic_action_close, new MaterialDialog.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int which) {
+                        dialogInterface.dismiss();
+                        finish();
+                    }
+                })
+                .build();
+
+        // Show Dialog
+        mDialog.show();
+    }
+
+    private boolean isValid(){
         boolean flag;
-     if(stremail.length()<=6||!Patterns.EMAIL_ADDRESS.matcher(stremail).matches()){
-        email.setError("Enter a valid email");
-        flag=false;
+         if(stremail.length()<=6||!Patterns.EMAIL_ADDRESS.matcher(stremail).matches()){
+            email.setError("Enter a valid email");
+            flag=false;
+        }
+        else {
+            email.setError(null);
+            flag=true;
+        }
+        return flag;
     }
-                else {
-        email.setError("Your varification code has been send on your email");
-        flag=true;
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
-                return flag;
-}}
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: {
+                finish();
+                break;
+            }
+        }
+        return true;
+    }
+}

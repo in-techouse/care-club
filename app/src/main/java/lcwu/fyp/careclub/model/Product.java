@@ -4,19 +4,22 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Products implements Serializable {
+public class Product implements Serializable {
     private String id;
     private String name;
     private String category;
     private String address;
     private String description, phoneno;
     private int quantityOfProducts;
-    private List<String>images;
+    private List<String> images;
+    private String userId, ngoid;
+    private boolean isTaken;
 
-    public Products() {
+    public Product() {
+        images = new ArrayList<>();
     }
 
-    public Products(String id, String name, String category, String address, String description, String phoneno, int quantityOfProducts, List<String> images) {
+    public Product(String id, String name, String category, String address, String description, String phoneno, int quantityOfProducts, List<String> images, String userId, String ngoid, boolean isTaken) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -25,6 +28,25 @@ public class Products implements Serializable {
         this.phoneno = phoneno;
         this.quantityOfProducts = quantityOfProducts;
         this.images = images;
+        this.userId = userId;
+        this.ngoid = ngoid;
+        this.isTaken = isTaken;
+    }
+
+    public String getNgoid() {
+        return ngoid;
+    }
+
+    public void setNgoid(String ngoid) {
+        this.ngoid = ngoid;
+    }
+
+    public boolean isTaken() {
+        return isTaken;
+    }
+
+    public void setTaken(boolean taken) {
+        isTaken = taken;
     }
 
     public String getId() {
@@ -89,5 +111,13 @@ public class Products implements Serializable {
 
     public void setImages(List<String> images) {
         this.images = images;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

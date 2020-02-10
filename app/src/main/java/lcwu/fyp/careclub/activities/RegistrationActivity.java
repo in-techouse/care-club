@@ -3,37 +3,33 @@ package lcwu.fyp.careclub.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.shreyaspatil.MaterialDialog.MaterialDialog;
-import com.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
-
 import lcwu.fyp.careclub.R;
 import lcwu.fyp.careclub.director.Helpers;
 import lcwu.fyp.careclub.director.Session;
 import lcwu.fyp.careclub.model.User;
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
-AppCompatButton signup;
-ProgressBar signupprogress;
-TextView gotologin;
-EditText fname,lname,pass,cpass,email,phoneno;
-String strfname,strlname,strpass,strcpass,stremail, strphoneno;
-Helpers helpers;
+    AppCompatButton signup;
+    ProgressBar signupprogress;
+    TextView gotologin;
+    EditText fname,lname,pass,cpass,email,phoneno;
+    String strfname,strlname,strpass,strcpass,stremail, strphoneno;
+    Helpers helpers;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +59,7 @@ Helpers helpers;
             case R.id.rgstrbtn: {
                 boolean isConn = helpers.isConnected(RegistrationActivity.this);
                 if (!isConn) {
-                    helpers.showError(RegistrationActivity.this, "Internet Error", "Internet Error");
+                    helpers.showError(RegistrationActivity.this, "ERROR", "No internet connection found.\nConnect to a network and try again.");
                     return;
                 }
                     strfname = fname.getText().toString();
@@ -112,15 +108,6 @@ Helpers helpers;
                                             helpers.showError(RegistrationActivity.this, "Registration Failed", e.getMessage());
                                         }
                                     });
-
-//                                signupprogress.setVisibility(View.GONE);
-//                                signup.setVisibility(View.VISIBLE);
-//                                Log.e("Registeration","success");
-//                                Intent it=new Intent(RegistrationActivity.this,Dashboard.class);
-//                                startActivity(it);
-//                                finish();
-
-
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -136,60 +123,75 @@ Helpers helpers;
                     break;
                 }
                 case R.id.gotologin: {
-                    Intent i = new Intent(RegistrationActivity.this, LoginActivity.class);
-                    startActivity(i);
+                    finish();
                     break;
                 }
             }
         }
 
-        private boolean isValid()
-        {
-            boolean flag=true;
-            if(strfname.length()<3){
-                fname.setError("enter a valid first name");
-                flag=false;
+    private boolean isValid()
+    {
+        boolean flag=true;
+        if(strfname.length()<3){
+            fname.setError("enter a valid first name");
+            flag=false;
 
-            }
-            else {
-                fname.setError(null);
-            }
-            if (strlname.length()<3){
-                lname.setError("Enter valid last name");
-                flag=false;
-            }
-            else {
-                lname.setError(null);
-            }
-            if (strphoneno.length()<11){
-                phoneno.setError("Enter valid phone number");
-                flag=false;
-            }
-            else {
-                phoneno.setError(null);
-            }
-            if (strpass.length()<6){
-                pass.setError("Enter valid password");
-                flag=false;
-            }
-            else {
-                pass.setError(null);
-            }
-            if(stremail.length()<3|| !Patterns.EMAIL_ADDRESS.matcher(stremail).matches()){
-                email.setError("Enter a valid Email");
-                flag=false;
-            }
-            else {
-                email.setError(null);
-            }
-            if (strcpass.length()<6){
-                cpass.setError("Enter valid password");
-                flag=false;
-            }
-            else {
-                cpass.setError(null);
-            }
-            return flag;
         }
+        else {
+            fname.setError(null);
+        }
+        if (strlname.length()<3){
+            lname.setError("Enter valid last name");
+            flag=false;
+        }
+        else {
+            lname.setError(null);
+        }
+        if (strphoneno.length()<11){
+            phoneno.setError("Enter valid phone number");
+            flag=false;
+        }
+        else {
+            phoneno.setError(null);
+        }
+        if (strpass.length()<6){
+            pass.setError("Enter valid password");
+            flag=false;
+        }
+        else {
+            pass.setError(null);
+        }
+        if(stremail.length()<3|| !Patterns.EMAIL_ADDRESS.matcher(stremail).matches()){
+            email.setError("Enter a valid Email");
+            flag=false;
+        }
+        else {
+            email.setError(null);
+        }
+        if (strcpass.length()<6){
+            cpass.setError("Enter valid password");
+            flag=false;
+        }
+        else {
+            cpass.setError(null);
+        }
+        return flag;
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: {
+                finish();
+                break;
+            }
+        }
+        return true;
+    }
 }
 

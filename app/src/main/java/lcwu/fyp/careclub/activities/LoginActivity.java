@@ -3,16 +3,13 @@ package lcwu.fyp.careclub.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
@@ -22,9 +19,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.shreyaspatil.MaterialDialog.MaterialDialog;
-import com.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
-
 import lcwu.fyp.careclub.R;
 import lcwu.fyp.careclub.director.Helpers;
 import lcwu.fyp.careclub.director.Session;
@@ -70,28 +64,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 if(!isconn){
                     //show Erroe Message,because no internet found
-                    MaterialDialog mDialog = new MaterialDialog.Builder(this)
-
-                            .setTitle("Internet Error")
-                            .setMessage("No internet connection found... Check your internet and Try again later ")
-                            .setCancelable(false)
-                            .setPositiveButton("Ok", R.drawable.ic_action_okay, new MaterialDialog.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int which) {
-                                    dialogInterface.dismiss();
-                                    // Delete Operation
-                                }
-                            })
-                            .setNegativeButton("Close", R.drawable.ic_action_close, new MaterialDialog.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int which) {
-                                    dialogInterface.dismiss();
-                                }
-                            })
-                            .build();
-
-                    // Show Dialog
-                    mDialog.show();
+                    h1.showError(LoginActivity.this, "ERROR", "No internet connection found.\nConnect to a network and try again.");
                     return;
                 }
                 strEmail = email.getText().toString();
@@ -126,25 +99,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                 loginprogress.setVisibility(View.GONE);
                                                 signin.setVisibility(View.VISIBLE);
                                                 h1.showError(LoginActivity.this, "Login Failed", "Something Went Wrong");
-
                                             }
-
                                         }
-
                                         @Override
                                         public void onCancelled(@NonNull DatabaseError databaseError) {
                                             loginprogress.setVisibility(View.GONE);
                                             signin.setVisibility(View.VISIBLE);
                                             h1.showError(LoginActivity.this, "Login Failed", "Something Went Wrong");
-
                                         }
                                     });
-//                                    loginprogress.setVisibility(View.GONE);
-//                                    signin.setVisibility(View.VISIBLE);
-//                                    Log.e("login", "success");
-//                                    Intent it=new Intent(LoginActivity.this,Dashboard.class);
-//                                    startActivity(it);
-//                                    finish();
 
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
@@ -153,29 +116,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             h1.showError(LoginActivity.this,"Login Failed",e.getMessage());
                             loginprogress.setVisibility(View.GONE);
                             signin.setVisibility(View.VISIBLE);
-
-                         //   Log.e("login", "failure " + e.getMessage());
-//                            MaterialDialog mDialog = new MaterialDialog.Builder(LoginActivity.this)
-//                                    .setTitle("Error")
-//                                    .setMessage(e.getMessage())
-//                                    .setCancelable(false)
-//                                    .setPositiveButton("Ok", R.drawable.ic_action_okay, new MaterialDialog.OnClickListener() {
-//                                        @Override
-//                                        public void onClick(DialogInterface dialogInterface, int which) {
-//                                            dialogInterface.dismiss();
-//                                            // Delete Operation
-//                                        }
-//                                    })
-//                                    .setNegativeButton("Close", R.drawable.ic_action_close, new MaterialDialog.OnClickListener() {
-//                                        @Override
-//                                        public void onClick(DialogInterface dialogInterface, int which) {
-//                                            dialogInterface.dismiss();
-//                                        }
-//                                    })
-//                                    .build();
-//
-//                            // Show Dialog
-//                            mDialog.show();
                          }
                     });
 
@@ -193,9 +133,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(it);
                 break;
             }
-
-
-
         }
     }
 
@@ -215,7 +152,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         return flag;
     }
-    // Check Internet Connection
-
 }
 

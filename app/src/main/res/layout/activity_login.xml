@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
+            android:textAllCaps="true"
             android:text="@string/log_in"
             android:textSize="@dimen/headingpadding"
             android:padding="@dimen/headingpadding"
@@ -21,10 +22,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin"/>
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <EditText
                 android:id="@+id/email"
                 android:layout_width="match_parent"
@@ -36,14 +37,12 @@
                 android:textColor="@color/headingclr"
                 android:textSize="@dimen/headingbg"
                 android:layout_margin="@dimen/margin"/>
-
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:passwordToggleEnabled="true">
-
             <EditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
@@ -76,34 +75,36 @@
             android:id="@+id/Loginprogress"
             android:layout_marginTop="20dp"
             android:layout_gravity="center"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:weightSum="3"
             android:orientation="horizontal">
-        <TextView
-            android:layout_weight="1"
-            android:id="@+id/signup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/headingpadding"
-            android:background="@color/colorPrimary"
-            android:textColor="@color/text"
-            android:padding="@dimen/headingpadding"
-            android:text="@string/signup"
-            android:textAlignment="center"
-            android:textSize="@dimen/headingpadding" />
-        <TextView
-            android:layout_weight="1"
-            android:id="@+id/forgetpassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/headingpadding"
-            android:background="@color/colorPrimary"
-            android:textColor="@color/text"
-            android:padding="@dimen/headingpadding"
-            android:text="@string/forget_password"
-            android:textAlignment="center"
-            android:textSize="@dimen/headingpadding" /></LinearLayout>
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/signup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/headingpadding"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/text"
+                android:padding="@dimen/headingpadding"
+                android:text="@string/signup"
+                android:textAlignment="center"
+                android:textSize="@dimen/headingpadding" />
+            <TextView
+                android:layout_weight="2"
+                android:id="@+id/forgetpassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/headingpadding"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/text"
+                android:padding="@dimen/headingpadding"
+                android:text="@string/forget_password"
+                android:textAlignment="center"
+                android:textSize="@dimen/headingpadding" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

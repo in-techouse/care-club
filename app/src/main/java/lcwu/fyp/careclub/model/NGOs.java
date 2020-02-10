@@ -1,22 +1,52 @@
 package lcwu.fyp.careclub.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class NGOs implements Serializable {
-    private String id,name,address,phoneNo,category;
-    private List<PaymentMethods> paymentMethodsList;
+    private String address, category, email, id, name, phone;
+    private List<PaymentMethod> paymentMethods;
+    private List<String> images;
 
     public NGOs() {
+        paymentMethods = new ArrayList<>();
+        images = new ArrayList<>();
     }
 
-    public NGOs(String id, String name, String address, String phoneNo, String category, List<PaymentMethods> paymentMethodsList) {
+    public NGOs(String address, String category, String email, String id, String name, String phone, List<PaymentMethod> paymentMethods, List<String> images) {
+        this.address = address;
+        this.category = category;
+        this.email = email;
         this.id = id;
         this.name = name;
+        this.phone = phone;
+        this.paymentMethods = paymentMethods;
+        this.images = images;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
         this.address = address;
-        this.phoneNo = phoneNo;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
         this.category = category;
-        this.paymentMethodsList = paymentMethodsList;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getId() {
@@ -35,35 +65,27 @@ public class NGOs implements Serializable {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public String getPhoneNo() {
-        return phoneNo;
+    public List<PaymentMethod> getPaymentMethods() {
+        return paymentMethods;
     }
 
-    public void setPhoneNo(String phoneNo) {
-        this.phoneNo = phoneNo;
+    public void setPaymentMethods(List<PaymentMethod> paymentMethods) {
+        this.paymentMethods = paymentMethods;
     }
 
-    public String getCategory() {
-        return category;
+    public List<String> getImages() {
+        return images;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public List<PaymentMethods> getPaymentMethodsList() {
-        return paymentMethodsList;
-    }
-
-    public void setPaymentMethodsList(List<PaymentMethods> paymentMethodsList) {
-        this.paymentMethodsList = paymentMethodsList;
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 }

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="lcwu.fyp.careclub">
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -14,29 +16,44 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:fullBackupContent="@xml/backup_descriptor"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:windowSoftInputMode="adjustResize|stateHidden"
             android:name=".activities.AddProduct"
             android:label="@string/title_activity_add_product"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".activities.Dashboard"/>
         <activity
+            android:windowSoftInputMode="stateHidden"
             android:name=".activities.EditUserProfile"
             android:label="@string/title_activity_edit_user_profile"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".activities.Dashboard"/>
         <activity
+            android:windowSoftInputMode="stateHidden"
             android:name=".activities.Dashboard"
             android:label="@string/title_activity_dashboard"
             android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.ForgetpasswordActivity" />
-        <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.RegistrationActivity" />
         <activity
+            android:name=".activities.ForgetpasswordActivity"
+            android:parentActivityName=".activities.LoginActivity"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".activities.LoginActivity"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".activities.RegistrationActivity"
+            android:parentActivityName=".activities.LoginActivity"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:windowSoftInputMode="stateHidden"
             android:name=".activities.SplashActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

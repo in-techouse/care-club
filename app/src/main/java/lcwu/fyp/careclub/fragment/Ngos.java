@@ -2,44 +2,38 @@ package lcwu.fyp.careclub.fragment;
 
 
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import lcwu.fyp.careclub.R;
+import lcwu.fyp.careclub.adapters.NgosAdapter;
 import lcwu.fyp.careclub.director.Helpers;
 import lcwu.fyp.careclub.director.Session;
-import lcwu.fyp.careclub.model.Donations;
+import lcwu.fyp.careclub.model.NGOs;
 import lcwu.fyp.careclub.model.User;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class Ngos extends Fragment {
     private LinearLayout loading;
     private TextView noRecordFound;
     private RecyclerView ngos;
     private Session session;
-    private User  user;
+    private User user;
     private Helpers helpers;
-    private List<Ngos> data;
+    private List<NGOs> data;
+    private NgosAdapter adapter;
     private DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("NGOS");
 
 
@@ -62,6 +56,11 @@ public class Ngos extends Fragment {
         user=session.getSession();
         helpers=new Helpers();
         data=new ArrayList<>();
+
+        adapter = new NgosAdapter(getActivity());
+
+        ngos.setLayoutManager(new LinearLayoutManager(getActivity()));
+        ngos.setAdapter(adapter);
         LoadNgos();
 
 
@@ -80,11 +79,12 @@ public class Ngos extends Fragment {
                @Override
                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                    for(DataSnapshot d: dataSnapshot.getChildren()){
-                       Ngos ngos=d.getValue(Ngos.class);
+                       NGOs ngos=d.getValue(NGOs.class);
                        if(ngos!=null){
                            data.add(ngos);
                        }
                    }if(data.size()>0){
+                       adapter.setData(data);
                        ngos.setVisibility(View.VISIBLE);
                        noRecordFound.setVisibility(View.GONE);
                    }
@@ -93,7 +93,6 @@ public class Ngos extends Fragment {
                        noRecordFound.setVisibility(View.VISIBLE);
                    }
                    loading.setVisibility(View.GONE);
-
                }
 
                @Override

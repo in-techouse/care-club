@@ -11,16 +11,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lcwu.fyp.careclub.R;
-import lcwu.fyp.careclub.model.Donations;
+import lcwu.fyp.careclub.model.Donation;
 
 public class DonationAdapter extends RecyclerView.Adapter<DonationAdapter.DonationHolder> {
-    private List<Donations> data;
+    private List<Donation> data;
 
     public DonationAdapter() {
         data= new ArrayList<>();
     }
 
-    public void setData(List<Donations> data) {
+    public void setData(List<Donation> data) {
         this.data = data;
         notifyDataSetChanged();
     }
@@ -34,7 +34,7 @@ public class DonationAdapter extends RecyclerView.Adapter<DonationAdapter.Donati
 
     @Override
     public void onBindViewHolder(@NonNull DonationHolder holder, int position) {
-      final Donations d=data.get(position);
+      final Donation d=data.get(position);
     }
 
     @Override

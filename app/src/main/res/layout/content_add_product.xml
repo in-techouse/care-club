@@ -1,18 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activities.AddProduct"
-    tools:showIn="@layout/activity_add_product">
+    tools:showIn="@layout/activity_add_product"
+    android:paddingBottom="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        >
+        android:paddingTop="50dp"
+        android:paddingStart="22dp"
+        android:paddingEnd="22dp"
+        android:paddingBottom="150dp">
+
+        <Spinner
+            android:entries="@array/categories"
+            android:padding="12dp"
+            android:id="@+id/category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -20,21 +33,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/name"
-                android:hint="Enter your Product Name"
-                android:inputType="text"
-                android:padding="12dp" />
+                android:hint="Product Name"
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/category"
-                android:hint="Enter your Product Category"
-                android:inputType="text"
-                android:padding="12dp" />
-        </com.google.android.material.textfield.TextInputLayout>
+
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -42,55 +45,60 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/quantity"
-                android:hint="Enter your Product Quantity"
-                android:inputType="text"
-                android:padding="12dp" />
+                android:hint="Product Quantity"
+                android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/description"
+                android:hint="Product Description"
+                android:inputType="textMultiLine"
+                android:lines="8"
+                android:minLines="6"
+                android:gravity="top|start"
+                android:maxLines="10"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:scrollbars="vertical"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/description"
-                android:hint="Enter your Product Description"
-                android:inputType="text"
-                android:padding="12dp" />
+                android:id="@+id/address"
+                android:hint="Enter address"
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/address"
-            android:hint="Enter your address"
-            android:inputType="text"
-            android:padding="12dp" />
-    </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/phoneno"
-            android:layout_weight="1"
-            android:hint="@string/enter_phone_number"
-            android:padding="12dp"
-            android:layout_margin="12dp"
-            android:inputType="phone"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/phoneno"
+                android:layout_weight="1"
+                android:hint="@string/enter_phone_number"
+                android:inputType="phone"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:background="@color/colorPrimary"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:textColor="@color/text"
             android:id="@+id/submitProduct"
-            android:text="Submit Product"
+            android:text="SAVE"
             android:padding="7dp"
             android:textSize="18dp"/>
+
         <ProgressBar
             android:visibility="gone"
             android:layout_width="wrap_content"

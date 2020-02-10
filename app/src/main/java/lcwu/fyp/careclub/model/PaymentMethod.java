@@ -2,10 +2,10 @@ package lcwu.fyp.careclub.model;
 
 import java.io.Serializable;
 
-public class PaymentMethods implements Serializable {
+public class PaymentMethod implements Serializable {
     private String number,methodName;
 
-    public PaymentMethods() {
+    public PaymentMethod() {
     }
 
     public String getNumber() {
@@ -24,7 +24,7 @@ public class PaymentMethods implements Serializable {
         this.methodName = methodName;
     }
 
-    public PaymentMethods(String number, String methodName) {
+    public PaymentMethod(String number, String methodName) {
         this.number = number;
         this.methodName = methodName;
     }

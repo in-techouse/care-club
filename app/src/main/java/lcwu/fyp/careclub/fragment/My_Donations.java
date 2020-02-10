@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -26,7 +25,7 @@ import java.util.List;
 import lcwu.fyp.careclub.R;
 import lcwu.fyp.careclub.director.Helpers;
 import lcwu.fyp.careclub.director.Session;
-import lcwu.fyp.careclub.model.Donations;
+import lcwu.fyp.careclub.model.Donation;
 import lcwu.fyp.careclub.model.User;
 
 /**
@@ -39,8 +38,8 @@ public class My_Donations extends Fragment {
     private Session session;
     private User user;
     private Helpers helpers;
-    private List<Donations> data;
-    private DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("Donations");
+    private List<Donation> data;
+    private DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("Donation");
 
 
     public My_Donations() {
@@ -78,7 +77,7 @@ public class My_Donations extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot d: dataSnapshot.getChildren()){
-                    Donations donations=d.getValue(Donations.class);
+                    Donation donations=d.getValue(Donation.class);
                     if(donations!=null){
                         data.add(donations);
                     }

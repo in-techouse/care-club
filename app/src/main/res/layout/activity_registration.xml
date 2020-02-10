@@ -145,7 +145,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20dp"
-            android:text="Already have an account?go for LOGIN"
+            android:text="Already have an account? Go for LOGIN"
             android:id="@+id/gotologin"
             android:padding="12dp"
             android:layout_margin="5dp"/>
