@@ -18,7 +18,7 @@ import java.util.List;
 import lcwu.fyp.careclub.R;
 import lcwu.fyp.careclub.model.Product;
 
-public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ProdctHolder>{
+public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ProdctHolder> {
     private List<Product> data;
     private Context context;
 
@@ -36,7 +36,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Prodct
     @Override
 
     public ProdctHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_product,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_product, parent, false);
         return new ProdctHolder(v);
     }
 
@@ -44,10 +44,9 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Prodct
     public void onBindViewHolder(@NonNull ProdctHolder holder, int position) {
 
         final Product p = data.get(position);
-        if(p.getImages() != null && p.getImages().size() > 0){
+        if (p.getImages() != null && p.getImages().size() > 0) {
             Glide.with(context).load(p.getImages().get(0)).into(holder.productImage);
-        }
-        else{
+        } else {
             holder.productImage.setVisibility(View.GONE);
         }
 
@@ -55,7 +54,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Prodct
         holder.productCategory.setText(p.getCategory());
         holder.productContact.setText(p.getPhoneno());
         holder.productAddress.setText(p.getAddress());
-        holder.productQuantity.setText(p.getQuantityOfProducts()+"");
+        holder.productQuantity.setText(p.getQuantityOfProducts() + "");
     }
 
     @Override
@@ -67,6 +66,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Prodct
     class ProdctHolder extends RecyclerView.ViewHolder {
         ImageView productImage;
         TextView productName, productCategory, productContact, productQuantity, productAddress;
+
         public ProdctHolder(@NonNull View itemView) {
             super(itemView);
             productImage = itemView.findViewById(R.id.productImage);

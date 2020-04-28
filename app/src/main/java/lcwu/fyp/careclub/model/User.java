@@ -3,7 +3,7 @@ package lcwu.fyp.careclub.model;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    private String fname,lname,email,phone,id,address;
+    private String fname, lname, email, phone, id, address;
 
     public User() {
     }

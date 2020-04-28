@@ -17,7 +17,7 @@ public class DonationAdapter extends RecyclerView.Adapter<DonationAdapter.Donati
     private List<Donation> data;
 
     public DonationAdapter() {
-        data= new ArrayList<>();
+        data = new ArrayList<>();
     }
 
     public void setData(List<Donation> data) {
@@ -28,13 +28,13 @@ public class DonationAdapter extends RecyclerView.Adapter<DonationAdapter.Donati
     @NonNull
     @Override
     public DonationHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_donation,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_donation, parent, false);
         return null;
     }
 
     @Override
     public void onBindViewHolder(@NonNull DonationHolder holder, int position) {
-      final Donation d=data.get(position);
+        final Donation d = data.get(position);
     }
 
     @Override

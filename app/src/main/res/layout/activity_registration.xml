@@ -1,153 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.RegistrationActivity">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="11">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="REGISTERATION FORM"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/text"
-        android:textSize="22dp"
-        android:textAlignment="center"
-        android:padding="12dp"
-        android:layout_margin="12dp"
-        android:layout_weight="1"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="3"
-        android:text="Sign-Up"
-        android:textAlignment="center"
-        android:textSize="70dp"/>
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/firstname"
-            android:inputType="textPersonName"
-            android:id="@+id/fname"
-            android:layout_weight="1"
-            android:padding="12dp"
-            android:layout_margin="12dp"
-            />
 
-    </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/lname"
-                android:hint="@string/last_name"
-                android:inputType="textPersonName"
-                android:padding="12dp"
-                android:layout_weight="1"
-                android:layout_margin="12dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="11">
 
-        </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-        >
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/email"
-            android:layout_weight="1"
-            android:hint="@string/enter_email"
-            android:padding="12dp"
             android:layout_margin="12dp"
-            android:inputType="textEmailAddress"/>
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:padding="12dp"
+            android:text="REGISTERATION FORM"
+            android:textAlignment="center"
+            android:textColor="@color/text"
+            android:textSize="22dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Sign-Up"
+            android:textAlignment="center"
+            android:textSize="70dp" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <EditText
+                android:id="@+id/fname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/phoneno"
-                android:layout_weight="1"
-                android:hint="@string/enter_phone_number"
-                android:padding="12dp"
                 android:layout_margin="12dp"
-                android:inputType="phone"/>
+                android:layout_weight="1"
+                android:hint="@string/firstname"
+                android:inputType="textPersonName"
+                android:padding="12dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-    </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/lname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:layout_weight="1"
+                android:hint="@string/last_name"
+                android:inputType="textPersonName"
+                android:padding="12dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:layout_weight="1"
+                android:hint="@string/enter_email"
+                android:inputType="textEmailAddress"
+                android:padding="12dp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/phoneno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:layout_weight="1"
+                    android:hint="@string/enter_phone_number"
+                    android:inputType="phone"
+                    android:padding="12dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:passwordToggleEnabled="true"
-        >
-        <EditText
+            app:passwordToggleEnabled="true">
+
+            <EditText
+                android:id="@+id/pass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:layout_weight="1"
+                android:hint="@string/enter_password"
+                android:inputType="textPassword"
+                android:padding="12dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/pass"
-            android:hint="@string/enter_password"
-            android:padding="12dp"
-            android:layout_weight="1"
+            app:passwordToggleEnabled="true">
+
+            <EditText
+                android:id="@+id/cpass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:layout_weight="1"
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
+                android:padding="12dp" />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/rgstrbtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="12dp"
-            android:inputType="textPassword"/>
-
-    </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:passwordToggleEnabled="true"
-        >
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/cpass"
             android:layout_weight="1"
-            android:hint="Confirm Password"
+            android:background="@color/colorPrimary"
             android:padding="12dp"
-            android:layout_margin="12dp"
-            android:inputType="textPassword"/>
+            android:text="signup"
+            android:textColor="@color/text"
+            android:textSize="22dp" />
 
-
-    </com.google.android.material.textfield.TextInputLayout>
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rgstrbtn"
-        android:layout_weight="1"
-        android:textColor="@color/text"
-        android:background="@color/colorPrimary"
-        android:text="signup"
-        android:textSize="22dp"
-        android:padding="12dp"
-        android:layout_margin="12dp"/>
-
-    <ProgressBar
-            android:visibility="gone"
+        <ProgressBar
+            android:id="@+id/signupprogress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_gravity="center"
-            android:id="@+id/signupprogress"/>
+            android:layout_marginTop="20dp"
+            android:visibility="gone" />
 
-    <TextView
+        <TextView
+            android:id="@+id/gotologin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="Already have an account? Go for LOGIN"
-            android:id="@+id/gotologin"
+            android:layout_margin="5dp"
             android:padding="12dp"
-            android:layout_margin="5dp"/>
-</LinearLayout>
+            android:text="Already have an account? Go for LOGIN"
+            android:textSize="20dp" />
+    </LinearLayout>
 </ScrollView>

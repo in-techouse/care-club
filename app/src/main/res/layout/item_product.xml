@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="11dp"
     android:layout_margin="7dp"
-    app:cardCornerRadius="11dp">
+    app:cardCornerRadius="11dp"
+    app:cardElevation="11dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,19 +14,20 @@
 
         <ImageView
             android:id="@+id/productImage"
-            android:scaleType="fitXY"
             android:layout_width="match_parent"
-            android:layout_height="300dp"/>
+            android:layout_height="300dp"
+            android:scaleType="fitXY" />
+
         <TextView
-            android:textAlignment="gravity"
-            android:gravity="center"
-            android:layout_margin="7dp"
-            android:textColor="@color/colorPrimary"
-            android:textSize="19sp"
-            android:textStyle="bold"
             android:id="@+id/productName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_margin="7dp"
+            android:gravity="center"
+            android:textAlignment="gravity"
+            android:textColor="@color/colorPrimary"
+            android:textSize="19sp"
+            android:textStyle="bold" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -35,24 +35,24 @@
             android:layout_margin="7dp">
 
             <TextView
-                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:textColor="@color/colorPrimaryDark"
-                android:textStyle="bold"
                 android:text="Category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:textSize="18sp"
                 android:id="@+id/productCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:textColor="@color/colorPrimaryDark"
                 android:text="Category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp" />
 
         </RelativeLayout>
 
@@ -62,24 +62,24 @@
             android:layout_margin="7dp">
 
             <TextView
-                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:textColor="@color/colorPrimaryDark"
-                android:textStyle="bold"
                 android:text="Quantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:textSize="18sp"
                 android:id="@+id/productQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:textColor="@color/colorPrimaryDark"
                 android:text="Quantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp" />
 
         </RelativeLayout>
 
@@ -89,36 +89,36 @@
             android:layout_margin="7dp">
 
             <TextView
-                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:textColor="@color/colorPrimaryDark"
-                android:textStyle="bold"
                 android:text="Contact"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:textSize="18sp"
                 android:id="@+id/productContact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:textColor="@color/colorPrimaryDark"
                 android:text="Contact"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp" />
 
         </RelativeLayout>
 
 
         <TextView
-            android:textSize="16sp"
-            android:layout_margin="7dp"
             android:id="@+id/productAddress"
-            android:textColor="@color/colorPrimaryDark"
-            android:text="Address"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_margin="7dp"
+            android:text="Address"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

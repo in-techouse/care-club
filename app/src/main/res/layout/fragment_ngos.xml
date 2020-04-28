@@ -5,33 +5,37 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".fragment.Ngos">
+
     <LinearLayout
+        android:id="@+id/loading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/loading"
         android:orientation="vertical">
+
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="Loading NGO's"
-            android:textAlignment="gravity"
-            android:gravity="center"/>
+            android:textAlignment="gravity" />
     </LinearLayout>
+
     <TextView
         android:id="@+id/noRecordFound"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="25dp"
+        android:text="No NOG's Record Found"
         android:textAlignment="center"
-        android:text="No NOG's Record Found" />
+        android:textSize="25dp" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ngos"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/ngos"/>
+        android:layout_height="match_parent" />
 </LinearLayout>

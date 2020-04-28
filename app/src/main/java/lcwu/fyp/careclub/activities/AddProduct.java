@@ -6,6 +6,22 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+
 import com.asksira.bsimagepicker.BSImagePicker;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -22,30 +38,18 @@ import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 import com.smarteist.autoimageslider.SliderViewAdapter;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.Spinner;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
 import lcwu.fyp.careclub.R;
 import lcwu.fyp.careclub.director.Helpers;
 import lcwu.fyp.careclub.director.Session;
 import lcwu.fyp.careclub.model.Product;
 import lcwu.fyp.careclub.model.User;
 
-public class AddProduct extends AppCompatActivity implements BSImagePicker.ImageLoaderDelegate, BSImagePicker.OnMultiImageSelectedListener,View.OnClickListener{
+public class AddProduct extends AppCompatActivity implements BSImagePicker.ImageLoaderDelegate, BSImagePicker.OnMultiImageSelectedListener, View.OnClickListener {
     private List<Uri> productImages;
     private SliderAdapter adapter;
     private Product product;
@@ -58,12 +62,18 @@ public class AddProduct extends AppCompatActivity implements BSImagePicker.Image
     private ProgressBar submitprductprogressbar;
     private String strCategory, strName, strQunatity, strDescription, strAddress, strPhoneno = "";
     private DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Products");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_product);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         productImages = new ArrayList<>();
         product = new Product();
         helpers = new Helpers();
@@ -103,8 +113,8 @@ public class AddProduct extends AppCompatActivity implements BSImagePicker.Image
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(askForPermission()) {
-                       openGallery();
+                if (askForPermission()) {
+                    openGallery();
                 }
             }
         });
@@ -113,31 +123,31 @@ public class AddProduct extends AppCompatActivity implements BSImagePicker.Image
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode==10){
-            if (grantResults.length > 0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
+        if (requestCode == 10) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 openGallery();
             }
         }
     }
 
-    private void openGallery(){
-      BSImagePicker multiSelectionPicker = new BSImagePicker.Builder("lcwu.fyp.careclub.fileprovider")
-              .isMultiSelect() //Set this if you want to use multi selection mode.
-              .setMinimumMultiSelectCount(1) //Default: 1.
-              .setMaximumMultiSelectCount(2) //Default: Integer.MAX_VALUE (i.e. User can select as many images as he/she wants)
-              .setMultiSelectBarBgColor(android.R.color.white) //Default: #FFFFFF. You can also set it to a translucent color.
-              .setMultiSelectTextColor(R.color.primary_text) //Default: #212121(Dark grey). This is the message in the multi-select bottom bar.
-              .setMultiSelectDoneTextColor(R.color.colorAccent) //Default: #388e3c(Green). This is the color of the "Done" TextView.
-              .setOverSelectTextColor(R.color.error_text) //Default: #b71c1c. This is the color of the message shown when user tries to select more than maximum select count.
-              .disableOverSelectionMessage() //You can also decide not to show this over select message.
-              .build();
-      multiSelectionPicker.show(getSupportFragmentManager(), "picker");
+    private void openGallery() {
+        BSImagePicker multiSelectionPicker = new BSImagePicker.Builder("lcwu.fyp.careclub.fileprovider")
+                .isMultiSelect() //Set this if you want to use multi selection mode.
+                .setMinimumMultiSelectCount(1) //Default: 1.
+                .setMaximumMultiSelectCount(2) //Default: Integer.MAX_VALUE (i.e. User can select as many images as he/she wants)
+                .setMultiSelectBarBgColor(android.R.color.white) //Default: #FFFFFF. You can also set it to a translucent color.
+                .setMultiSelectTextColor(R.color.primary_text) //Default: #212121(Dark grey). This is the message in the multi-select bottom bar.
+                .setMultiSelectDoneTextColor(R.color.colorAccent) //Default: #388e3c(Green). This is the color of the "Done" TextView.
+                .setOverSelectTextColor(R.color.error_text) //Default: #b71c1c. This is the color of the message shown when user tries to select more than maximum select count.
+                .disableOverSelectionMessage() //You can also decide not to show this over select message.
+                .build();
+        multiSelectionPicker.show(getSupportFragmentManager(), "picker");
     }
 
-    private boolean askForPermission(){
-        if(ActivityCompat.checkSelfPermission(AddProduct.this, Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(AddProduct.this,Manifest.permission.WRITE_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED){
-         ActivityCompat.requestPermissions(AddProduct.this,new String[]{
-                 Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE},10);
+    private boolean askForPermission() {
+        if (ActivityCompat.checkSelfPermission(AddProduct.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(AddProduct.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(AddProduct.this, new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 10);
             return false;
         }
         return true;
@@ -152,7 +162,7 @@ public class AddProduct extends AppCompatActivity implements BSImagePicker.Image
 
     @Override
     public void onMultiImageSelected(List<Uri> uriList, String tag) {
-        productImages=uriList;
+        productImages = uriList;
         adapter.notifyDataSetChanged();
 
     }
@@ -180,70 +190,70 @@ public class AddProduct extends AppCompatActivity implements BSImagePicker.Image
         }
     }
 
-    private void uploadImage(final int count){
+    private void uploadImage(final int count) {
         final StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Products").child(product.getId());
         Calendar calendar = Calendar.getInstance();
-        storageReference.child(calendar.getTimeInMillis()+"").putFile(productImages.get(0)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        storageReference.child(calendar.getTimeInMillis() + "").putFile(productImages.get(0)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        Log.e("Profile","in OnSuccess"+uri.toString());
+                        Log.e("Profile", "in OnSuccess" + uri.toString());
                         product.getImages().add(uri.toString());
-                        if(product.getImages().size() == productImages.size()) {
+                        if (product.getImages().size() == productImages.size()) {
                             saveToDatabase();
-                        }
-                        else{
-                            uploadImage(count+1);
+                        } else {
+                            uploadImage(count + 1);
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.e("Profile","DownloadUrl:"+e.getMessage());
+                        Log.e("Profile", "DownloadUrl:" + e.getMessage());
                         submitprductprogressbar.setVisibility(View.VISIBLE);
                         submitProduct.setVisibility(View.GONE);
-                        helpers.showError(AddProduct.this,"Error","Something Went Wrong.\n Please Try Again");
+                        helpers.showError(AddProduct.this, "Error", "Something Went Wrong.\n Please Try Again");
                     }
                 });
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.e("Profile","UploadImageUrl:"+e.getMessage());
+                Log.e("Profile", "UploadImageUrl:" + e.getMessage());
                 submitprductprogressbar.setVisibility(View.VISIBLE);
                 submitProduct.setVisibility(View.GONE);
-                helpers.showError(AddProduct.this,"Error","Something Went Wrong.\n Please Try Again");
+                helpers.showError(AddProduct.this, "Error", "Something Went Wrong.\n Please Try Again");
             }
 
         });
     }
-    private void saveToDatabase(){
+
+    private void saveToDatabase() {
         product.setCategory(strCategory);
         product.setName(strName);
         product.setQuantityOfProducts(Integer.parseInt(strQunatity));
         product.setDescription(strDescription);
         product.setAddress(strAddress);
         product.setPhoneno(strPhoneno);
-            reference.child(product.getId()).setValue(product).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    submitprductprogressbar.setVisibility(View.GONE);
-                    submitProduct.setVisibility(View.VISIBLE);
-                    showSuccessMessage();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    submitprductprogressbar.setVisibility(View.GONE);
-                    submitProduct.setVisibility(View.VISIBLE);
-                    helpers.showError(AddProduct.this,"Error","Something Went Wrong.\n Please Try Again");
-                }
-            });
+        reference.child(product.getId()).setValue(product).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                submitprductprogressbar.setVisibility(View.GONE);
+                submitProduct.setVisibility(View.VISIBLE);
+                showSuccessMessage();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                submitprductprogressbar.setVisibility(View.GONE);
+                submitProduct.setVisibility(View.VISIBLE);
+                helpers.showError(AddProduct.this, "Error", "Something Went Wrong.\n Please Try Again");
+            }
+        });
     }
 
-    private void showSuccessMessage(){
+    private void showSuccessMessage() {
         MaterialDialog mDialog = new MaterialDialog.Builder(AddProduct.this)
                 .setTitle("PRODUCT")
                 .setMessage("Your product is live for the NGO's.")
@@ -269,8 +279,7 @@ public class AddProduct extends AppCompatActivity implements BSImagePicker.Image
     }
 
 
-    private boolean isValid()
-    {
+    private boolean isValid() {
         boolean flag = true;
         String error = "";
 
@@ -278,61 +287,56 @@ public class AddProduct extends AppCompatActivity implements BSImagePicker.Image
         strPhoneno = phoneno.getText().toString();
         strAddress = address.getText().toString();
         strDescription = description.getText().toString();
-        strCategory= category.getSelectedItem().toString();
+        strCategory = category.getSelectedItem().toString();
         strQunatity = qunatity.getText().toString();
 
-        if(productImages.size() < 1){
+        if (productImages.size() < 1) {
             error = error + "*Select product images.\n";
             flag = false;
         }
 
-        if(category.getSelectedItemPosition() == 0){
+        if (category.getSelectedItemPosition() == 0) {
             error = error + "*Select product category.\n";
             flag = false;
         }
 
-        if(strName.length() < 3){
+        if (strName.length() < 3) {
             name.setError("Enter a valid product name");
             flag = false;
-        }
-        else {
+        } else {
             name.setError(null);
         }
 
-        if(strQunatity.length() < 1){
+        if (strQunatity.length() < 1) {
             qunatity.setError("Enter a valid quantity");
             flag = false;
 
-        }
-        else {
+        } else {
             qunatity.setError(null);
         }
 
-        if(strDescription.length() < 15){
+        if (strDescription.length() < 15) {
             description.setError("Enter a valid Description");
             flag = false;
-        }
-        else {
+        } else {
             description.setError(null);
         }
 
-        if(strPhoneno.length() != 11){
+        if (strPhoneno.length() != 11) {
             phoneno.setError("Enter a valid PhoneNo");
             flag = false;
-        }
-        else {
+        } else {
             phoneno.setError(null);
         }
 
-        if(strAddress.length()<15){
+        if (strAddress.length() < 15) {
             address.setError("Enter a valid Address");
             flag = false;
-        }
-        else {
+        } else {
             address.setError(null);
         }
 
-        if(error.length() > 0){
+        if (error.length() > 0) {
             helpers.showError(AddProduct.this, "ERROR!", error);
         }
 

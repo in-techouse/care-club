@@ -2,16 +2,15 @@ package lcwu.fyp.careclub.fragment;
 
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,7 +38,7 @@ public class My_Donations extends Fragment {
     private User user;
     private Helpers helpers;
     private List<Donation> data;
-    private DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("Donation");
+    private DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Donation");
 
 
     public My_Donations() {
@@ -51,23 +50,24 @@ public class My_Donations extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root=inflater.inflate(R.layout.fragment_my__donations, container, false);
+        View root = inflater.inflate(R.layout.fragment_my__donations, container, false);
         loading = root.findViewById(R.id.loading);
         noRecordFound = root.findViewById(R.id.noRecordFound);
         donations = root.findViewById(R.id.donations);
 
-        session=new Session(getActivity());
-        user=session.getSession();
-        helpers=new Helpers();
-        data=new ArrayList<>();
+        session = new Session(getActivity());
+        user = session.getSession();
+        helpers = new Helpers();
+        data = new ArrayList<>();
         LoadDonations();
 
 
         return root;
     }
-    private void LoadDonations(){
-        if(!helpers.isConnected(getActivity())){
-            helpers.showError(getActivity(),"Error","Error Occurr Due To Internet Connection");
+
+    private void LoadDonations() {
+        if (!helpers.isConnected(getActivity())) {
+            helpers.showError(getActivity(), "Error", "Error Occurr Due To Internet Connection");
             return;
         }
         loading.setVisibility(View.VISIBLE);
@@ -76,17 +76,16 @@ public class My_Donations extends Fragment {
         reference.orderByChild("userId").equalTo(user.getId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot d: dataSnapshot.getChildren()){
-                    Donation donations=d.getValue(Donation.class);
-                    if(donations!=null){
+                for (DataSnapshot d : dataSnapshot.getChildren()) {
+                    Donation donations = d.getValue(Donation.class);
+                    if (donations != null) {
                         data.add(donations);
                     }
                 }
-                if(data.size()>0){
+                if (data.size() > 0) {
                     donations.setVisibility(View.VISIBLE);
                     noRecordFound.setVisibility(View.GONE);
-                }
-                else{
+                } else {
                     donations.setVisibility(View.GONE);
                     noRecordFound.setVisibility(View.VISIBLE);
                 }
@@ -96,9 +95,9 @@ public class My_Donations extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-              loading.setVisibility(View.GONE);
-              donations.setVisibility(View.VISIBLE);
-              noRecordFound.setVisibility(View.GONE);
+                loading.setVisibility(View.GONE);
+                donations.setVisibility(View.VISIBLE);
+                noRecordFound.setVisibility(View.GONE);
             }
         });
     }

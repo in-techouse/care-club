@@ -3,15 +3,13 @@ package lcwu.fyp.careclub.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import lcwu.fyp.careclub.R;
 import lcwu.fyp.careclub.activities.EditUserProfile;
@@ -26,8 +24,7 @@ public class My_Profile extends Fragment implements View.OnClickListener {
     private Session session;
     private User user;
     private Helpers helpers;
-    TextView fname,lname,email,phoneno,edit;
-
+    TextView name, email, phoneno, edit;
 
 
     public My_Profile() {
@@ -40,22 +37,20 @@ public class My_Profile extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_my__profile, container, false);
-        fname = root.findViewById(R.id.first_name);
-        lname =root.findViewById(R.id.last_name);
-        email=root.findViewById(R.id.email);
-        phoneno=root.findViewById(R.id.phoneno);
-        edit=root.findViewById(R.id.edit);
+        name = root.findViewById(R.id.name);
+        email = root.findViewById(R.id.email);
+        phoneno = root.findViewById(R.id.phoneno);
+        edit = root.findViewById(R.id.edit);
 
         edit.setOnClickListener(this);
 
-        helpers=new Helpers();
-        session=new Session(getActivity());
+        helpers = new Helpers();
+        session = new Session(getActivity());
         user = session.getSession();
-        Log.e("Profile", "First Name: "+ user.getFname());
+        Log.e("Profile", "First Name: " + user.getFname());
 
 
-        fname.setText(user.getFname());
-        lname.setText(user.getLname());
+        name.setText(user.getFname() + " " + user.getLname());
         email.setText(user.getEmail());
         phoneno.setText(user.getPhone());
 
@@ -65,10 +60,10 @@ public class My_Profile extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        int id=v.getId();
-        switch (id){
-            case R.id.edit:{
-                Intent it=new Intent(getActivity(),EditUserProfile.class);
+        int id = v.getId();
+        switch (id) {
+            case R.id.edit: {
+                Intent it = new Intent(getActivity(), EditUserProfile.class);
                 startActivity(it);
 
             }

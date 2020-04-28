@@ -4,19 +4,22 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+
 import com.shreyaspatil.MaterialDialog.MaterialDialog;
 import com.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
+
 import lcwu.fyp.careclub.R;
 
 public class Helpers {
 
-    public boolean isConnected( Context c){
+    public boolean isConnected(Context c) {
         boolean connected = false;
-        ConnectivityManager connectivityManager = (ConnectivityManager)c.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
         connected = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED || connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED;
-        return  connected;
+        return connected;
     }
-    public void showError(Activity a,String title,String msg){
+
+    public void showError(Activity a, String title, String msg) {
         MaterialDialog mDialog = new MaterialDialog.Builder(a)
                 .setTitle(title)
                 .setMessage(msg)

@@ -20,13 +20,13 @@ import lcwu.fyp.careclub.fragment.Ngos;
  */
 public class AuthenticatedSectionsPagerAdapter extends FragmentPagerAdapter {
 
-    My_Profile profile=new My_Profile();
-    My_Donations donation=new My_Donations();
-    My_Products product=new My_Products();
-    Ngos ngo=new Ngos();
+    My_Profile profile = new My_Profile();
+    My_Donations donation = new My_Donations();
+    My_Products product = new My_Products();
+    Ngos ngo = new Ngos();
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.NGOs, R.string.My_Products,R.string.My_Donations,R.string.My_profile};
+    private static final int[] TAB_TITLES = new int[]{R.string.NGOs, R.string.My_Products, R.string.My_Donations, R.string.My_profile};
     private final Context mContext;
 
     public AuthenticatedSectionsPagerAdapter(Context context, FragmentManager fm) {
@@ -38,22 +38,18 @@ public class AuthenticatedSectionsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        switch (position){
-            case 0:
-            {
+        switch (position) {
+            case 0: {
                 return ngo;
 
             }
-            case 1:
-            {
+            case 1: {
                 return product;
             }
-            case 2:
-            {
+            case 2: {
                 return donation;
             }
-            case 3:
-            {
+            case 3: {
                 return profile;
             }
         }

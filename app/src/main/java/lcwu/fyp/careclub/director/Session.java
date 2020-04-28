@@ -13,13 +13,13 @@ public class Session {
     private SharedPreferences.Editor editor;
     private Context context;
 
-    public Session(Context c){
+    public Session(Context c) {
         context = c;
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
         editor = preferences.edit();
     }
 
-    public void setSession(User user){
+    public void setSession(User user) {
 
         Gson gson = new Gson();
         String value = gson.toJson(user);
@@ -27,16 +27,16 @@ public class Session {
         editor.apply();
     }
 
-    public User getSession(){
+    public User getSession() {
         String str = preferences.getString("user", "*");
-        if(str != null && str.equals("*"))
+        if (str != null && str.equals("*"))
             return null;
         Gson gson = new Gson();
         User u = gson.fromJson(str, User.class);
-        return  u;
+        return u;
     }
 
-    public void destroySession(){
+    public void destroySession() {
         editor.remove("user");
         editor.apply();
     }

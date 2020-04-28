@@ -1,10 +1,9 @@
 package lcwu.fyp.careclub.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class Rider implements Serializable {
-    private String name,id,phoneNo,numberPlate,vehicalName,vehicalColor,vehicalType;
+    private String name, id, phoneNo, numberPlate, vehicalName, vehicalColor, vehicalType;
 
     public String getName() {
         return name;

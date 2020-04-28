@@ -18,18 +18,18 @@
             android:gravity="center"
             android:minHeight="?actionBarSize"
             android:padding="@dimen/appbar_padding"
-            android:textColor="@color/text"
             android:text="@string/app_name"
-            android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
+            android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+            android:textColor="@color/text" />
 
         <com.google.android.material.tabs.TabLayout
-            app:tabGravity="fill"
-            app:tabMode="fixed"
             android:id="@+id/tabs"
             android:layout_width="match_parent"
-            app:tabTextColor="@color/text"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary" />
+            android:background="?attr/colorPrimary"
+            app:tabGravity="fill"
+            app:tabMode="fixed"
+            app:tabTextColor="@color/text" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager

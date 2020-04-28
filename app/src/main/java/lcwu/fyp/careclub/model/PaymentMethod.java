@@ -3,7 +3,7 @@ package lcwu.fyp.careclub.model;
 import java.io.Serializable;
 
 public class PaymentMethod implements Serializable {
-    private String number,methodName;
+    private String number, methodName;
 
     public PaymentMethod() {
     }

@@ -2,6 +2,15 @@ package lcwu.fyp.careclub.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -10,21 +19,9 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
-
 import lcwu.fyp.careclub.R;
 import lcwu.fyp.careclub.director.Helpers;
 import lcwu.fyp.careclub.director.Session;
-import lcwu.fyp.careclub.fragment.My_Profile;
 import lcwu.fyp.careclub.model.User;
 
 public class EditUserProfile extends AppCompatActivity implements View.OnClickListener {
@@ -40,8 +37,12 @@ public class EditUserProfile extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_user_profile);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         fname = findViewById(R.id.fname);
         lname = findViewById(R.id.lname);
@@ -94,7 +95,6 @@ public class EditUserProfile extends AppCompatActivity implements View.OnClickLi
                     update.setVisibility(View.GONE);
 
 
-
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
                     user.setFname(strfname);
                     user.setLname(strlname);
@@ -104,7 +104,7 @@ public class EditUserProfile extends AppCompatActivity implements View.OnClickLi
                         public void onSuccess(Void aVoid) {
                             session.setSession(user);
                             //Start dashboard activity'
-                            Intent intent=new Intent(EditUserProfile.this,Dashboard.class);
+                            Intent intent = new Intent(EditUserProfile.this, Dashboard.class);
                             startActivity(intent);
                             finish();
                         }

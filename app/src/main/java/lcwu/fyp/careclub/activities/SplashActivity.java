@@ -39,17 +39,14 @@ public class SplashActivity extends AwesomeSplash {
 
     @Override
     public void animationsFinished() {
-        Session session=new Session(SplashActivity.this);
+        Session session = new Session(SplashActivity.this);
         Intent it;
-        if (session.getSession()==null)
-        {
+        if (session.getSession() == null) {
             it = new Intent(SplashActivity.this, LoginActivity.class);
             startActivity(it);
             finish();
-    }
-        else
-            {
-            it=new Intent(SplashActivity.this,Dashboard.class);
+        } else {
+            it = new Intent(SplashActivity.this, Dashboard.class);
             startActivity(it);
             finish();
         }

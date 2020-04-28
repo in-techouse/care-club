@@ -2,11 +2,14 @@ package lcwu.fyp.careclub.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
-import android.view.View;
+
 import lcwu.fyp.careclub.R;
 import lcwu.fyp.careclub.ui.main.AuthenticatedSectionsPagerAdapter;
 
@@ -25,7 +28,7 @@ public class Dashboard extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent it= new Intent(Dashboard.this, AddProduct.class);
+                Intent it = new Intent(Dashboard.this, AddProduct.class);
                 startActivity(it);
             }
         });
