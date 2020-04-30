@@ -4,58 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     tools:context=".activities.LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/mp_7"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin"
-            android:background="@color/colorPrimary"
-            android:padding="@dimen/headingpadding"
-            android:text="@string/log_in"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textColor="@color/text"
-            android:textSize="@dimen/headingpadding" />
+        <!--        <TextView-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_margin="@dimen/margin"-->
+        <!--            android:background="@color/colorPrimary"-->
+        <!--            android:padding="@dimen/headingpadding"-->
+        <!--            android:text="@string/log_in"-->
+        <!--            android:textAlignment="center"-->
+        <!--            android:textAllCaps="true"-->
+        <!--            android:textColor="@color/text"-->
+        <!--            android:textSize="@dimen/headingpadding" />-->
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/mp_10"
+            android:padding="@dimen/mp_7">
 
             <EditText
                 android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin"
                 android:hint="@string/enter_email"
                 android:inputType="textEmailAddress"
-                android:padding="@dimen/headingpadding"
-                android:textAlignment="center "
-                android:textColor="@color/headingclr"
-                android:textSize="@dimen/headingbg" />
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textSize18" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/mp_10"
+            android:padding="@dimen/mp_7"
             app:passwordToggleEnabled="true">
 
             <EditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin"
                 android:hint="@string/enter_password"
                 android:inputType="textPassword"
-                android:padding="@dimen/headingpadding"
                 android:textAlignment="center"
-                android:textColor="@color/headingclr"
-                android:textSize="@dimen/headingbg" />
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textSize18" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
@@ -68,7 +70,7 @@
             android:text="@string/signin"
             android:textAlignment="center"
             android:textColor="@color/text"
-            android:textSize="@dimen/headingpadding" />
+            android:textSize="@dimen/textSize17" />
 
         <ProgressBar
             android:id="@+id/Loginprogress"
@@ -95,7 +97,7 @@
                 android:text="@string/signup"
                 android:textAlignment="center"
                 android:textColor="@color/text"
-                android:textSize="@dimen/headingpadding" />
+                android:textSize="@dimen/textSize17" />
 
             <TextView
                 android:id="@+id/forgetpassword"
@@ -108,7 +110,7 @@
                 android:text="@string/forget_password"
                 android:textAlignment="center"
                 android:textColor="@color/text"
-                android:textSize="@dimen/headingpadding" />
+                android:textSize="@dimen/textSize17" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

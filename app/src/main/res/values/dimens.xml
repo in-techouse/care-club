@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="headingbg">18sp</dimen>
-    <dimen name="headingpadding">17sp</dimen>
+    <dimen name="headingpadding">7sp</dimen>
     <dimen name="heading">17sp</dimen>
-    <dimen name="margin">12sp</dimen>
+    <dimen name="margin">8sp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
@@ -12,4 +12,27 @@
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="app_bar_height">330dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+
+    <dimen name="mp_3">3dp</dimen>
+    <dimen name="mp_5">5dp</dimen>
+    <dimen name="mp_7">7dp</dimen>
+    <dimen name="mp_10">10dp</dimen>
+    <dimen name="mp_13">13dp</dimen>
+    <dimen name="mp_17">17dp</dimen>
+    <dimen name="mp_20">20dp</dimen>
+    <dimen name="mp_25">25dp</dimen>
+    <dimen name="mp_30">30dp</dimen>
+    <dimen name="mp_35">35dp</dimen>
+    <dimen name="mp_40">40dp</dimen>
+
+    <dimen name="textSize16">16sp</dimen>
+    <dimen name="textSize17">17sp</dimen>
+    <dimen name="textSize18">18sp</dimen>
+    <dimen name="textSize19">19sp</dimen>
+    <dimen name="textSize20">20sp</dimen>
+    <dimen name="textSize21">21sp</dimen>
+    <dimen name="textSize22">22sp</dimen>
+    <dimen name="textSize23">23sp</dimen>
+    <dimen name="textSize24">24sp</dimen>
+    <dimen name="textSize25">25sp</dimen>
 </resources>
