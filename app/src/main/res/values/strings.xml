@@ -8,7 +8,7 @@
     <string name="send">Send</string>
     <string name="signin">SignIn</string>
     <string name="create_an_aaccount">Create An Account</string>
-    <string name="forget_password">Forget Password</string>
+    <string name="forget_password">Forget Password?</string>
     <string name="log_in">Log-In</string>
     <string name="signup">SignUp</string>
     <string name="title_activity_dashboard">Dashboard</string>

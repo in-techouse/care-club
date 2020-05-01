@@ -100,7 +100,7 @@
             android:background="@color/colorPrimary"
             android:padding="7dp"
             android:text="SAVE"
-            android:textColor="@color/text"
+            android:textColor="@color/textcolorWhite"
             android:textSize="18dp" />
 
         <ProgressBar

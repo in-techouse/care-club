@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimaryDark">#303030</color>
-    <color name="colorPrimary">#515050</color>
-    <color name="colorAccent">#F0F0F0</color>
-    <color name="colorBackground">#7D7C7C</color>
-    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorPrimary">#050404</color>
+    <color name="colorAccent">#000000</color>
+    <color name="colorBackground">#181818</color>
+    <color name="textcolorWhite">#FFFFFF</color>
+    <color name="txtclr">#000</color>
 
-    <color name="text">#FCFCFD</color>
-    <color name="headingclr">#B8453E</color>
-    <color name="bg1">#164035</color>
+
 </resources>

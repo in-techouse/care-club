@@ -141,7 +141,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private boolean isValid() {
         boolean flag = true;
         if (strEmail.length() < 6 || !Patterns.EMAIL_ADDRESS.matcher(strEmail).matches()) {
-            email.setError("Enter a Valid email");
+            email.setError("Enter Valid Email");
             flag = false;
         } else {
             email.setError(null);

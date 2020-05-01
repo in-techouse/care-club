@@ -20,7 +20,7 @@
             android:padding="@dimen/appbar_padding"
             android:text="@string/app_name"
             android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
-            android:textColor="@color/text" />
+            android:textColor="@color/textcolorWhite" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
@@ -29,7 +29,7 @@
             android:background="?attr/colorPrimary"
             app:tabGravity="fill"
             app:tabMode="fixed"
-            app:tabTextColor="@color/text" />
+            app:tabTextColor="@color/textcolorWhite" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager

@@ -62,7 +62,6 @@ public class AddProduct extends AppCompatActivity implements BSImagePicker.Image
     private ProgressBar submitprductprogressbar;
     private String strCategory, strName, strQunatity, strDescription, strAddress, strPhoneno = "";
     private DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Products");
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -252,7 +251,6 @@ public class AddProduct extends AppCompatActivity implements BSImagePicker.Image
             }
         });
     }
-
     private void showSuccessMessage() {
         MaterialDialog mDialog = new MaterialDialog.Builder(AddProduct.this)
                 .setTitle("PRODUCT")

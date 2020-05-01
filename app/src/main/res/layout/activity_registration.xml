@@ -12,25 +12,12 @@
         android:orientation="vertical"
         android:weightSum="11">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:padding="12dp"
-            android:text="REGISTERATION FORM"
-            android:textAlignment="center"
-            android:textColor="@color/text"
-            android:textSize="22dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="Sign-Up"
-            android:textAlignment="center"
-            android:textSize="70dp" />
+        <ImageView
+            android:id="@+id/profile_image"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_gravity="center"
+            android:src="@drawable/appicon" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -137,10 +124,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
             android:layout_weight="1"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorBackground"
             android:padding="12dp"
             android:text="signup"
-            android:textColor="@color/text"
+            android:textColor="@color/textcolorWhite"
             android:textSize="22dp" />
 
         <ProgressBar
