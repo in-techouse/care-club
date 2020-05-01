@@ -30,7 +30,7 @@ import lcwu.fyp.careclub.director.Session;
 import lcwu.fyp.careclub.model.Product;
 import lcwu.fyp.careclub.model.User;
 
-public class My_Products extends Fragment {
+public class MyProducts extends Fragment {
     private LinearLayout loading;
     private RecyclerView products;
     private TextView noRecordFound;
@@ -41,7 +41,7 @@ public class My_Products extends Fragment {
     private DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Products");
     private ProductsAdapter adapter;
 
-    public My_Products() {
+    public MyProducts() {
         // Required empty public constructor
     }
 
@@ -49,7 +49,7 @@ public class My_Products extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_my__products, container, false);
+        View root = inflater.inflate(R.layout.fragment_my_products, container, false);
         loading = root.findViewById(R.id.loading);
         products = root.findViewById(R.id.products);
         noRecordFound = root.findViewById(R.id.noRecordFound);

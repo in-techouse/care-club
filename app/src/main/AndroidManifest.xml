@@ -19,6 +19,14 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".activities.RiderDashboard"
+            android:label="@string/title_activity_rider_dashboard"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.UserDashboard"
+            android:label="@string/title_activity_user_dashboard"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".activities.AddProduct"
             android:label="@string/title_activity_add_product"
             android:parentActivityName=".activities.Dashboard"
@@ -53,6 +61,7 @@
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

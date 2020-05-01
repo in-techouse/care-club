@@ -30,7 +30,7 @@ import lcwu.fyp.careclub.model.User;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class My_Donations extends Fragment {
+public class MyDonations extends Fragment {
     private LinearLayout loading;
     private TextView noRecordFound;
     private RecyclerView donations;
@@ -41,7 +41,7 @@ public class My_Donations extends Fragment {
     private DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Donation");
 
 
-    public My_Donations() {
+    public MyDonations() {
         // Required empty public constructor
     }
 
@@ -50,7 +50,7 @@ public class My_Donations extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_my__donations, container, false);
+        View root = inflater.inflate(R.layout.fragment_my_donations, container, false);
         loading = root.findViewById(R.id.loading);
         noRecordFound = root.findViewById(R.id.noRecordFound);
         donations = root.findViewById(R.id.donations);

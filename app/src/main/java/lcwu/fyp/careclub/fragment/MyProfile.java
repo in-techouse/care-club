@@ -20,14 +20,14 @@ import lcwu.fyp.careclub.model.User;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class My_Profile extends Fragment implements View.OnClickListener {
+public class MyProfile extends Fragment implements View.OnClickListener {
     private Session session;
     private User user;
     private Helpers helpers;
     TextView name, email, phoneno, edit;
 
 
-    public My_Profile() {
+    public MyProfile() {
         // Required empty public constructor
     }
 
@@ -36,7 +36,7 @@ public class My_Profile extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_my__profile, container, false);
+        View root = inflater.inflate(R.layout.fragment_my_profile, container, false);
         name = root.findViewById(R.id.name);
         email = root.findViewById(R.id.email);
         phoneno = root.findViewById(R.id.phoneno);

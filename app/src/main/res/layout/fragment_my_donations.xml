@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragment.My_Products">
+    tools:context=".fragment.MyDonations">
 
     <LinearLayout
         android:id="@+id/loading"
@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Loading Products's"
+            android:text="Loading Donations"
             android:textAlignment="gravity" />
     </LinearLayout>
 
@@ -32,12 +32,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="7dp"
         android:padding="7dp"
-        android:text="No Product Record Found"
+        android:text="No Donation Record Found"
         android:textAlignment="center"
         android:textSize="19dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/products"
+        android:id="@+id/donations"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-</LinearLayout>
+</RelativeLayout>

@@ -9,9 +9,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import lcwu.fyp.careclub.R;
-import lcwu.fyp.careclub.fragment.My_Donations;
-import lcwu.fyp.careclub.fragment.My_Products;
-import lcwu.fyp.careclub.fragment.My_Profile;
+import lcwu.fyp.careclub.fragment.MyDonations;
+import lcwu.fyp.careclub.fragment.MyProducts;
+import lcwu.fyp.careclub.fragment.MyProfile;
 import lcwu.fyp.careclub.fragment.Ngos;
 
 /**
@@ -20,9 +20,9 @@ import lcwu.fyp.careclub.fragment.Ngos;
  */
 public class AuthenticatedSectionsPagerAdapter extends FragmentPagerAdapter {
 
-    My_Profile profile = new My_Profile();
-    My_Donations donation = new My_Donations();
-    My_Products product = new My_Products();
+    MyProfile profile = new MyProfile();
+    MyDonations donation = new MyDonations();
+    MyProducts product = new MyProducts();
     Ngos ngo = new Ngos();
 
     @StringRes
