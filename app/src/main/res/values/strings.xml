@@ -136,4 +136,15 @@
 
     <string name="home_second">Home Second</string>
     <string name="title_activity_rider_dashboard">RiderDashboard</string>
+    <string name="ngo">NGO</string>
+    <string name="logout">LogOut</string>
+    <string name="products">Products</string>
+    <string name="profile">Profile</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="phoneno">PhoneNO</string>
+    <string name="ngo">NGO</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="phoneNo">PhoneNo</string>
 </resources>
