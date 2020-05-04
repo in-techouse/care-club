@@ -6,7 +6,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_ngo"
-            android:icon="@drawable/donation"
+            android:icon="@drawable/ngo"
             android:title="@string/ngo" />
         <item
             android:id="@+id/nav_myProduct"
@@ -18,7 +18,7 @@
             android:title="@string/My_Donations" />
         <item
             android:id="@+id/nav_profile"
-            android:icon="@drawable/profile"
+            android:icon="@drawable/profile1"
             android:title="@string/My_profile" />
         <item
             android:id="@+id/nav_logout"
