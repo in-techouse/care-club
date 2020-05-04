@@ -104,7 +104,7 @@ public class EditUserProfile extends AppCompatActivity implements View.OnClickLi
                         public void onSuccess(Void aVoid) {
                             session.setSession(user);
                             //Start dashboard activity'
-                            Intent intent = new Intent(EditUserProfile.this, Dashboard.class);
+                            Intent intent = new Intent(EditUserProfile.this, UserDashboard.class);
                             startActivity(intent);
                             finish();
                         }

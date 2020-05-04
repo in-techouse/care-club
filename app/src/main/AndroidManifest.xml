@@ -31,19 +31,13 @@
         <activity
             android:name=".activities.AddProduct"
             android:label="@string/title_activity_add_product"
-            android:parentActivityName=".activities.Dashboard"
+            android:parentActivityName=".activities.UserDashboard"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".activities.EditUserProfile"
             android:label="@string/title_activity_edit_user_profile"
-            android:parentActivityName=".activities.Dashboard"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".activities.Dashboard"
-            android:label="@string/title_activity_dashboard"
-            android:launchMode="singleInstance"
+            android:parentActivityName=".activities.UserDashboard"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity

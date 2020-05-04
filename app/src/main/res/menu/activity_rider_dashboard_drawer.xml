@@ -10,7 +10,7 @@
             android:title="@string/products" />
         <item
             android:id="@+id/nav_profile"
-            android:icon="@drawable/profile"
+            android:icon="@drawable/profile1"
             android:title="@string/profile" />
         <item
             android:id="@+id/nav_logout"

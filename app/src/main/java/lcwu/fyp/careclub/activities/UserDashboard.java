@@ -14,6 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -22,7 +25,12 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import lcwu.fyp.careclub.R;
 import lcwu.fyp.careclub.director.Helpers;
+import lcwu.fyp.careclub.director.NoSwipeableViewPager;
 import lcwu.fyp.careclub.director.Session;
+import lcwu.fyp.careclub.fragment.MyDonations;
+import lcwu.fyp.careclub.fragment.MyProducts;
+import lcwu.fyp.careclub.fragment.MyProfile;
+import lcwu.fyp.careclub.fragment.Ngos;
 import lcwu.fyp.careclub.model.User;
 
 public class UserDashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -31,6 +39,12 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
     private User user;
     private Session session;
     private Helpers helpers;
+    private NoSwipeableViewPager pager;
+    private PagerAdapter adapter;
+    private Ngos ngos;
+    private MyProducts myProducts;
+    private MyDonations myDonations;
+    private MyProfile myProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +56,8 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent it = new Intent(UserDashboard.this, AddProduct.class);
+                startActivity(it);
             }
         });
 
@@ -53,6 +67,15 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        ngos = new Ngos();
+        myDonations = new MyDonations();
+        myProducts = new MyProducts();
+        myProfile = new MyProfile();
+
+        pager = findViewById(R.id.pager);
+        adapter = new PagerAdapter(getSupportFragmentManager(), 0);
+        pager.setAdapter(adapter);
 
         session = new Session(getApplicationContext());
         user = session.getSession();
@@ -75,15 +98,19 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
         Log.e("UserDashboard", "" + id);
         switch (id) {
             case R.id.nav_ngo: {
+                pager.setCurrentItem(0);
                 break;
             }
             case R.id.nav_myProduct: {
+                pager.setCurrentItem(1);
                 break;
             }
             case R.id.nav_myDonation: {
+                pager.setCurrentItem(2);
                 break;
             }
             case R.id.nav_profile: {
+                pager.setCurrentItem(3);
                 break;
             }
             case R.id.nav_logout: {
@@ -99,5 +126,36 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    class PagerAdapter extends FragmentPagerAdapter {
+
+        public PagerAdapter(@NonNull FragmentManager fm, int behavior) {
+            super(fm, behavior);
+        }
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0: {
+                    return ngos;
+                }
+                case 1: {
+                    return myProducts;
+                }
+                case 2: {
+                    return myDonations;
+                }
+                default: {
+                    return myProfile;
+                }
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 4;
+        }
     }
 }

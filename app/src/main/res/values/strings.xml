@@ -123,7 +123,7 @@
         <item>Furniture</item>
         <item>Grocery</item>
     </string-array>
-    <string name="title_activity_user_dashboard">UserDashboard</string>
+    <string name="title_activity_user_dashboard">User Dashboard</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -135,7 +135,7 @@
     <string name="menu_slideshow">Slideshow</string>
 
     <string name="home_second">Home Second</string>
-    <string name="title_activity_rider_dashboard">RiderDashboard</string>
+    <string name="title_activity_rider_dashboard">Rider Dashboard</string>
     <string name="ngo">NGO</string>
     <string name="logout">LogOut</string>
     <string name="products">Products</string>
