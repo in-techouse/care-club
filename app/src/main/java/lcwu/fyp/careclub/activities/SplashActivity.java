@@ -9,6 +9,7 @@ import com.viksaa.sssplash.lib.model.ConfigSplash;
 
 import lcwu.fyp.careclub.R;
 import lcwu.fyp.careclub.director.Session;
+import lcwu.fyp.careclub.model.User;
 
 public class SplashActivity extends AwesomeSplash {
 
@@ -46,7 +47,14 @@ public class SplashActivity extends AwesomeSplash {
             startActivity(it);
             finish();
         } else {
-            it = new Intent(SplashActivity.this, Dashboard.class);
+            User u = session.getSession();
+            if (u.getRole() == 1) {
+                it = new Intent(SplashActivity.this, RiderDashboard.class);
+            } else {
+                it = new Intent(SplashActivity.this, UserDashboard.class);
+
+            }
+            it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(it);
             finish();
         }

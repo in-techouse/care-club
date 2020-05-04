@@ -4,9 +4,6 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-<!--   Products     -->
-<!--   Profile     -->
-<!--   Logout     -->
         <item
             android:id="@+id/nav_products"
             android:icon="@drawable/produc"

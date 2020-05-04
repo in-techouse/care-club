@@ -94,13 +94,15 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                                     String id = stremail.replace("@", "-");
                                     id = id.replace(".", "_");
                                     user.setId(id);
+                                    user.setRole(0);
                                     reference.child("Users").child(id).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Session session = new Session(RegistrationActivity.this);
                                             session.setSession(user);
                                             //Start dashboard activity'
-                                            Intent intent = new Intent(RegistrationActivity.this, Dashboard.class);
+                                            Intent intent = new Intent(RegistrationActivity.this, UserDashboard.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                             startActivity(intent);
                                             finish();
                                         }
@@ -171,6 +173,10 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             flag = false;
         } else {
             cpass.setError(null);
+        }
+        if (strpass.length() > 5 && strcpass.length() > 5 && !strcpass.equals(strpass)) {
+            cpass.setError("Password doesn't match");
+            flag = false;
         }
         return flag;
     }

@@ -4,11 +4,6 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-<!--   NGO     -->
-<!--   My Products     -->
-<!--   My Donations     -->
-<!--   Profile     -->
-<!--   Logout     -->
         <item
             android:id="@+id/nav_ngo"
             android:icon="@drawable/donation"

@@ -19,9 +19,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="NGOs">Ngo</string>
-    <string name="My_Products">my\nproducts</string>
-    <string name="My_Donations">my\ndonations</string>
-    <string name="My_profile">profile</string>
+    <string name="My_Products">My Products</string>
+    <string name="My_Donations">My Donations</string>
+    <string name="My_profile">Profile</string>
     <string name="title_activity_edit_user_profile">EditUserProfile</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
@@ -143,8 +143,5 @@
     <string name="name">Name</string>
     <string name="email">Email</string>
     <string name="phoneno">PhoneNO</string>
-    <string name="ngo">NGO</string>
-    <string name="name">Name</string>
-    <string name="email">Email</string>
     <string name="phoneNo">PhoneNo</string>
 </resources>

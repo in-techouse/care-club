@@ -35,7 +35,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String strEmail, strPassword;
     ProgressBar loginprogress;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,11 +46,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         forgetpassword = findViewById(R.id.forgetpassword);
         loginprogress = findViewById(R.id.Loginprogress);
 
-
         signin.setOnClickListener(this);
         signup.setOnClickListener(this);
         forgetpassword.setOnClickListener(this);
-
 
         h1 = new Helpers();
     }
@@ -71,7 +68,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
                 strEmail = email.getText().toString();
                 strPassword = password.getText().toString();
-                Boolean flag = isValid();
+                boolean flag = isValid();
                 if (flag) {
                     loginprogress.setVisibility(View.VISIBLE);
                     signin.setVisibility(View.GONE);
@@ -90,11 +87,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             if (dataSnapshot.getValue() != null) {
                                                 // Data is Valid
                                                 User u = dataSnapshot.getValue(User.class);
-                                                Session session = new Session(LoginActivity.this);
-                                                session.setSession(u);
-                                                Intent it = new Intent(LoginActivity.this, Dashboard.class);
-                                                startActivity(it);
-                                                finish();
+                                                if (u != null) {
+                                                    Session session = new Session(LoginActivity.this);
+                                                    session.setSession(u);
+                                                    Intent it;
+                                                    if (u.getRole() == 1) {
+                                                        it = new Intent(LoginActivity.this, RiderDashboard.class);
+                                                    } else {
+                                                        it = new Intent(LoginActivity.this, UserDashboard.class);
+                                                    }
+                                                    it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                    startActivity(it);
+                                                    finish();
+                                                } else {
+                                                    h1.showError(LoginActivity.this, "Login Failed", "Something Went Wrong");
+                                                }
 
                                             } else {
                                                 loginprogress.setVisibility(View.GONE);

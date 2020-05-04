@@ -21,10 +21,12 @@
         <activity
             android:name=".activities.RiderDashboard"
             android:label="@string/title_activity_rider_dashboard"
+            android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.UserDashboard"
             android:label="@string/title_activity_user_dashboard"
+            android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.AddProduct"
