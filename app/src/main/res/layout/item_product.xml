@@ -83,42 +83,6 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="7dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:text="Contact"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/productContact"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:text="Contact"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="18sp" />
-
-        </RelativeLayout>
-
-
-        <TextView
-            android:id="@+id/productAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="7dp"
-            android:text="Address"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

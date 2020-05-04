@@ -52,8 +52,6 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Prodct
 
         holder.productName.setText(p.getName());
         holder.productCategory.setText(p.getCategory());
-        holder.productContact.setText(p.getPhoneno());
-        holder.productAddress.setText(p.getAddress());
         holder.productQuantity.setText(p.getQuantityOfProducts() + "");
     }
 
@@ -65,7 +63,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Prodct
 
     class ProdctHolder extends RecyclerView.ViewHolder {
         ImageView productImage;
-        TextView productName, productCategory, productContact, productQuantity, productAddress;
+        TextView productName, productCategory, productQuantity;
 
         public ProdctHolder(@NonNull View itemView) {
             super(itemView);
@@ -73,8 +71,6 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Prodct
             productName = itemView.findViewById(R.id.productName);
             productCategory = itemView.findViewById(R.id.productCategory);
             productQuantity = itemView.findViewById(R.id.productQuantity);
-            productContact = itemView.findViewById(R.id.productContact);
-            productAddress = itemView.findViewById(R.id.productAddress);
 
         }
     }

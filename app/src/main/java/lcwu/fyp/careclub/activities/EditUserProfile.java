@@ -93,8 +93,6 @@ public class EditUserProfile extends AppCompatActivity implements View.OnClickLi
                     //Show progress bar
                     pb.setVisibility(View.VISIBLE);
                     update.setVisibility(View.GONE);
-
-
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
                     user.setFname(strfname);
                     user.setLname(strlname);
@@ -103,7 +101,7 @@ public class EditUserProfile extends AppCompatActivity implements View.OnClickLi
                         @Override
                         public void onSuccess(Void aVoid) {
                             session.setSession(user);
-                            //Start dashboard activity'
+                            //Start dashboard activity
                             Intent intent = new Intent(EditUserProfile.this, UserDashboard.class);
                             startActivity(intent);
                             finish();
