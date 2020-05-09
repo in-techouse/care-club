@@ -18,6 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".activities.MyAssignedProducts"></activity>
         <activity
             android:name=".activities.RiderDashboard"
             android:label="@string/title_activity_rider_dashboard"
