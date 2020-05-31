@@ -55,6 +55,7 @@ public class AddProduct extends AppCompatActivity implements BSImagePicker.Image
     private Product product;
     private Helpers helpers;
     private User user;
+
     private Session session;
     private Spinner category;
     private EditText name, qunatity, description, address, phoneno;
