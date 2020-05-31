@@ -12,14 +12,14 @@ public class Product implements Serializable {
     private String description, phoneno;
     private int quantityOfProducts;
     private List<String> images;
-    private String userId, ngoid;
+    private String userId, ngoid, riderId;
     private boolean isTaken;
 
     public Product() {
         images = new ArrayList<>();
     }
 
-    public Product(String id, String name, String category, String address, String description, String phoneno, int quantityOfProducts, List<String> images, String userId, String ngoid, boolean isTaken) {
+    public Product(String id, String name, String category, String address, String description, String phoneno, int quantityOfProducts, List<String> images, String userId, String ngoid, String riderId, boolean isTaken) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -30,23 +30,8 @@ public class Product implements Serializable {
         this.images = images;
         this.userId = userId;
         this.ngoid = ngoid;
+        this.riderId = riderId;
         this.isTaken = isTaken;
-    }
-
-    public String getNgoid() {
-        return ngoid;
-    }
-
-    public void setNgoid(String ngoid) {
-        this.ngoid = ngoid;
-    }
-
-    public boolean isTaken() {
-        return isTaken;
-    }
-
-    public void setTaken(boolean taken) {
-        isTaken = taken;
     }
 
     public String getId() {
@@ -119,5 +104,29 @@ public class Product implements Serializable {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getNgoid() {
+        return ngoid;
+    }
+
+    public void setNgoid(String ngoid) {
+        this.ngoid = ngoid;
+    }
+
+    public String getRiderId() {
+        return riderId;
+    }
+
+    public void setRiderId(String riderId) {
+        this.riderId = riderId;
+    }
+
+    public boolean isTaken() {
+        return isTaken;
+    }
+
+    public void setTaken(boolean taken) {
+        isTaken = taken;
     }
 }

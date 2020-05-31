@@ -83,6 +83,7 @@ public class AddProduct extends AppCompatActivity implements BSImagePicker.Image
         product.setUserId(user.getId());
         product.setTaken(false);
         product.setNgoid("");
+        product.setRiderId("");
         product.setId(id);
 
         submitProduct = findViewById(R.id.submitProduct);

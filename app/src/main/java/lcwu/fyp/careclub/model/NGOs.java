@@ -6,24 +6,12 @@ import java.util.List;
 
 public class NGOs implements Serializable {
     private String address, category, email, id, name, phone;
-    private List<PaymentMethod> paymentMethods;
-    private List<String> images;
+    private String images;
 
     public NGOs() {
-        paymentMethods = new ArrayList<>();
-        images = new ArrayList<>();
     }
 
-    public NGOs(String address, String category, String email, String id, String name, String phone, List<PaymentMethod> paymentMethods, List<String> images) {
-        this.address = address;
-        this.category = category;
-        this.email = email;
-        this.id = id;
-        this.name = name;
-        this.phone = phone;
-        this.paymentMethods = paymentMethods;
-        this.images = images;
-    }
+
 
     public String getAddress() {
         return address;
@@ -73,19 +61,21 @@ public class NGOs implements Serializable {
         this.phone = phone;
     }
 
-    public List<PaymentMethod> getPaymentMethods() {
-        return paymentMethods;
-    }
-
-    public void setPaymentMethods(List<PaymentMethod> paymentMethods) {
-        this.paymentMethods = paymentMethods;
-    }
-
-    public List<String> getImages() {
+    public String getImages() {
         return images;
     }
 
-    public void setImages(List<String> images) {
+    public void setImages(String images) {
+        this.images = images;
+    }
+
+    public NGOs(String address, String category, String email, String id, String name, String phone, String images) {
+        this.address = address;
+        this.category = category;
+        this.email = email;
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
         this.images = images;
     }
 }
