@@ -1,6 +1,8 @@
 package lcwu.fyp.careclub.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -16,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lcwu.fyp.careclub.R;
+import lcwu.fyp.careclub.activities.NGODetail;
 import lcwu.fyp.careclub.model.NGOs;
 
 public class NgosAdapter extends RecyclerView.Adapter<NgosAdapter.NgosHolder> {
@@ -41,8 +45,8 @@ public class NgosAdapter extends RecyclerView.Adapter<NgosAdapter.NgosHolder> {
     @Override
     public void onBindViewHolder(@NonNull NgosHolder holder, int position) {
         final NGOs ngos = data.get(position);
-        if (ngos.getImages() != null && ngos.getImages().size() > 0) {
-            Glide.with(context).load(ngos.getImages().get(0)).into(holder.image);
+        if (ngos.getImage() != null && ngos.getImage().length() > 0) {
+            Glide.with(context).load(ngos.getImage()).into(holder.image);
         } else {
             holder.image.setVisibility(View.GONE);
         }
@@ -50,6 +54,17 @@ public class NgosAdapter extends RecyclerView.Adapter<NgosAdapter.NgosHolder> {
         holder.address.setText(ngos.getAddress());
         holder.category.setText(ngos.getCategory());
         holder.contact.setText(ngos.getPhone());
+        holder.maincard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent id = new Intent(context, NGODetail.class);
+                Bundle b = new Bundle();
+                b.putSerializable("NGO", ngos);
+                id.putExtras(b);
+                id.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(id);
+            }
+        });
     }
 
     @Override
@@ -60,14 +75,16 @@ public class NgosAdapter extends RecyclerView.Adapter<NgosAdapter.NgosHolder> {
     class NgosHolder extends RecyclerView.ViewHolder {
         ImageView image;
         TextView name, address, category, contact;
+        CardView maincard;
 
-        public NgosHolder(@NonNull View itemView) {
+        NgosHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.image);
             name = itemView.findViewById(R.id.name);
             address = itemView.findViewById(R.id.address);
             contact = itemView.findViewById(R.id.contact);
             category = itemView.findViewById(R.id.category);
+            maincard = itemView.findViewById(R.id.mainCard);
         }
     }
 }

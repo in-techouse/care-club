@@ -6,7 +6,7 @@ import java.util.List;
 
 public class NGOs implements Serializable {
     private String address, category, email, id, name, phone;
-    private String images;
+    private String image;
 
     public NGOs() {
     }
@@ -61,21 +61,21 @@ public class NGOs implements Serializable {
         this.phone = phone;
     }
 
-    public String getImages() {
-        return images;
+    public String getImage() {
+        return image;
     }
 
-    public void setImages(String images) {
-        this.images = images;
+    public void setImage(String images) {
+        this.image = images;
     }
 
-    public NGOs(String address, String category, String email, String id, String name, String phone, String images) {
+    public NGOs(String address, String category, String email, String id, String name, String phone, String image) {
         this.address = address;
         this.category = category;
         this.email = email;
         this.id = id;
         this.name = name;
         this.phone = phone;
-        this.images = images;
+        this.image = image;
     }
 }
