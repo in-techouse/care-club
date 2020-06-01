@@ -6,6 +6,6 @@
     <color name="colorBackground">#181818</color>
     <color name="textcolorWhite">#FFFFFF</color>
     <color name="txtclr">#000</color>
-
-
+    <color name="lightGray">#CDCBCB</color>
+    <color name="danger">#DC3535</color>
 </resources>

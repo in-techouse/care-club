@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activities.NGODetail"
     tools:showIn="@layout/activity_ngodetail">
@@ -11,12 +12,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        android:paddingBottom="40dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="11dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="11dp"
@@ -35,6 +36,25 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:layout_marginBottom="7dp"
+                    android:background="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/ngoName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="NGO Name"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginBottom="7dp"
                     android:background="@color/colorPrimary" />
 
                 <RelativeLayout
@@ -159,7 +179,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="11dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="11dp"
@@ -178,9 +198,18 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
                     android:text="Payment Methods for DONATION"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:background="@color/colorPrimary" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/paymentMethod"

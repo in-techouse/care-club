@@ -24,12 +24,10 @@
             app:toolbarId="@+id/toolbar">
 
             <ImageView
+                android:id="@+id/ngoImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/ngoImage"
-                android:scaleType="fitCenter"
-                />
-
+                android:scaleType="fitCenter" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -43,13 +41,13 @@
 
     <include layout="@layout/content_ngodetail" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/makeDonation"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:layout_gravity="bottom"
+        android:text="MAKE DONATION" />
+
+    <include layout="@layout/donation_bottom_sheet" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
