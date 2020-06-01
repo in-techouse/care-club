@@ -2,27 +2,19 @@ package lcwu.fyp.careclub.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.View;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import lcwu.fyp.careclub.R;
-import lcwu.fyp.careclub.model.NGOs;
-import lcwu.fyp.careclub.model.PaymentMethod;
 import lcwu.fyp.careclub.model.Product;
 
 public class ProductDetail extends AppCompatActivity {
@@ -73,6 +65,22 @@ public class ProductDetail extends AppCompatActivity {
         pcategory.setText(productDetail.getCategory());
         pquantity.setText(productDetail.getQuantityOfProducts() + "");
         paddress.setText(productDetail.getAddress());
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: {
+                finish();
+                break;
+            }
+        }
+        return true;
     }
 }
 

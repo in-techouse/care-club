@@ -1,23 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="7dp"
     app:cardCornerRadius="11dp"
-    app:cardElevation="11dp"
-    android:id="@+id/mainCard">
+    app:cardElevation="11dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="7dp">
 
         <ImageView
             android:id="@+id/productImage"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:scaleType="fitXY" />
+            android:scaleType="fitCenter" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:background="@color/colorPrimary" />
 
         <TextView
             android:id="@+id/productName"
@@ -29,6 +37,13 @@
             android:textColor="@color/colorPrimary"
             android:textSize="19sp"
             android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:background="@color/colorPrimary" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -57,6 +72,13 @@
 
         </RelativeLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:background="@color/colorPrimary" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -84,6 +106,12 @@
 
         </RelativeLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:background="@color/colorPrimary" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

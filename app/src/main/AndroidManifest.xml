@@ -21,10 +21,12 @@
         <activity
             android:name=".activities.ProductDetail"
             android:label="@string/title_activity_product_detail"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:parentActivityName=".activities.UserDashboard"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.NGODetail"
             android:label="@string/title_activity_ngodetail"
+            android:parentActivityName=".activities.UserDashboard"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.MyAssignedProducts" />
         <activity
