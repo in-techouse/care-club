@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +20,8 @@ import lcwu.fyp.careclub.model.Product;
 
 public class ProductDetail extends AppCompatActivity {
     private Product productDetail;
-    private TextView pname, pcategory, pquantity, paddress;
+
+    private EditText productName ,pcategory,pquantity,paddress;
     private DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Products");
 
     @Override
@@ -55,13 +57,13 @@ public class ProductDetail extends AppCompatActivity {
             return;
         }
 
-        pname = findViewById(R.id.pname);
-        pcategory = findViewById(R.id.pcategory);
-        pquantity = findViewById(R.id.pquantity);
-        paddress = findViewById(R.id.paddress);
+        productName = findViewById(R.id.productName);
+        pcategory = findViewById(R.id.productCategory);
+        pquantity = findViewById(R.id.productQuantity);
+        paddress = findViewById(R.id.productaddress);
 
 
-        pname.setText(productDetail.getName());
+        productName.setText(productDetail.getName());
         pcategory.setText(productDetail.getCategory());
         pquantity.setText(productDetail.getQuantityOfProducts() + "");
         paddress.setText(productDetail.getAddress());

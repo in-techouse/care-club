@@ -44,4 +44,12 @@
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end" />
 
+    <Button
+        android:id="@+id/edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:text="EDIT"
+        android:textStyle="bold" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
