@@ -46,6 +46,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     private AppCompatButton edit;
     private ProgressBar progressbar;
     private boolean isEditing = false;
+    private boolean isImage = false;
+    private SliderView sliderView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,13 +99,11 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         quantity = findViewById(R.id.quantity);
         edit = findViewById(R.id.edit);
         progressbar = findViewById(R.id.progressbar);
-        SliderView sliderView = findViewById(R.id.imageSlider);
+        sliderView = findViewById(R.id.imageSlider);
         edit.setOnClickListener(this);
 
         adapter = new SliderAdapter(ProductDetail.this);
         sliderView.setSliderAdapter(adapter);
-
-
         sliderView.setIndicatorAnimation(IndicatorAnimations.WORM);
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
         sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
@@ -125,6 +125,14 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         description.setText(productDetail.getDescription());
         address.setText(productDetail.getAddress());
         phoneNo.setText(productDetail.getPhoneno());
+
+        category.setEnabled(false);
+        category.setClickable(false);
+        name.setFocusable(false);
+        quantity.setFocusable(false);
+        description.setFocusable(false);
+        address.setFocusable(false);
+        phoneNo.setFocusable(false);
     }
 
     @Override
@@ -132,6 +140,35 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         int id = v.getId();
         switch (id) {
             case R.id.edit: {
+                if (isEditing) {
+                    // Update Product
+                } else {
+                    // Open for editing
+                    isEditing = true;
+                    edit.setText("UPDATE");
+                    category.setEnabled(true);
+                    category.setClickable(true);
+                    name.setFocusableInTouchMode(true);
+                    name.setFocusable(true);
+                    quantity.setFocusableInTouchMode(true);
+                    quantity.setFocusable(true);
+                    description.setFocusableInTouchMode(true);
+                    description.setFocusable(true);
+                    address.setFocusableInTouchMode(true);
+                    address.setFocusable(true);
+                    phoneNo.setFocusableInTouchMode(true);
+                    phoneNo.setFocusable(true);
+
+                    adapter = new SliderAdapter(ProductDetail.this);
+                    sliderView.setSliderAdapter(adapter);
+                    sliderView.setIndicatorAnimation(IndicatorAnimations.WORM);
+                    sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+                    sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
+                    sliderView.setIndicatorSelectedColor(Color.WHITE);
+                    sliderView.setIndicatorUnselectedColor(Color.GRAY);
+                    sliderView.startAutoCycle();
+                    sliderView.setScrollTimeInSec(4);
+                }
                 break;
             }
         }
@@ -168,7 +205,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
         @Override
         public void onBindViewHolder(SliderAdapterVH viewHolder, int position) {
-            if (isEditing)
+            if (isImage)
                 Glide.with(viewHolder.itemView)
                         .load(productImages.get(position))
                         .into(viewHolder.imageViewBackground);
@@ -181,7 +218,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
         @Override
         public int getCount() {
-            if (isEditing)
+            if (isImage)
                 return productImages.size();
             else
                 return productImagesUploaded.size();
