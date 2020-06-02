@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -41,6 +42,7 @@ public class NGODetail extends AppCompatActivity implements View.OnClickListener
     private PaymentAdapter adapter;
     private BottomSheetBehavior sheetBehavior;
     private LinearLayout mainSheet;
+    private EditText amount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,7 @@ public class NGODetail extends AppCompatActivity implements View.OnClickListener
         paymentMethod = findViewById(R.id.paymentMethod);
         makeDonation = findViewById(R.id.makeDonation);
         close = findViewById(R.id.close);
+        amount=findViewById(R.id.amount);
 
         makeDonation.setOnClickListener(this);
         close.setOnClickListener(this);

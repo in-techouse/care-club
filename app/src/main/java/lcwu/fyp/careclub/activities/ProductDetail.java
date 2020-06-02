@@ -14,15 +14,20 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.shreyaspatil.MaterialDialog.MaterialDialog;
+import com.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -32,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lcwu.fyp.careclub.R;
+import lcwu.fyp.careclub.director.Helpers;
 import lcwu.fyp.careclub.model.Product;
 
 public class ProductDetail extends AppCompatActivity implements View.OnClickListener {
@@ -48,6 +54,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     private boolean isEditing = false;
     private boolean isImage = false;
     private SliderView sliderView;
+    private Helpers helpers;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +150,12 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             case R.id.edit: {
                 if (isEditing) {
                     // Update Product
+                    if(isValid()){
+                        progressbar.setVisibility(View.VISIBLE);
+                        edit.setVisibility(View.GONE);
+                        saveToDatabase();
+                    }
+
                 } else {
                     // Open for editing
                     isEditing = true;
@@ -173,6 +187,115 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             }
         }
     }
+
+    private boolean isValid() {
+        boolean flag = true;
+        String error = "";
+
+        strName = name.getText().toString();
+        strPhoneNo = phoneNo.getText().toString();
+        strAddress = address.getText().toString();
+        strDescription = description.getText().toString();
+        strCategory = category.getSelectedItem().toString();
+        strQuantity = quantity.getText().toString();
+
+        if (category.getSelectedItemPosition() == 0) {
+            error = error + "*Select product category.\n";
+            flag = false;
+        }
+
+        if (strName.length() < 3) {
+            name.setError("Enter a valid product name");
+            flag = false;
+        } else {
+            name.setError(null);
+        }
+
+        if (strQuantity.length() < 1) {
+            quantity.setError("Enter a valid quantity");
+            flag = false;
+
+        } else {
+            quantity.setError(null);
+        }
+
+        if (strDescription.length() < 15) {
+            description.setError("Enter a valid Description");
+            flag = false;
+        } else {
+            description.setError(null);
+        }
+
+        if (strPhoneNo.length() != 11) {
+            phoneNo.setError("Enter a valid PhoneNo");
+            flag = false;
+        } else {
+            phoneNo.setError(null);
+        }
+
+        if (strAddress.length() < 15) {
+            address.setError("Enter a valid Address");
+            flag = false;
+        } else {
+            address.setError(null);
+        }
+
+        if (error.length() > 0) {
+            helpers.showError(ProductDetail.this, "ERROR!", error);
+        }
+
+        return flag;
+    }
+
+    private void saveToDatabase() {
+        productDetail.setCategory(strCategory);
+        productDetail.setName(strName);
+        productDetail.setQuantityOfProducts(Integer.parseInt(strQuantity));
+        productDetail.setDescription(strDescription);
+        productDetail.setAddress(strAddress);
+        productDetail.setPhoneno(strPhoneNo);
+        reference.child(productDetail.getId()).setValue(productDetail).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                progressbar.setVisibility(View.GONE);
+                edit.setVisibility(View.VISIBLE);
+                showSuccessMessage();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                progressbar.setVisibility(View.GONE);
+                edit.setVisibility(View.VISIBLE);
+                helpers.showError(ProductDetail.this, "Error", "Something Went Wrong.\n Please Try Again");
+            }
+        });
+    }
+
+    private void showSuccessMessage() {
+        MaterialDialog mDialog = new MaterialDialog.Builder(ProductDetail.this)
+                .setTitle("PRODUCT")
+                .setMessage("Your product is updated successfully.")
+                .setCancelable(false)
+                .setPositiveButton("Okay", R.drawable.ic_action_okay, new MaterialDialog.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int which) {
+                        dialogInterface.dismiss();
+                        finish();
+                    }
+                })
+                .setNegativeButton("Close", R.drawable.ic_action_close, new MaterialDialog.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int which) {
+                        dialogInterface.dismiss();
+                        finish();
+                    }
+                })
+                .build();
+
+        // Show Dialog
+        mDialog.show();
+    }
+
 
     @Override
     public void onBackPressed() {
