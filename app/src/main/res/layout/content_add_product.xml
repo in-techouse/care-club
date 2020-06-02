@@ -23,7 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:entries="@array/categories"
-            android:padding="12dp" />
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -111,6 +112,5 @@
             android:layout_marginTop="20dp"
             android:visibility="gone" />
     </LinearLayout>
-
 
 </androidx.core.widget.NestedScrollView>

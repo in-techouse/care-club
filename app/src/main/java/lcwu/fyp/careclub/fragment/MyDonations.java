@@ -38,17 +38,15 @@ public class MyDonations extends Fragment {
     private User user;
     private Helpers helpers;
     private List<Donation> data;
-    private DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Donation");
+    private DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Donations");
 
 
     public MyDonations() {
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_my_donations, container, false);
         loading = root.findViewById(R.id.loading);
@@ -67,7 +65,7 @@ public class MyDonations extends Fragment {
 
     private void LoadDonations() {
         if (!helpers.isConnected(getActivity())) {
-            helpers.showError(getActivity(), "Error", "Error Occurr Due To Internet Connection");
+            helpers.showError(getActivity(), "Error", "Error Occur Due To Internet Connection");
             return;
         }
         loading.setVisibility(View.VISIBLE);
@@ -101,5 +99,4 @@ public class MyDonations extends Fragment {
             }
         });
     }
-
 }

@@ -144,6 +144,6 @@
     <string name="email">Email</string>
     <string name="phoneno">PhoneNO</string>
     <string name="phoneNo">PhoneNo</string>
-    <string name="title_activity_ngodetail">NGODetail</string>
-    <string name="title_activity_product_detail">ProductDetail</string>
+    <string name="title_activity_ngodetail">NGO Detail</string>
+    <string name="title_activity_product_detail">Product Detail</string>
 </resources>

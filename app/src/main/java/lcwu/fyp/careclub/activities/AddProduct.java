@@ -55,13 +55,12 @@ public class AddProduct extends AppCompatActivity implements BSImagePicker.Image
     private Product product;
     private Helpers helpers;
     private User user;
-
     private Session session;
     private Spinner category;
-    private EditText name, qunatity, description, address, phoneno;
+    private EditText name, quantity, description, address, phoneno;
     private AppCompatButton submitProduct;
     private ProgressBar submitprductprogressbar;
-    private String strCategory, strName, strQunatity, strDescription, strAddress, strPhoneno = "";
+    private String strCategory, strName, strQuantity, strDescription, strAddress, strPhoneNo = "";
     private DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Products");
 
     @Override
@@ -93,7 +92,7 @@ public class AddProduct extends AppCompatActivity implements BSImagePicker.Image
         address = findViewById(R.id.address);
         phoneno = findViewById(R.id.phoneno);
         category = findViewById(R.id.category);
-        qunatity = findViewById(R.id.quantity);
+        quantity = findViewById(R.id.quantity);
         submitprductprogressbar = findViewById(R.id.submitprductprogressbar);
 
         SliderView sliderView = findViewById(R.id.imageSlider);
@@ -108,7 +107,7 @@ public class AddProduct extends AppCompatActivity implements BSImagePicker.Image
         sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
         sliderView.setIndicatorSelectedColor(Color.WHITE);
         sliderView.setIndicatorUnselectedColor(Color.GRAY);
-        sliderView.setScrollTimeInSec(4); //set scroll delay in seconds :
+        sliderView.setScrollTimeInSec(4);
         sliderView.startAutoCycle();
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -166,12 +165,10 @@ public class AddProduct extends AppCompatActivity implements BSImagePicker.Image
     public void onMultiImageSelected(List<Uri> uriList, String tag) {
         productImages = uriList;
         adapter.notifyDataSetChanged();
-
     }
 
     @Override
     public void onClick(View v) {
-
         int id = v.getId();
         switch (id) {
             case R.id.submitProduct: {
@@ -234,10 +231,10 @@ public class AddProduct extends AppCompatActivity implements BSImagePicker.Image
     private void saveToDatabase() {
         product.setCategory(strCategory);
         product.setName(strName);
-        product.setQuantityOfProducts(Integer.parseInt(strQunatity));
+        product.setQuantityOfProducts(Integer.parseInt(strQuantity));
         product.setDescription(strDescription);
         product.setAddress(strAddress);
-        product.setPhoneno(strPhoneno);
+        product.setPhoneno(strPhoneNo);
         reference.child(product.getId()).setValue(product).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -286,11 +283,11 @@ public class AddProduct extends AppCompatActivity implements BSImagePicker.Image
         String error = "";
 
         strName = name.getText().toString();
-        strPhoneno = phoneno.getText().toString();
+        strPhoneNo = phoneno.getText().toString();
         strAddress = address.getText().toString();
         strDescription = description.getText().toString();
         strCategory = category.getSelectedItem().toString();
-        strQunatity = qunatity.getText().toString();
+        strQuantity = quantity.getText().toString();
 
         if (productImages.size() < 1) {
             error = error + "*Select product images.\n";
@@ -309,12 +306,12 @@ public class AddProduct extends AppCompatActivity implements BSImagePicker.Image
             name.setError(null);
         }
 
-        if (strQunatity.length() < 1) {
-            qunatity.setError("Enter a valid quantity");
+        if (strQuantity.length() < 1) {
+            quantity.setError("Enter a valid quantity");
             flag = false;
 
         } else {
-            qunatity.setError(null);
+            quantity.setError(null);
         }
 
         if (strDescription.length() < 15) {
@@ -324,7 +321,7 @@ public class AddProduct extends AppCompatActivity implements BSImagePicker.Image
             description.setError(null);
         }
 
-        if (strPhoneno.length() != 11) {
+        if (strPhoneNo.length() != 11) {
             phoneno.setError("Enter a valid PhoneNo");
             flag = false;
         } else {
@@ -362,7 +359,6 @@ public class AddProduct extends AppCompatActivity implements BSImagePicker.Image
     }
 
     public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapterVH> {
-
         private Context context;
 
         public SliderAdapter(Context context) {
