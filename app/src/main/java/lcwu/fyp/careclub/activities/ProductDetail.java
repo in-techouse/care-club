@@ -155,7 +155,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         edit.setVisibility(View.GONE);
                         saveToDatabase();
                     }
-
                 } else {
                     // Open for editing
                     isEditing = true;

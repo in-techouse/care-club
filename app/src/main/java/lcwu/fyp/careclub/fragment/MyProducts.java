@@ -92,7 +92,6 @@ public class MyProducts extends Fragment {
                 } else {
                     products.setVisibility(View.GONE);
                     noRecordFound.setVisibility(View.VISIBLE);
-
                 }
                 loading.setVisibility(View.GONE);
             }

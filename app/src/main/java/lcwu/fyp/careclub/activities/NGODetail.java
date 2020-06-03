@@ -48,7 +48,7 @@ public class NGODetail extends AppCompatActivity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ngodetail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null) {
@@ -80,7 +80,7 @@ public class NGODetail extends AppCompatActivity implements View.OnClickListener
         paymentMethod = findViewById(R.id.paymentMethod);
         makeDonation = findViewById(R.id.makeDonation);
         close = findViewById(R.id.close);
-        amount=findViewById(R.id.amount);
+        amount = findViewById(R.id.amount);
 
         makeDonation.setOnClickListener(this);
         close.setOnClickListener(this);
