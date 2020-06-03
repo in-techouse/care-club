@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lcwu.fyp.careclub.R;
+import lcwu.fyp.careclub.adapters.DonationAdapter;
 import lcwu.fyp.careclub.director.Helpers;
 import lcwu.fyp.careclub.director.Session;
 import lcwu.fyp.careclub.model.Donation;
@@ -39,6 +41,7 @@ public class MyDonations extends Fragment {
     private Helpers helpers;
     private List<Donation> data;
     private DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Donations");
+    private DonationAdapter adapter;
 
 
     public MyDonations() {
@@ -57,9 +60,10 @@ public class MyDonations extends Fragment {
         user = session.getSession();
         helpers = new Helpers();
         data = new ArrayList<>();
+        donations.setLayoutManager(new LinearLayoutManager(getActivity()));
+        adapter = new DonationAdapter();
+        donations.setAdapter(adapter);
         LoadDonations();
-
-
         return root;
     }
 
@@ -87,8 +91,8 @@ public class MyDonations extends Fragment {
                     donations.setVisibility(View.GONE);
                     noRecordFound.setVisibility(View.VISIBLE);
                 }
+                adapter.setData(data);
                 loading.setVisibility(View.GONE);
-
             }
 
             @Override
