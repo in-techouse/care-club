@@ -142,6 +142,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             case R.id.edit: {
                 if (isEditing) {
                     // Update Product
+
                 } else {
                     // Open for editing
                     isEditing = true;
