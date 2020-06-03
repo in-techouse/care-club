@@ -19,13 +19,15 @@
         android:paddingBottom="60dp">
 
         <TextView
+            android:id="@+id/label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="" />
+            android:text="Please provide amount that you want to donate  " />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/label">
 
             <EditText
                 android:id="@+id/amount"

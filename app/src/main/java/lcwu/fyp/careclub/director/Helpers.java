@@ -43,4 +43,30 @@ public class Helpers {
         mDialog.show();
 
     }
+
+    public void showSuccess(final Activity a, String title, String msg) {
+        MaterialDialog mDialog = new MaterialDialog.Builder(a)
+                .setTitle(title)
+                .setMessage(msg)
+                .setCancelable(false)
+                .setPositiveButton("Okay", R.drawable.ic_action_okay, new MaterialDialog.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int which) {
+                        dialogInterface.dismiss();
+                        a.finish();
+                    }
+                })
+                .setNegativeButton("Close", R.drawable.ic_action_close, new MaterialDialog.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int which) {
+                        dialogInterface.dismiss();
+                        a.finish();
+                    }
+                })
+                .build();
+
+        // Show Dialog
+        mDialog.show();
+
+    }
 }

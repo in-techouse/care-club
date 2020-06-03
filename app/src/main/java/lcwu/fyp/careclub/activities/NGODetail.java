@@ -1,5 +1,6 @@
 package lcwu.fyp.careclub.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,13 +26,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import lcwu.fyp.careclub.R;
 import lcwu.fyp.careclub.adapters.PaymentAdapter;
+import lcwu.fyp.careclub.director.Helpers;
+import lcwu.fyp.careclub.director.Session;
+import lcwu.fyp.careclub.model.Donation;
 import lcwu.fyp.careclub.model.NGOs;
 import lcwu.fyp.careclub.model.PaymentMethod;
+import lcwu.fyp.careclub.model.User;
 
 public class NGODetail extends AppCompatActivity implements View.OnClickListener {
     private NGOs ngOs;
@@ -43,6 +52,11 @@ public class NGODetail extends AppCompatActivity implements View.OnClickListener
     private BottomSheetBehavior sheetBehavior;
     private LinearLayout mainSheet;
     private EditText amount;
+    private ProgressDialog dialog;
+    private Donation donation;
+    private Session session;
+    private User user;
+    private Helpers helpers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +85,9 @@ public class NGODetail extends AppCompatActivity implements View.OnClickListener
             finish();
             return;
         }
-
+        session = new Session(getApplication());
+        user = session.getSession();
+        helpers = new Helpers();
         ngoName = findViewById(R.id.ngoName);
         name = findViewById(R.id.name);
         email = findViewById(R.id.email);
@@ -117,6 +133,8 @@ public class NGODetail extends AppCompatActivity implements View.OnClickListener
             }
         });
 
+        dialog = new ProgressDialog(this);
+
         loadPaymentMethods();
     }
 
@@ -148,7 +166,45 @@ public class NGODetail extends AppCompatActivity implements View.OnClickListener
         int id = v.getId();
         switch (id) {
             case R.id.makeDonation: {
-                showBottomSheet();
+                if (sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+                    // Save Donation
+                    String strAmount = amount.getText().toString();
+                    if (strAmount.length() < 2) {
+                        amount.setError("Enter a Valid Amount");
+                        return;
+                    }
+
+                    dialog.setTitle("Saving");
+                    dialog.setCancelable(false);
+                    dialog.setCanceledOnTouchOutside(false);
+                    dialog.show();
+                    donation = new Donation();
+                    donation.setAmount(Integer.parseInt(strAmount));
+                    donation.setUserId(user.getId());
+                    donation.setNgoId(ngOs.getId());
+                    Date date = new Date();
+                    SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM, yyyy");
+                    String strDate = sdf.format(date);
+                    donation.setDate(strDate);
+                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Donations");
+                    String did = databaseReference.push().getKey();
+                    donation.setId(did);
+                    databaseReference.child(donation.getId()).setValue(donation).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            dialog.dismiss();
+                            helpers.showSuccess(NGODetail.this, "Donated Successfully", "Thank you For Donation");
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            dialog.dismiss();
+                            helpers.showError(NGODetail.this, "Donation Failed", "Something Went Wrong Please Try Later");
+                        }
+                    });
+                } else {
+                    showBottomSheet();
+                }
                 break;
             }
             case R.id.close: {
