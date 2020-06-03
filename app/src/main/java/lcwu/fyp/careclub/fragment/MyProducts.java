@@ -76,6 +76,7 @@ public class MyProducts extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //get children from datasnapshot
+                data.clear();
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
                     Product product = d.getValue(Product.class);
                     if (product != null) {
@@ -91,7 +92,6 @@ public class MyProducts extends Fragment {
                 } else {
                     products.setVisibility(View.GONE);
                     noRecordFound.setVisibility(View.VISIBLE);
-
                 }
                 loading.setVisibility(View.GONE);
             }
