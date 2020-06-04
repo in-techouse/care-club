@@ -72,8 +72,28 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                MaterialDialog mDialog = new MaterialDialog.Builder(ProductDetail.this)
+                        .setTitle("CONFIRMATION")
+                        .setMessage("Are you sure to delete this product?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", R.drawable.ic_action_okay, new MaterialDialog.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int which) {
+                                dialogInterface.dismiss();
+                                deleteproduct();
+                                // Delete Operation
+                            }
+                        })
+                        .setNegativeButton("No", R.drawable.ic_action_close, new MaterialDialog.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int which) {
+                                dialogInterface.dismiss();
+                            }
+                        })
+                        .build();
+
+                // Show Dialog
+                mDialog.show();
             }
         });
         Intent it = getIntent();
@@ -92,6 +112,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             finish();
             return;
         }
+
+        helpers = new Helpers();
 
         productImages = new ArrayList<>();
         productImagesUploaded = new ArrayList<>();
@@ -143,6 +165,25 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         phoneNo.setFocusable(false);
     }
 
+    private void deleteproduct() {
+        if (productDetail.getNgoid() == null || productDetail.getNgoid().length() < 1) {
+            reference.child(productDetail.getId()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    helpers.showSuccess(ProductDetail.this, "DELETED", "Product has been deleted successfully");
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    helpers.showError(ProductDetail.this, "ERROR", "Something went wrong plz try again later");
+                }
+            });
+        } else {
+            helpers.showError(ProductDetail.this, "ERROR", "Already claimed by NGO so you cant delete this");
+        }
+
+    }
+
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -150,7 +191,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             case R.id.edit: {
                 if (isEditing) {
                     // Update Product
-                    if(isValid()){
+                    if (isValid()) {
                         progressbar.setVisibility(View.VISIBLE);
                         edit.setVisibility(View.GONE);
                         saveToDatabase();
