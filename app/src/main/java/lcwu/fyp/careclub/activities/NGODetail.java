@@ -183,7 +183,7 @@ public class NGODetail extends AppCompatActivity implements View.OnClickListener
                     donation.setUserId(user.getId());
                     donation.setNgoId(ngOs.getId());
                     Date date = new Date();
-                    SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM, yyyy");
+                    SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd, MMM-yyyy");
                     String strDate = sdf.format(date);
                     donation.setDate(strDate);
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Donations");
