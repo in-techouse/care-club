@@ -29,6 +29,7 @@ import lcwu.fyp.careclub.director.NoSwipeableViewPager;
 import lcwu.fyp.careclub.director.Session;
 import lcwu.fyp.careclub.fragment.MyProducts;
 import lcwu.fyp.careclub.fragment.MyProfile;
+import lcwu.fyp.careclub.fragment.Rider_Product;
 import lcwu.fyp.careclub.model.User;
 
 public class RiderDashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -39,8 +40,9 @@ public class RiderDashboard extends AppCompatActivity implements NavigationView.
     private Helpers helpers;
     private NoSwipeableViewPager pager;
     private PagerAdapter adapter;
-    private MyProducts myProducts;
+    private Rider_Product myProducts;
     private MyProfile myProfile;
+
 
 
     @Override
@@ -65,7 +67,7 @@ public class RiderDashboard extends AppCompatActivity implements NavigationView.
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        myProducts = new MyProducts();
+        myProducts = new Rider_Product();
         myProfile = new MyProfile();
 
         pager = findViewById(R.id.pager);
