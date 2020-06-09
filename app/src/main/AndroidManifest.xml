@@ -19,6 +19,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+
             android:name=".activities.ProductDetail"
             android:label="@string/title_activity_product_detail"
             android:parentActivityName=".activities.UserDashboard"

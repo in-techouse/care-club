@@ -4,19 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.RegistrationActivity">
+    tools:context=".activities.RegistrationActivity"
+    android:background="@drawable/background">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/profile_image"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:layout_gravity="center"
-            android:src="@drawable/appicon" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -29,6 +24,7 @@
                 android:layout_margin="12dp"
                 android:layout_weight="1"
                 android:hint="@string/firstname"
+                android:textStyle="bold"
                 android:inputType="textPersonName"
                 android:padding="12dp" />
 
@@ -44,6 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
                 android:layout_weight="1"
+                android:textStyle="bold"
                 android:hint="@string/last_name"
                 android:inputType="textPersonName"
                 android:padding="12dp" />
@@ -62,6 +59,7 @@
                 android:layout_weight="1"
                 android:hint="@string/enter_email"
                 android:inputType="textEmailAddress"
+                android:textStyle="bold"
                 android:padding="12dp" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -76,6 +74,7 @@
                     android:layout_weight="1"
                     android:hint="@string/enter_phone_number"
                     android:inputType="phone"
+                    android:textStyle="bold"
                     android:padding="12dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -94,6 +93,7 @@
                 android:layout_margin="12dp"
                 android:layout_weight="1"
                 android:hint="@string/enter_password"
+                android:textStyle="bold"
                 android:inputType="textPassword"
                 android:padding="12dp" />
 
@@ -111,6 +111,7 @@
                 android:layout_margin="12dp"
                 android:layout_weight="1"
                 android:hint="Confirm Password"
+                android:textStyle="bold"
                 android:inputType="textPassword"
                 android:padding="12dp" />
 
@@ -125,6 +126,7 @@
             android:layout_weight="1"
             android:background="@color/colorBackground"
             android:padding="12dp"
+            android:textStyle="bold"
             android:text="signup"
             android:textColor="@color/textcolorWhite"
             android:textSize="22dp" />
@@ -143,6 +145,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:padding="12dp"
+            android:textStyle="bold"
             android:text="Already have an account? Go for LOGIN" />
     </LinearLayout>
 </ScrollView>
