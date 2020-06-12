@@ -37,6 +37,8 @@ public class EditUserProfile extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_user_profile);
+        getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.care_club_bg));
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

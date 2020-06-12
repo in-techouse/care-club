@@ -37,6 +37,8 @@ public class MyProfile extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_my_profile, container, false);
+        getActivity().getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.care_club_bg));
+
         name = root.findViewById(R.id.name);
         email = root.findViewById(R.id.email);
         phoneno = root.findViewById(R.id.phoneno);
