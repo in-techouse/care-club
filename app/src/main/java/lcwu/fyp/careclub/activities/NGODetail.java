@@ -6,17 +6,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -42,19 +44,14 @@ import lcwu.fyp.careclub.model.User;
 
 public class NGODetail extends AppCompatActivity implements View.OnClickListener {
     private NGOs ngOs;
-    private TextView ngoName, name, email, phne, address;
-    private RecyclerView paymentMethod;
     private DatabaseReference refrence = FirebaseDatabase.getInstance().getReference().child("PaymentMethods");
     private ValueEventListener listner;
     private List<PaymentMethod> methods;
-    private Button makeDonation, close;
+    private AppCompatButton makeDonation;
     private PaymentAdapter adapter;
     private BottomSheetBehavior sheetBehavior;
-    private LinearLayout mainSheet;
     private EditText amount;
     private ProgressDialog dialog;
-    private Donation donation;
-    private Session session;
     private User user;
     private Helpers helpers;
 
@@ -64,10 +61,6 @@ public class NGODetail extends AppCompatActivity implements View.OnClickListener
         setContentView(R.layout.activity_ngodetail);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setHomeButtonEnabled(true);
-        }
 
         Intent it = getIntent();
         if (it == null) {
@@ -85,27 +78,54 @@ public class NGODetail extends AppCompatActivity implements View.OnClickListener
             finish();
             return;
         }
-        session = new Session(getApplication());
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }
+
+        Session session = new Session(getApplication());
         user = session.getSession();
         helpers = new Helpers();
-        ngoName = findViewById(R.id.ngoName);
-        name = findViewById(R.id.name);
-        email = findViewById(R.id.email);
-        phne = findViewById(R.id.phne);
-        address = findViewById(R.id.address);
-        paymentMethod = findViewById(R.id.paymentMethod);
+        TextView ngoName = findViewById(R.id.ngoName);
+        TextView name = findViewById(R.id.name);
+        TextView email = findViewById(R.id.email);
+        TextView phne = findViewById(R.id.phne);
+        TextView address = findViewById(R.id.address);
+        TextView category = findViewById(R.id.category);
+        TextView levelOfAction = findViewById(R.id.levelOfAction);
+        TextView workingSince = findViewById(R.id.workingSince);
+        TextView vision = findViewById(R.id.vision);
+        TextView website = findViewById(R.id.website);
+        RecyclerView paymentMethod = findViewById(R.id.paymentMethod);
         makeDonation = findViewById(R.id.makeDonation);
-        close = findViewById(R.id.close);
+        AppCompatButton close = findViewById(R.id.close);
         amount = findViewById(R.id.amount);
+        ImageView ngoImage = findViewById(R.id.ngoImage);
 
         makeDonation.setOnClickListener(this);
         close.setOnClickListener(this);
+
+        if (ngOs.getImage() != null && ngOs.getImage().length() > 0) {
+            Glide.with(getApplicationContext()).load(ngOs.getImage()).into(ngoImage);
+        }
 
         ngoName.setText(ngOs.getName());
         name.setText(ngOs.getName());
         email.setText(ngOs.getEmail());
         phne.setText(ngOs.getPhone());
         address.setText(ngOs.getAddress());
+        category.setText(ngOs.getCategory());
+        levelOfAction.setText(ngOs.getLevelOfAction());
+        try {
+            Date d = new SimpleDateFormat("yyyy-MM-dd").parse(ngOs.getWorkingSince());
+            String strWorkingSince = new SimpleDateFormat("EEE, dd MMM, yyyy").format(d);
+            workingSince.setText(strWorkingSince);
+        } catch (Exception e) {
+            workingSince.setText(ngOs.getWorkingSince());
+        }
+        website.setText(ngOs.getWebsite());
+        vision.setText(ngOs.getVision());
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         paymentMethod.setLayoutManager(linearLayoutManager);
         methods = new ArrayList<>();
@@ -178,7 +198,7 @@ public class NGODetail extends AppCompatActivity implements View.OnClickListener
                     dialog.setCancelable(false);
                     dialog.setCanceledOnTouchOutside(false);
                     dialog.show();
-                    donation = new Donation();
+                    Donation donation = new Donation();
                     donation.setAmount(Integer.parseInt(strAmount));
                     donation.setUserId(user.getId());
                     donation.setNgoId(ngOs.getId());
@@ -228,7 +248,11 @@ public class NGODetail extends AppCompatActivity implements View.OnClickListener
 
     @Override
     public void onBackPressed() {
-        finish();
+        if (sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+            closeBottomSheet();
+        } else {
+            finish();
+        }
     }
 
     @Override

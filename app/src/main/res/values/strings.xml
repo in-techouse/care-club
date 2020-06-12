@@ -146,4 +146,5 @@
     <string name="phoneNo">PhoneNo</string>
     <string name="title_activity_ngodetail">NGO Detail</string>
     <string name="title_activity_product_detail">Product Detail</string>
+    <string name="apply">APPLY</string>
 </resources>

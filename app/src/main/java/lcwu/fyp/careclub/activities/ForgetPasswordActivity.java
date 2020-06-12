@@ -21,18 +21,19 @@ import com.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 import lcwu.fyp.careclub.R;
 import lcwu.fyp.careclub.director.Helpers;
 
-public class ForgetpasswordActivity extends AppCompatActivity implements View.OnClickListener {
-
-    Button send;
-    String stremail;
-    EditText email;
-    ProgressBar forgetpass;
-    Helpers helpers;
+public class ForgetPasswordActivity extends AppCompatActivity implements View.OnClickListener {
+    private Button send;
+    private String stremail;
+    private EditText email;
+    private ProgressBar forgetpass;
+    private Helpers helpers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgetpassword);
+
+        getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.care_club_bg));
 
         email = findViewById(R.id.email);
         send = findViewById(R.id.send);
@@ -40,8 +41,6 @@ public class ForgetpasswordActivity extends AppCompatActivity implements View.On
 
         send.setOnClickListener(this);
         helpers = new Helpers();
-
-
     }
 
     @Override
@@ -57,24 +56,26 @@ public class ForgetpasswordActivity extends AppCompatActivity implements View.On
                     send.setVisibility(View.GONE);
                     Log.e("Recover pass", "Gooning to start");
                     FirebaseAuth auth = FirebaseAuth.getInstance();
-                    auth.sendPasswordResetEmail(stremail).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            forgetpass.setVisibility(View.GONE);
-                            send.setVisibility(View.VISIBLE);
-                            Log.e("Recover password", "success");
-                            showSuccessMessage();
+                    auth.sendPasswordResetEmail(stremail)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    forgetpass.setVisibility(View.GONE);
+                                    send.setVisibility(View.VISIBLE);
+                                    Log.e("Recover password", "success");
+                                    showSuccessMessage();
 
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            forgetpass.setVisibility(View.GONE);
-                            send.setVisibility(View.VISIBLE);
-                            Log.e("Recover password", "Failure" + e.getMessage());
-                            helpers.showError(ForgetpasswordActivity.this, "ERROR", e.getMessage());
-                        }
-                    });
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    forgetpass.setVisibility(View.GONE);
+                                    send.setVisibility(View.VISIBLE);
+                                    Log.e("Recover password", "Failure" + e.getMessage());
+                                    helpers.showError(ForgetPasswordActivity.this, "ERROR!".toUpperCase(), e.getMessage());
+                                }
+                            });
 
 
                 }
@@ -84,7 +85,7 @@ public class ForgetpasswordActivity extends AppCompatActivity implements View.On
     }
 
     private void showSuccessMessage() {
-        MaterialDialog mDialog = new MaterialDialog.Builder(ForgetpasswordActivity.this)
+        MaterialDialog mDialog = new MaterialDialog.Builder(ForgetPasswordActivity.this)
                 .setTitle("FORGOT PASSWORD")
                 .setMessage("A password recovery email has been sent to your account")
                 .setCancelable(false)

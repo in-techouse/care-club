@@ -28,22 +28,23 @@ import lcwu.fyp.careclub.director.Session;
 import lcwu.fyp.careclub.model.User;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-    Helpers h1;
-    AppCompatButton signin;
-    TextView forgetpassword, signup;
-    EditText email, password;
-    String strEmail, strPassword;
-    ProgressBar loginprogress;
+    private Helpers h1;
+    private AppCompatButton signin;
+    private EditText email, password;
+    private String strEmail, strPassword;
+    private ProgressBar loginprogress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.care_club_bg));
         signin = findViewById(R.id.signin);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
-        signup = findViewById(R.id.signup);
-        forgetpassword = findViewById(R.id.forgetpassword);
+        TextView signup = findViewById(R.id.signup);
+        TextView forgetpassword = findViewById(R.id.forgetpassword);
         loginprogress = findViewById(R.id.Loginprogress);
 
         signin.setOnClickListener(this);
@@ -100,13 +101,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                     startActivity(it);
                                                     finish();
                                                 } else {
-                                                    h1.showError(LoginActivity.this, "Login Failed", "Something Went Wrong");
+                                                    h1.showError(LoginActivity.this, "Login Failed!".toUpperCase(), "Something went wrong.\nPlease try again later.");
                                                 }
 
                                             } else {
                                                 loginprogress.setVisibility(View.GONE);
                                                 signin.setVisibility(View.VISIBLE);
-                                                h1.showError(LoginActivity.this, "Login Failed", "Something Went Wrong");
+                                                h1.showError(LoginActivity.this, "Login Failed!".toUpperCase(), "Something went wrong.\nPlease try again later.");
                                             }
                                         }
 
@@ -114,19 +115,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         public void onCancelled(@NonNull DatabaseError databaseError) {
                                             loginprogress.setVisibility(View.GONE);
                                             signin.setVisibility(View.VISIBLE);
-                                            h1.showError(LoginActivity.this, "Login Failed", "Something Went Wrong");
+                                            h1.showError(LoginActivity.this, "Login Failed!".toUpperCase(), "Something Went Wrong");
                                         }
                                     });
 
                                 }
-                            }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            h1.showError(LoginActivity.this, "Login Failed", e.getMessage());
-                            loginprogress.setVisibility(View.GONE);
-                            signin.setVisibility(View.VISIBLE);
-                        }
-                    });
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    h1.showError(LoginActivity.this, "Login Failed!".toUpperCase(), e.getMessage());
+                                    loginprogress.setVisibility(View.GONE);
+                                    signin.setVisibility(View.VISIBLE);
+                                }
+                            });
 
 
                 }
@@ -138,7 +140,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
             }
             case R.id.forgetpassword: {
-                Intent it = new Intent(LoginActivity.this, ForgetpasswordActivity.class);
+                Intent it = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
                 startActivity(it);
                 break;
             }

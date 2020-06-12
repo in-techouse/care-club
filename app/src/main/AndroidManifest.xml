@@ -7,26 +7,28 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCEPT_GPS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
 
     <application
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/googleKey" />
 
+        <activity
             android:name=".activities.ProductDetail"
             android:label="@string/title_activity_product_detail"
-            android:parentActivityName=".activities.UserDashboard"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activities.NGODetail"
-            android:label="@string/title_activity_ngodetail"
             android:parentActivityName=".activities.UserDashboard"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.MyAssignedProducts" />
@@ -35,11 +37,20 @@
             android:label="@string/title_activity_rider_dashboard"
             android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
+
+
         <activity
-            android:name=".activities.UserDashboard"
-            android:label="@string/title_activity_user_dashboard"
-            android:launchMode="singleInstance"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".activities.EditUserProfile"
+            android:label="@string/title_activity_edit_user_profile"
+            android:parentActivityName=".activities.UserDashboard"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+
+
+        <activity
+            android:name=".activities.SelectAddress"
+            android:label="Select Pickup Address"
+            android:parentActivityName=".activities.AddProduct" />
         <activity
             android:name=".activities.AddProduct"
             android:label="@string/title_activity_add_product"
@@ -47,21 +58,25 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name=".activities.EditUserProfile"
-            android:label="@string/title_activity_edit_user_profile"
+            android:name=".activities.NGODetail"
+            android:label="@string/title_activity_ngodetail"
             android:parentActivityName=".activities.UserDashboard"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.ForgetpasswordActivity"
+            android:name=".activities.UserDashboard"
+            android:label="@string/title_activity_user_dashboard"
+            android:launchMode="singleInstance"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.ForgetPasswordActivity"
             android:parentActivityName=".activities.LoginActivity"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".activities.LoginActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.RegistrationActivity"
             android:parentActivityName=".activities.LoginActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activities.LoginActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.SplashActivity"
@@ -73,16 +88,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="lcwu.fyp.careclub.fileProvider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
     </application>
 
 </manifest>

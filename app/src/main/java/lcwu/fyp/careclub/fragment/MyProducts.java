@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import lcwu.fyp.careclub.R;
@@ -34,7 +35,6 @@ public class MyProducts extends Fragment {
     private LinearLayout loading;
     private RecyclerView products;
     private TextView noRecordFound;
-    private Session session;
     private Helpers helpers;
     private User user;
     private List<Product> data;
@@ -53,7 +53,7 @@ public class MyProducts extends Fragment {
         loading = root.findViewById(R.id.loading);
         products = root.findViewById(R.id.products);
         noRecordFound = root.findViewById(R.id.noRecordFound);
-        session = new Session(getActivity());
+        Session session = new Session(getActivity());
         helpers = new Helpers();
         user = session.getSession();
         data = new ArrayList<>();
@@ -84,7 +84,7 @@ public class MyProducts extends Fragment {
                     }
                 }
                 Log.e("Products", "Products list size: " + data.size());
-
+                Collections.reverse(data);
                 if (data.size() > 0) {
                     adapter.setData(data);
                     products.setVisibility(View.VISIBLE);

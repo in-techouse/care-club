@@ -53,7 +53,6 @@ public class NgosAdapter extends RecyclerView.Adapter<NgosAdapter.NgosHolder> {
         holder.name.setText(ngos.getName());
         holder.address.setText(ngos.getAddress());
         holder.category.setText(ngos.getCategory());
-        holder.contact.setText(ngos.getPhone());
         holder.maincard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +73,7 @@ public class NgosAdapter extends RecyclerView.Adapter<NgosAdapter.NgosHolder> {
 
     class NgosHolder extends RecyclerView.ViewHolder {
         ImageView image;
-        TextView name, address, category, contact;
+        TextView name, address, category;
         CardView maincard;
 
         NgosHolder(@NonNull View itemView) {
@@ -82,7 +81,6 @@ public class NgosAdapter extends RecyclerView.Adapter<NgosAdapter.NgosHolder> {
             image = itemView.findViewById(R.id.image);
             name = itemView.findViewById(R.id.name);
             address = itemView.findViewById(R.id.address);
-            contact = itemView.findViewById(R.id.contact);
             category = itemView.findViewById(R.id.category);
             maincard = itemView.findViewById(R.id.mainCard);
         }

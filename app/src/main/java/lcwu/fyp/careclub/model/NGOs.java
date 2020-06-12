@@ -1,17 +1,29 @@
 package lcwu.fyp.careclub.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class NGOs implements Serializable {
-    private String address, category, email, id, name, phone;
-    private String image;
+    private String address, category, email, id, image, levelOfAction, name, phone, vision, website, workingSince;
+    private int approved;
 
     public NGOs() {
+        address = category = email = id = image = levelOfAction = name = phone = vision = website = workingSince = "";
     }
 
-
+    public NGOs(String address, String category, String email, String id, String image, String levelOfAction, String name, String phone, String vision, String website, String workingSince, int approved) {
+        this.address = address;
+        this.category = category;
+        this.email = email;
+        this.id = id;
+        this.image = image;
+        this.levelOfAction = levelOfAction;
+        this.name = name;
+        this.phone = phone;
+        this.vision = vision;
+        this.website = website;
+        this.workingSince = workingSince;
+        this.approved = approved;
+    }
 
     public String getAddress() {
         return address;
@@ -45,6 +57,22 @@ public class NGOs implements Serializable {
         this.id = id;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getLevelOfAction() {
+        return levelOfAction;
+    }
+
+    public void setLevelOfAction(String levelOfAction) {
+        this.levelOfAction = levelOfAction;
+    }
+
     public String getName() {
         return name;
     }
@@ -61,21 +89,35 @@ public class NGOs implements Serializable {
         this.phone = phone;
     }
 
-    public String getImage() {
-        return image;
+    public String getVision() {
+        return vision;
     }
 
-    public void setImage(String images) {
-        this.image = images;
+    public void setVision(String vision) {
+        this.vision = vision;
     }
 
-    public NGOs(String address, String category, String email, String id, String name, String phone, String image) {
-        this.address = address;
-        this.category = category;
-        this.email = email;
-        this.id = id;
-        this.name = name;
-        this.phone = phone;
-        this.image = image;
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public String getWorkingSince() {
+        return workingSince;
+    }
+
+    public void setWorkingSince(String workingSince) {
+        this.workingSince = workingSince;
+    }
+
+    public int getApproved() {
+        return approved;
+    }
+
+    public void setApproved(int approved) {
+        this.approved = approved;
     }
 }

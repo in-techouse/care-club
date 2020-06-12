@@ -41,12 +41,16 @@
 
     <include layout="@layout/content_ngodetail" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/makeDonation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:text="MAKE DONATION" />
+        android:background="@color/colorPrimary"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:text="MAKE DONATION"
+        android:textColor="@color/textcolorWhite" />
 
     <include layout="@layout/donation_bottom_sheet" />
 

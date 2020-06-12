@@ -25,38 +25,29 @@ import java.util.List;
 import lcwu.fyp.careclub.R;
 import lcwu.fyp.careclub.adapters.NgosAdapter;
 import lcwu.fyp.careclub.director.Helpers;
-import lcwu.fyp.careclub.director.Session;
 import lcwu.fyp.careclub.model.NGOs;
-import lcwu.fyp.careclub.model.User;
 
 public class Ngos extends Fragment {
     private LinearLayout loading;
     private TextView noRecordFound;
     private RecyclerView ngos;
-    private Session session;
-    private User user;
     private Helpers helpers;
     private List<NGOs> data;
     private NgosAdapter adapter;
     private DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("NGOS");
 
-
     public Ngos() {
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_ngos, container, false);
         loading = root.findViewById(R.id.loading);
         noRecordFound = root.findViewById(R.id.noRecordFound);
         ngos = root.findViewById(R.id.ngos);
 
-        session = new Session(getActivity());
-        user = session.getSession();
         helpers = new Helpers();
         data = new ArrayList<>();
 
@@ -65,7 +56,6 @@ public class Ngos extends Fragment {
         ngos.setLayoutManager(new LinearLayoutManager(getActivity()));
         ngos.setAdapter(adapter);
         LoadNgos();
-
 
         return root;
     }

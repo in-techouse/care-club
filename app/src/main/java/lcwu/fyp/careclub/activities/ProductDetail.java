@@ -1,7 +1,9 @@
 package lcwu.fyp.careclub.activities;
 
-import android.content.Context;
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,18 +14,21 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 
 import com.bumptech.glide.Glide;
+import com.esafirm.imagepicker.features.ImagePicker;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.shreyaspatil.MaterialDialog.MaterialDialog;
@@ -47,7 +52,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     private Product productDetail;
     private DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Products");
     private Spinner category;
-    private EditText name, quantity, description, address, phoneNo;
+    private EditText name, quantity, description, phoneNo;
+    private TextView address;
     private String strCategory, strName, strQuantity, strDescription, strAddress, strPhoneNo = "";
     private AppCompatButton edit;
     private ProgressBar progressbar;
@@ -55,8 +61,11 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     private boolean isImage = false;
     private SliderView sliderView;
     private Helpers helpers;
+    private FloatingActionButton deleteProduct, selectImage;
+    private ImageView locationImg;
+    private RelativeLayout selectAddress;
 
-
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,38 +73,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setHomeButtonEnabled(true);
-        }
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MaterialDialog mDialog = new MaterialDialog.Builder(ProductDetail.this)
-                        .setTitle("CONFIRMATION")
-                        .setMessage("Are you sure to delete this product?")
-                        .setCancelable(false)
-                        .setPositiveButton("Yes", R.drawable.ic_action_okay, new MaterialDialog.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int which) {
-                                dialogInterface.dismiss();
-                                deleteproduct();
-                                // Delete Operation
-                            }
-                        })
-                        .setNegativeButton("No", R.drawable.ic_action_close, new MaterialDialog.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int which) {
-                                dialogInterface.dismiss();
-                            }
-                        })
-                        .build();
-
-                // Show Dialog
-                mDialog.show();
-            }
-        });
         Intent it = getIntent();
         if (it == null) {
             finish();
@@ -113,13 +90,27 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             return;
         }
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }
+
+        deleteProduct = findViewById(R.id.delete);
+        selectImage = findViewById(R.id.selectImage);
+        locationImg = findViewById(R.id.locationImg);
+        selectAddress = findViewById(R.id.selectAddress);
+        deleteProduct.setOnClickListener(this);
+        selectImage.setOnClickListener(this);
+        selectAddress.setOnClickListener(this);
+        selectAddress.setClickable(false);
+        selectAddress.setEnabled(false);
+
+        selectImage.setVisibility(View.GONE);
+
         helpers = new Helpers();
 
         productImages = new ArrayList<>();
         productImagesUploaded = new ArrayList<>();
-        for (String string : productDetail.getImages()) {
-            productImagesUploaded.add(string);
-        }
+        productImagesUploaded.addAll(productDetail.getImages());
 
         name = findViewById(R.id.name);
         description = findViewById(R.id.description);
@@ -132,7 +123,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         sliderView = findViewById(R.id.imageSlider);
         edit.setOnClickListener(this);
 
-        adapter = new SliderAdapter(ProductDetail.this);
+        adapter = new SliderAdapter();
         sliderView.setSliderAdapter(adapter);
         sliderView.setIndicatorAnimation(IndicatorAnimations.WORM);
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
@@ -184,6 +175,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -198,6 +190,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     }
                 } else {
                     // Open for editing
+                    deleteProduct.setVisibility(View.GONE);
+                    selectImage.setVisibility(View.VISIBLE);
+                    locationImg.setVisibility(View.VISIBLE);
                     isEditing = true;
                     edit.setText("UPDATE");
                     category.setEnabled(true);
@@ -212,8 +207,10 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     address.setFocusable(true);
                     phoneNo.setFocusableInTouchMode(true);
                     phoneNo.setFocusable(true);
+                    selectAddress.setClickable(true);
+                    selectAddress.setEnabled(true);
 
-                    adapter = new SliderAdapter(ProductDetail.this);
+                    adapter = new SliderAdapter();
                     sliderView.setSliderAdapter(adapter);
                     sliderView.setIndicatorAnimation(IndicatorAnimations.WORM);
                     sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
@@ -225,8 +222,103 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 }
                 break;
             }
+            case R.id.delete: {
+                MaterialDialog mDialog = new MaterialDialog.Builder(ProductDetail.this)
+                        .setTitle("CONFIRMATION")
+                        .setMessage("Are you sure to delete this product?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", R.drawable.ic_action_okay, new MaterialDialog.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int which) {
+                                dialogInterface.dismiss();
+                                deleteproduct();
+                                // Delete Operation
+                            }
+                        })
+                        .setNegativeButton("No", R.drawable.ic_action_close, new MaterialDialog.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int which) {
+                                dialogInterface.dismiss();
+                            }
+                        })
+                        .build();
+
+                // Show Dialog
+                mDialog.show();
+                break;
+            }
+            case R.id.selectImage: {
+                if (askForPermission()) {
+                    openGallery();
+                }
+                break;
+            }
+            case R.id.selectAddress: {
+                Intent it = new Intent(ProductDetail.this, SelectAddress.class);
+                startActivityForResult(it, 10);
+                break;
+            }
         }
     }
+
+    private boolean askForPermission() {
+        if (ActivityCompat.checkSelfPermission(ProductDetail.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(ProductDetail.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(ProductDetail.this, new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 10);
+            return false;
+        }
+        return true;
+    }
+
+    private void openGallery() {
+        ImagePicker.create(ProductDetail.this)
+                .toolbarImageTitle("Tap to select")
+                .multi()
+                .limit(2)
+                .showCamera(true)
+                .start();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, final int resultCode, Intent data) {
+//        if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
+//            productImages.clear();
+//            adapter.notifyDataSetChanged();
+//            sliderView.setSliderAdapter(null);
+//            List<Image> images = ImagePicker.getImages(data);
+//            List<Uri> uriList = new ArrayList<>();
+//            for (Image img : images) {
+//                Uri uri = Uri.fromFile(new File(img.getPath()));
+//                uriList.add(uri);
+//            }
+//            productImages = uriList;
+//            sliderView.setSliderAdapter(adapter);
+//            sliderView.setIndicatorAnimation(IndicatorAnimations.WORM);
+//            sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+//            sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
+//            sliderView.setIndicatorSelectedColor(Color.WHITE);
+//            sliderView.setIndicatorUnselectedColor(Color.GRAY);
+//            sliderView.setScrollTimeInSec(4);
+//            sliderView.startAutoCycle();
+//            adapter.notifyDataSetChanged();
+//        } else if (requestCode == 10 && resultCode == RESULT_OK) {
+//            if (data != null) {
+//                Bundle bundle = data.getExtras();
+//                if (bundle != null) {
+//                    Product p = (Product) bundle.getSerializable("result");
+//                    if (p != null) {
+//                        Log.e("AddProduct", "Location Received: " + p.getAddress());
+//                        product.setLatitude(p.getLatitude());
+//                        product.setLongitude(p.getLongitude());
+//                        product.setAddress(p.getAddress());
+//                        address.setText(product.getAddress());
+//                    }
+//                }
+//            }
+//        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
 
     private boolean isValid() {
         boolean flag = true;
@@ -274,7 +366,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         }
 
         if (strAddress.length() < 15) {
-            address.setError("Enter a valid Address");
+            error = error + "*Select product pickup address.\n";
             flag = false;
         } else {
             address.setError(null);
@@ -354,10 +446,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     }
 
     public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapterVH> {
-        private Context context;
-
-        public SliderAdapter(Context context) {
-            this.context = context;
+        public SliderAdapter() {
         }
 
         @Override

@@ -34,8 +34,9 @@
             android:layout_margin="7dp"
             android:gravity="center"
             android:textAlignment="gravity"
+            android:textAllCaps="true"
             android:textColor="@color/colorPrimary"
-            android:textSize="19sp"
+            android:textSize="17sp"
             android:textStyle="bold" />
 
         <View
@@ -57,7 +58,6 @@
                 android:layout_centerVertical="true"
                 android:text="Category"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -67,8 +67,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:text="Category"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="18sp" />
+                android:textColor="@color/colorPrimaryDark" />
 
         </RelativeLayout>
 
@@ -91,7 +90,6 @@
                 android:layout_centerVertical="true"
                 android:text="Quantity"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -101,8 +99,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:text="Quantity"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="18sp" />
+                android:textColor="@color/colorPrimaryDark" />
 
         </RelativeLayout>
 

@@ -2,7 +2,6 @@ package lcwu.fyp.careclub.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,20 +26,21 @@ import lcwu.fyp.careclub.director.Session;
 import lcwu.fyp.careclub.model.User;
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
-    AppCompatButton signup;
-    ProgressBar signupprogress;
-    TextView gotologin;
-    EditText fname, lname, pass, cpass, email, phoneno;
-    String strfname, strlname, strpass, strcpass, stremail, strphoneno;
-    Helpers helpers;
+    private AppCompatButton signup;
+    private ProgressBar signupprogress;
+    private EditText fname, lname, pass, cpass, email, phoneno;
+    private String strfname, strlname, strpass, strcpass, stremail, strphoneno;
+    private Helpers helpers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
+        getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.care_club_bg));
+
         signup = findViewById(R.id.rgstrbtn);
-        gotologin = findViewById(R.id.gotologin);
+        TextView gotologin = findViewById(R.id.gotologin);
         fname = findViewById(R.id.fname);
         lname = findViewById(R.id.lname);
         phoneno = findViewById(R.id.phoneno);
@@ -78,7 +78,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                     signupprogress.setVisibility(View.VISIBLE);
                     signup.setVisibility(View.GONE);
                     //Firebase
-                    Log.e("Registeration", "Gooning to start");
 
                     FirebaseAuth auth = FirebaseAuth.getInstance();
                     auth.createUserWithEmailAndPassword(stremail, strpass)
@@ -95,33 +94,34 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                                     id = id.replace(".", "_");
                                     user.setId(id);
                                     user.setRole(0);
-                                    reference.child("Users").child(id).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Session session = new Session(RegistrationActivity.this);
-                                            session.setSession(user);
-                                            //Start dashboard activity'
-                                            Intent intent = new Intent(RegistrationActivity.this, UserDashboard.class);
-                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            signupprogress.setVisibility(View.GONE);
-                                            signup.setVisibility(View.VISIBLE);
-                                            helpers.showError(RegistrationActivity.this, "Registration Failed", e.getMessage());
-                                        }
-                                    });
+                                    reference.child("Users").child(id).setValue(user)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Session session = new Session(RegistrationActivity.this);
+                                                    session.setSession(user);
+                                                    //Start dashboard activity'
+                                                    Intent intent = new Intent(RegistrationActivity.this, UserDashboard.class);
+                                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                    startActivity(intent);
+                                                    finish();
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    signupprogress.setVisibility(View.GONE);
+                                                    signup.setVisibility(View.VISIBLE);
+                                                    helpers.showError(RegistrationActivity.this, "Registration Failed!".toUpperCase(), "Something went wrong.\nPlease try again later.");
+                                                }
+                                            });
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             signupprogress.setVisibility(View.GONE);
                             signup.setVisibility(View.VISIBLE);
-                            Log.e("Registeration", "Failure" + e.getMessage());
-                            helpers.showError(RegistrationActivity.this, "Registration Failed", e.getMessage());
+                            helpers.showError(RegistrationActivity.this, "Registration Failed!".toUpperCase(), e.getMessage());
                         }
                     });
 
