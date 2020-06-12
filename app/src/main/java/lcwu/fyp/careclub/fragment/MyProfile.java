@@ -24,7 +24,7 @@ public class MyProfile extends Fragment implements View.OnClickListener {
     private Session session;
     private User user;
     private Helpers helpers;
-    TextView name, email, phoneno, edit;
+    private TextView name, email, phoneno, edit;
 
 
     public MyProfile() {
@@ -65,10 +65,7 @@ public class MyProfile extends Fragment implements View.OnClickListener {
             case R.id.edit: {
                 Intent it = new Intent(getActivity(), EditUserProfile.class);
                 startActivity(it);
-
             }
         }
-
-
     }
 }

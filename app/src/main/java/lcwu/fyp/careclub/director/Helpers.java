@@ -41,7 +41,6 @@ public class Helpers {
 
         // Show Dialog
         mDialog.show();
-
     }
 
     public void showSuccess(final Activity a, String title, String msg) {
@@ -67,6 +66,5 @@ public class Helpers {
 
         // Show Dialog
         mDialog.show();
-
     }
 }

@@ -20,8 +20,9 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.shreyaspatil.MaterialDialog.MaterialDialog;
+import com.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 
 import lcwu.fyp.careclub.R;
 import lcwu.fyp.careclub.director.Helpers;
@@ -34,13 +35,9 @@ import lcwu.fyp.careclub.fragment.Ngos;
 import lcwu.fyp.careclub.model.User;
 
 public class UserDashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
     private DrawerLayout drawer;
-    private User user;
     private Session session;
-    private Helpers helpers;
     private NoSwipeableViewPager pager;
-    private PagerAdapter adapter;
     private Ngos ngos;
     private MyProducts myProducts;
     private MyDonations myDonations;
@@ -74,12 +71,12 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
         myProfile = new MyProfile();
 
         pager = findViewById(R.id.pager);
-        adapter = new PagerAdapter(getSupportFragmentManager(), 0);
+        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), 0);
         pager.setAdapter(adapter);
 
         session = new Session(getApplicationContext());
-        user = session.getSession();
-        helpers = new Helpers();
+        User user = session.getSession();
+        Helpers helpers = new Helpers();
         View header = navigationView.getHeaderView(0);
         ImageView imageView = header.findViewById(R.id.imageView);
         TextView name = header.findViewById(R.id.name);
@@ -114,13 +111,33 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
                 break;
             }
             case R.id.nav_logout: {
-                FirebaseAuth auth = FirebaseAuth.getInstance();
-                auth.signOut();
-                session.destroySession();
-                Intent it = new Intent(UserDashboard.this, LoginActivity.class);
-                it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(it);
-                finish();
+                MaterialDialog mDialog = new MaterialDialog.Builder(UserDashboard.this)
+                        .setTitle("Are You Sure?".toUpperCase())
+                        .setMessage("Do you want to logout from the CARE CLUB?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", R.drawable.ic_action_okay, new MaterialDialog.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int which) {
+                                FirebaseAuth auth = FirebaseAuth.getInstance();
+                                auth.signOut();
+                                dialogInterface.dismiss();
+                                session.destroySession();
+                                Intent it = new Intent(UserDashboard.this, LoginActivity.class);
+                                it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(it);
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("NO!", R.drawable.ic_action_close, new MaterialDialog.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int which) {
+                                dialogInterface.dismiss();
+                            }
+                        })
+                        .build();
+
+                // Show Dialog
+                mDialog.show();
                 break;
             }
         }

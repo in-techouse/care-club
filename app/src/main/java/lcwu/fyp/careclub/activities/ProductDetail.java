@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,11 +27,15 @@ import androidx.core.app.ActivityCompat;
 
 import com.bumptech.glide.Glide;
 import com.esafirm.imagepicker.features.ImagePicker;
+import com.esafirm.imagepicker.model.Image;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.shreyaspatil.MaterialDialog.MaterialDialog;
 import com.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 import com.smarteist.autoimageslider.IndicatorAnimations;
@@ -38,7 +43,9 @@ import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import lcwu.fyp.careclub.R;
@@ -186,7 +193,12 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     if (isValid()) {
                         progressbar.setVisibility(View.VISIBLE);
                         edit.setVisibility(View.GONE);
-                        saveToDatabase();
+                        if (isImage) {
+                            productDetail.getImages().clear();
+                            uploadImage(0);
+                        } else {
+                            saveToDatabase();
+                        }
                     }
                 } else {
                     // Open for editing
@@ -261,6 +273,48 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    private void uploadImage(final int count) {
+        final StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Products").child(productDetail.getId());
+        Calendar calendar = Calendar.getInstance();
+        storageReference.child(calendar.getTimeInMillis() + "").putFile(productImages.get(count))
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        taskSnapshot.getMetadata().getReference().getDownloadUrl()
+                                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        Log.e("AddProduct", "in OnSuccess: " + uri.toString());
+                                        productDetail.getImages().add(uri.toString());
+                                        if (productDetail.getImages().size() == productImages.size()) {
+                                            saveToDatabase();
+                                        } else {
+                                            uploadImage(count + 1);
+                                        }
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.e("AddProduct", "DownloadUrl:" + e.getMessage());
+                                        progressbar.setVisibility(View.VISIBLE);
+                                        edit.setVisibility(View.GONE);
+                                        helpers.showError(ProductDetail.this, "Error", "Something Went Wrong.\n Please Try Again");
+                                    }
+                                });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("Profile", "UploadImageUrl:" + e.getMessage());
+                        progressbar.setVisibility(View.VISIBLE);
+                        edit.setVisibility(View.GONE);
+                        helpers.showError(ProductDetail.this, "Error", "Something Went Wrong.\n Please Try Again");
+                    }
+                });
+    }
+
     private boolean askForPermission() {
         if (ActivityCompat.checkSelfPermission(ProductDetail.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(ProductDetail.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(ProductDetail.this, new String[]{
@@ -281,41 +335,42 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onActivityResult(int requestCode, final int resultCode, Intent data) {
-//        if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
-//            productImages.clear();
-//            adapter.notifyDataSetChanged();
-//            sliderView.setSliderAdapter(null);
-//            List<Image> images = ImagePicker.getImages(data);
-//            List<Uri> uriList = new ArrayList<>();
-//            for (Image img : images) {
-//                Uri uri = Uri.fromFile(new File(img.getPath()));
-//                uriList.add(uri);
-//            }
-//            productImages = uriList;
-//            sliderView.setSliderAdapter(adapter);
-//            sliderView.setIndicatorAnimation(IndicatorAnimations.WORM);
-//            sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-//            sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
-//            sliderView.setIndicatorSelectedColor(Color.WHITE);
-//            sliderView.setIndicatorUnselectedColor(Color.GRAY);
-//            sliderView.setScrollTimeInSec(4);
-//            sliderView.startAutoCycle();
-//            adapter.notifyDataSetChanged();
-//        } else if (requestCode == 10 && resultCode == RESULT_OK) {
-//            if (data != null) {
-//                Bundle bundle = data.getExtras();
-//                if (bundle != null) {
-//                    Product p = (Product) bundle.getSerializable("result");
-//                    if (p != null) {
-//                        Log.e("AddProduct", "Location Received: " + p.getAddress());
-//                        product.setLatitude(p.getLatitude());
-//                        product.setLongitude(p.getLongitude());
-//                        product.setAddress(p.getAddress());
-//                        address.setText(product.getAddress());
-//                    }
-//                }
-//            }
-//        }
+        if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
+            isImage = true;
+            productImages.clear();
+            adapter.notifyDataSetChanged();
+            sliderView.setSliderAdapter(null);
+            List<Image> images = ImagePicker.getImages(data);
+            List<Uri> uriList = new ArrayList<>();
+            for (Image img : images) {
+                Uri uri = Uri.fromFile(new File(img.getPath()));
+                uriList.add(uri);
+            }
+            productImages = uriList;
+            sliderView.setSliderAdapter(adapter);
+            sliderView.setIndicatorAnimation(IndicatorAnimations.WORM);
+            sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+            sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
+            sliderView.setIndicatorSelectedColor(Color.WHITE);
+            sliderView.setIndicatorUnselectedColor(Color.GRAY);
+            sliderView.setScrollTimeInSec(4);
+            sliderView.startAutoCycle();
+            adapter.notifyDataSetChanged();
+        } else if (requestCode == 10 && resultCode == RESULT_OK) {
+            if (data != null) {
+                Bundle bundle = data.getExtras();
+                if (bundle != null) {
+                    Product p = (Product) bundle.getSerializable("result");
+                    if (p != null) {
+                        Log.e("AddProduct", "Location Received: " + p.getAddress());
+                        productDetail.setLatitude(p.getLatitude());
+                        productDetail.setLongitude(p.getLongitude());
+                        productDetail.setAddress(p.getAddress());
+                        address.setText(productDetail.getAddress());
+                    }
+                }
+            }
+        }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
