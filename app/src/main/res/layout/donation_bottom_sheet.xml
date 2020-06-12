@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
-    android:layout_height="270dp"
+    android:layout_height="440dp"
     android:background="@color/lightGray"
     android:orientation="vertical"
     app:behavior_hideable="true"
-    app:behavior_peekHeight="270dp"
+    app:behavior_peekHeight="440dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <RelativeLayout
