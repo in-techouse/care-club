@@ -54,6 +54,8 @@ public class NGODetail extends AppCompatActivity implements View.OnClickListener
     private ProgressDialog dialog;
     private User user;
     private Helpers helpers;
+    private PaymentMethod paymentMethod;
+    private TextView paymentName, paymentProviderName, paymentAccountHolderName, paymentAccountNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +88,11 @@ public class NGODetail extends AppCompatActivity implements View.OnClickListener
         Session session = new Session(getApplication());
         user = session.getSession();
         helpers = new Helpers();
+        paymentName = findViewById(R.id.paymentName);
+        paymentProviderName = findViewById(R.id.paymentProviderName);
+        paymentAccountHolderName = findViewById(R.id.paymentAccountHolderName);
+        paymentAccountNumber = findViewById(R.id.paymentAccountNumber);
+
         TextView ngoName = findViewById(R.id.ngoName);
         TextView name = findViewById(R.id.name);
         TextView email = findViewById(R.id.email);
@@ -129,7 +136,7 @@ public class NGODetail extends AppCompatActivity implements View.OnClickListener
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         paymentMethod.setLayoutManager(linearLayoutManager);
         methods = new ArrayList<>();
-        adapter = new PaymentAdapter();
+        adapter = new PaymentAdapter(NGODetail.this);
         paymentMethod.setAdapter(adapter);
 
         LinearLayout layoutBottomSheet = findViewById(R.id.bottom_sheet);
@@ -187,13 +194,16 @@ public class NGODetail extends AppCompatActivity implements View.OnClickListener
         switch (id) {
             case R.id.makeDonation: {
                 if (sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+                    if (paymentMethod == null) {
+                        helpers.showError(NGODetail.this, "ERROR!", "Select a payment method first,");
+                        return;
+                    }
                     // Save Donation
                     String strAmount = amount.getText().toString();
                     if (strAmount.length() < 2) {
                         amount.setError("Enter a Valid Amount");
                         return;
                     }
-
                     dialog.setTitle("Saving");
                     dialog.setCancelable(false);
                     dialog.setCanceledOnTouchOutside(false);
@@ -203,9 +213,12 @@ public class NGODetail extends AppCompatActivity implements View.OnClickListener
                     donation.setUserId(user.getId());
                     donation.setNgoId(ngOs.getId());
                     Date date = new Date();
-                    SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd, MMM-yyyy");
+                    SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd, MMM-yyyy hh:mm a");
                     String strDate = sdf.format(date);
                     donation.setDate(strDate);
+                    donation.setPaymentMethod(paymentMethod.getProviderName());
+                    donation.setAccountHolderName(paymentMethod.getAccountHolderName());
+                    donation.setAccountNumber(paymentMethod.getAccountNumber());
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Donations");
                     String did = databaseReference.push().getKey();
                     donation.setId(did);
@@ -244,6 +257,22 @@ public class NGODetail extends AppCompatActivity implements View.OnClickListener
         sheetBehavior.setHideable(true);
         sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         makeDonation.setText("MAKE DONATION");
+    }
+
+    public void setPaymentMethod(PaymentMethod pm) {
+        if (pm != null) {
+            Log.e("NGODetail", "Payment method is not null");
+            paymentMethod = pm;
+            paymentName.setText(paymentMethod.getName());
+            paymentProviderName.setText(paymentMethod.getProviderName());
+            paymentAccountHolderName.setText(paymentMethod.getAccountHolderName());
+            paymentAccountNumber.setText(paymentMethod.getAccountNumber());
+            Log.e("NGODetail", "Payment method Values set");
+            showBottomSheet();
+            Log.e("NGODetail", "Bottom sheet displayed");
+        } else {
+            Log.e("NGODetail", "Payment method is null");
+        }
     }
 
     @Override

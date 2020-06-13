@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,14 +17,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.shreyaspatil.MaterialDialog.MaterialDialog;
 import com.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import lcwu.fyp.careclub.R;
-import lcwu.fyp.careclub.director.Helpers;
 import lcwu.fyp.careclub.director.NoSwipeableViewPager;
 import lcwu.fyp.careclub.director.Session;
 import lcwu.fyp.careclub.fragment.MyDonations;
@@ -73,12 +73,14 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
         pager = findViewById(R.id.pager);
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), 0);
         pager.setAdapter(adapter);
-
+        pager.setOffscreenPageLimit(3);
         session = new Session(getApplicationContext());
         User user = session.getSession();
-        Helpers helpers = new Helpers();
         View header = navigationView.getHeaderView(0);
-        ImageView imageView = header.findViewById(R.id.imageView);
+        CircleImageView imageView = header.findViewById(R.id.imageView);
+        if (user.getImage() != null && user.getImage().length() > 0) {
+            Glide.with(getApplicationContext()).load(user.getImage()).into(imageView);
+        }
         TextView name = header.findViewById(R.id.name);
         TextView email = header.findViewById(R.id.email);
         TextView phone = header.findViewById(R.id.phone);

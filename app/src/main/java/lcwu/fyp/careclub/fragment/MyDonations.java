@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import lcwu.fyp.careclub.R;
@@ -27,6 +28,7 @@ import lcwu.fyp.careclub.adapters.DonationAdapter;
 import lcwu.fyp.careclub.director.Helpers;
 import lcwu.fyp.careclub.director.Session;
 import lcwu.fyp.careclub.model.Donation;
+import lcwu.fyp.careclub.model.NGOs;
 import lcwu.fyp.careclub.model.User;
 
 /**
@@ -36,13 +38,12 @@ public class MyDonations extends Fragment {
     private LinearLayout loading;
     private TextView noRecordFound;
     private RecyclerView donations;
-    private Session session;
     private User user;
     private Helpers helpers;
     private List<Donation> data;
-    private DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Donations");
+    private DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
     private DonationAdapter adapter;
-
+    private ValueEventListener listener;
 
     public MyDonations() {
         // Required empty public constructor
@@ -56,7 +57,7 @@ public class MyDonations extends Fragment {
         noRecordFound = root.findViewById(R.id.noRecordFound);
         donations = root.findViewById(R.id.donations);
 
-        session = new Session(getActivity());
+        Session session = new Session(getActivity());
         user = session.getSession();
         helpers = new Helpers();
         data = new ArrayList<>();
@@ -70,29 +71,34 @@ public class MyDonations extends Fragment {
     private void LoadDonations() {
         if (!helpers.isConnected(getActivity())) {
             helpers.showError(getActivity(), "Error", "Error Occur Due To Internet Connection");
+            loading.setVisibility(View.GONE);
+            donations.setVisibility(View.VISIBLE);
+            noRecordFound.setVisibility(View.GONE);
             return;
         }
         loading.setVisibility(View.VISIBLE);
         noRecordFound.setVisibility(View.GONE);
         donations.setVisibility(View.GONE);
-        reference.orderByChild("userId").equalTo(user.getId()).addValueEventListener(new ValueEventListener() {
+        reference.child("Donations").orderByChild("userId").equalTo(user.getId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                data.clear();
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
                     Donation donations = d.getValue(Donation.class);
                     if (donations != null) {
                         data.add(donations);
                     }
                 }
-                if (data.size() > 0) {
-                    donations.setVisibility(View.VISIBLE);
-                    noRecordFound.setVisibility(View.GONE);
-                } else {
+
+                Collections.reverse(data);
+                if (data.size() < 1) {
                     donations.setVisibility(View.GONE);
                     noRecordFound.setVisibility(View.VISIBLE);
+                    loading.setVisibility(View.GONE);
+                    adapter.setData(data);
+                } else {
+                    loadNgos();
                 }
-                adapter.setData(data);
-                loading.setVisibility(View.GONE);
             }
 
             @Override
@@ -102,5 +108,49 @@ public class MyDonations extends Fragment {
                 noRecordFound.setVisibility(View.GONE);
             }
         });
+    }
+
+    private void loadNgos() {
+        listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (listener != null)
+                    reference.child("NGOS").addValueEventListener(listener);
+                List<NGOs> ngOs = new ArrayList<>();
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    NGOs ngo = data.getValue(NGOs.class);
+                    if (ngo != null) {
+                        ngOs.add(ngo);
+                    }
+                }
+
+                for (Donation d : data) {
+                    for (NGOs n : ngOs) {
+                        if (d.getNgoId().equals(n.getId())) {
+                            d.setNgoCategory(n.getCategory());
+                            d.setNgoName(n.getName());
+                            d.setNgoEmail(n.getEmail());
+                            d.setNgoContact(n.getPhone());
+                        }
+                    }
+                }
+
+                donations.setVisibility(View.VISIBLE);
+                noRecordFound.setVisibility(View.GONE);
+                loading.setVisibility(View.GONE);
+                adapter.setData(data);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                if (listener != null)
+                    reference.child("NGOS").addValueEventListener(listener);
+                loading.setVisibility(View.GONE);
+                donations.setVisibility(View.VISIBLE);
+                noRecordFound.setVisibility(View.GONE);
+            }
+        };
+
+        reference.child("NGOS").addValueEventListener(listener);
     }
 }

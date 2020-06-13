@@ -26,11 +26,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/googleKey" />
 
-        <activity
-            android:name=".activities.ProductDetail"
-            android:label="@string/title_activity_product_detail"
-            android:parentActivityName=".activities.UserDashboard"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.MyAssignedProducts" />
         <activity
             android:name=".activities.RiderDashboard"
@@ -45,8 +40,11 @@
             android:parentActivityName=".activities.UserDashboard"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
-
-
+        <activity
+            android:name=".activities.ProductDetail"
+            android:label="@string/title_activity_product_detail"
+            android:parentActivityName=".activities.UserDashboard"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.SelectAddress"
             android:label="Select Pickup Address"
@@ -61,7 +59,8 @@
             android:name=".activities.NGODetail"
             android:label="@string/title_activity_ngodetail"
             android:parentActivityName=".activities.UserDashboard"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activities.UserDashboard"
             android:label="@string/title_activity_user_dashboard"

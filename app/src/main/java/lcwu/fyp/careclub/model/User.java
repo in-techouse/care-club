@@ -3,13 +3,15 @@ package lcwu.fyp.careclub.model;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    private String fname, lname, email, phone, id, address, ngoId;
+    private String fname, lname, email, phone, id, address, ngoId, image;
     private int role; // To track user role, 0=> customer, 1=> rider
 
     public User() {
+        fname = lname = email = phone = id = address = ngoId = image = "";
+
     }
 
-    public User(String fname, String lname, String email, String phone, String id, String address, String ngoId, int role) {
+    public User(String fname, String lname, String email, String phone, String id, String address, String ngoId, String image, int role) {
         this.fname = fname;
         this.lname = lname;
         this.email = email;
@@ -17,7 +19,16 @@ public class User implements Serializable {
         this.id = id;
         this.address = address;
         this.ngoId = ngoId;
+        this.image = image;
         this.role = role;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getFname() {

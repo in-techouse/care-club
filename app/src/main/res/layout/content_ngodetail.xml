@@ -337,7 +337,7 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="Payment Methods for DONATION"
+                    android:text="Payment Methods for DONATION, Select one to make a donation"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
 

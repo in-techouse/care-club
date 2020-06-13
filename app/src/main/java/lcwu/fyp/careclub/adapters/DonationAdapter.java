@@ -38,7 +38,13 @@ public class DonationAdapter extends RecyclerView.Adapter<DonationAdapter.Donati
         final Donation d = data.get(position);
         holder.amount.setText(d.getAmount() + " RS");
         holder.date.setText(d.getDate());
-        holder.paymentmethod.setText("");
+        holder.ngoName.setText(d.getNgoName());
+        holder.ngoEmail.setText(d.getNgoEmail());
+        holder.ngoContact.setText(d.getNgoContact());
+
+        holder.paymentMethod.setText(d.getPaymentMethod());
+        holder.accountHolderName.setText(d.getAccountHolderName());
+        holder.accountNumber.setText(d.getAccountNumber());
     }
 
     @Override
@@ -47,13 +53,18 @@ public class DonationAdapter extends RecyclerView.Adapter<DonationAdapter.Donati
     }
 
     class DonationHolder extends RecyclerView.ViewHolder {
-        TextView date, amount, paymentmethod;
+        TextView date, amount, paymentMethod, ngoName, ngoEmail, ngoContact, accountHolderName, accountNumber;
 
         public DonationHolder(@NonNull View itemView) {
             super(itemView);
             date = itemView.findViewById(R.id.date);
             amount = itemView.findViewById(R.id.amount);
-            paymentmethod = itemView.findViewById(R.id.paymentMethod);
+            paymentMethod = itemView.findViewById(R.id.paymentMethod);
+            ngoName = itemView.findViewById(R.id.ngoName);
+            ngoEmail = itemView.findViewById(R.id.ngoEmail);
+            ngoContact = itemView.findViewById(R.id.ngoContact);
+            accountHolderName = itemView.findViewById(R.id.accountHolderName);
+            accountNumber = itemView.findViewById(R.id.accountNumber);
         }
     }
 }
