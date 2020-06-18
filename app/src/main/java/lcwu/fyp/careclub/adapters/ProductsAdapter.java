@@ -19,17 +19,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lcwu.fyp.careclub.R;
-import lcwu.fyp.careclub.activities.NGODetail;
 import lcwu.fyp.careclub.activities.ProductDetail;
+import lcwu.fyp.careclub.activities.RiderProductDetail;
 import lcwu.fyp.careclub.model.Product;
 
-public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ProdctHolder> {
+public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ProductHolder> {
     private List<Product> data;
     private Context context;
+    private int role;
 
-    public ProductsAdapter(Context c) {
+    public ProductsAdapter(Context c, int r) {
         data = new ArrayList<>();
         context = c;
+        role = r;
     }
 
     public void setData(List<Product> data) {
@@ -39,13 +41,13 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Prodct
 
     @NonNull
     @Override
-    public ProdctHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ProductHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_product, parent, false);
-        return new ProdctHolder(v);
+        return new ProductHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProdctHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ProductHolder holder, int position) {
 
         final Product p = data.get(position);
         if (p.getImages() != null && p.getImages().size() > 0) {
@@ -60,7 +62,12 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Prodct
         holder.mainCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent id = new Intent(context, ProductDetail.class);
+                Intent id;
+                if (role == 0) {
+                    id = new Intent(context, ProductDetail.class);
+                } else {
+                    id = new Intent(context, RiderProductDetail.class);
+                }
                 Bundle b = new Bundle();
                 b.putSerializable("product", p);
                 id.putExtras(b);
@@ -75,12 +82,12 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Prodct
         return data.size();
     }
 
-    class ProdctHolder extends RecyclerView.ViewHolder {
+    class ProductHolder extends RecyclerView.ViewHolder {
         ImageView productImage;
         TextView productName, productCategory, productQuantity;
         CardView mainCard;
 
-        ProdctHolder(@NonNull View itemView) {
+        ProductHolder(@NonNull View itemView) {
             super(itemView);
             productImage = itemView.findViewById(R.id.productImage);
             productName = itemView.findViewById(R.id.productName);

@@ -536,7 +536,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             View itemView;
             ImageView imageViewBackground;
 
-            public SliderAdapterVH(View itemView) {
+            SliderAdapterVH(View itemView) {
                 super(itemView);
                 imageViewBackground = itemView.findViewById(R.id.iv_auto_image_slider);
                 this.itemView = itemView;

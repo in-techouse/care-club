@@ -13,15 +13,16 @@ public class Product implements Serializable {
     private int quantityOfProducts;
     private List<String> images;
     private String userId, ngoid, riderId;
-    private boolean isTaken;
+    private boolean isTaken, isPicked;
     private double latitude, longitude;
 
     public Product() {
         images = new ArrayList<>();
         latitude = longitude = 0;
+        isPicked = false;
     }
 
-    public Product(String id, String name, String category, String address, String description, String phoneno, int quantityOfProducts, List<String> images, String userId, String ngoid, String riderId, boolean isTaken, double latitude, double longitude) {
+    public Product(String id, String name, String category, String address, String description, String phoneno, int quantityOfProducts, List<String> images, String userId, String ngoid, String riderId, boolean isTaken, boolean isPicked, double latitude, double longitude) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -34,8 +35,17 @@ public class Product implements Serializable {
         this.ngoid = ngoid;
         this.riderId = riderId;
         this.isTaken = isTaken;
+        this.isPicked = isPicked;
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public boolean isPicked() {
+        return isPicked;
+    }
+
+    public void setPicked(boolean picked) {
+        isPicked = picked;
     }
 
     public double getLatitude() {

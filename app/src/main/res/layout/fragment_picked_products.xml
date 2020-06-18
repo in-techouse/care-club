@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.Rider_Product">
+    tools:context=".fragment.PickedProducts">
 
     <LinearLayout
         android:id="@+id/loading"
@@ -18,16 +18,15 @@
             android:layout_marginTop="20dp" />
 
         <TextView
-            android:textColor="@color/textcolorWhite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Loading Products's"
-            android:textAlignment="gravity" />
+            android:textAlignment="gravity"
+            android:textColor="@color/textcolorWhite" />
     </LinearLayout>
 
     <TextView
-        android:textColor="@color/textcolorWhite"
         android:id="@+id/noRecordFound"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,6 +34,7 @@
         android:padding="7dp"
         android:text="No Product Record Found"
         android:textAlignment="center"
+        android:textColor="@color/textcolorWhite"
         android:textSize="19dp" />
 
     <androidx.recyclerview.widget.RecyclerView

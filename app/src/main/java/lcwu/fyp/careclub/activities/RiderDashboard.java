@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,32 +17,34 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import lcwu.fyp.careclub.R;
-import lcwu.fyp.careclub.director.Helpers;
 import lcwu.fyp.careclub.director.NoSwipeableViewPager;
 import lcwu.fyp.careclub.director.Session;
-import lcwu.fyp.careclub.fragment.MyProducts;
 import lcwu.fyp.careclub.fragment.MyProfile;
+import lcwu.fyp.careclub.fragment.PickedProducts;
 import lcwu.fyp.careclub.fragment.Rider_Product;
+import lcwu.fyp.careclub.model.NGOs;
 import lcwu.fyp.careclub.model.User;
 
 public class RiderDashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
+    private DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("NGOS");
+    private ValueEventListener listener;
     private DrawerLayout drawer;
-    private User user;
     private Session session;
-    private Helpers helpers;
     private NoSwipeableViewPager pager;
-    private PagerAdapter adapter;
     private Rider_Product myProducts;
     private MyProfile myProfile;
-
-
+    private PickedProducts pickedProducts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,14 +52,6 @@ public class RiderDashboard extends AppCompatActivity implements NavigationView.
         setContentView(R.layout.activity_rider_dashboard);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -69,26 +62,55 @@ public class RiderDashboard extends AppCompatActivity implements NavigationView.
 
         myProducts = new Rider_Product();
         myProfile = new MyProfile();
+        pickedProducts = new PickedProducts();
 
         pager = findViewById(R.id.pager);
-        adapter = new PagerAdapter(getSupportFragmentManager(), 0);
+        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), 0);
         pager.setAdapter(adapter);
 
         session = new Session(getApplicationContext());
-        user = session.getSession();
-        helpers = new Helpers();
+        User user = session.getSession();
         View header = navigationView.getHeaderView(0);
 
-        ImageView imageView = header.findViewById(R.id.imageView);
+        CircleImageView imageView = header.findViewById(R.id.imageView);
+        if (user.getImage() != null && user.getImage().length() > 0) {
+            Glide.with(getApplicationContext()).load(user.getImage()).into(imageView);
+        }
         TextView name = header.findViewById(R.id.name);
         TextView email = header.findViewById(R.id.email);
         TextView ngos = header.findViewById(R.id.ngos);
         TextView phone = header.findViewById(R.id.phone);
 
+        NGOs ngo = session.getNgo();
+        if (ngo == null) {
+            listener = new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (listener != null)
+                        reference.child(user.getNgoId()).removeEventListener(listener);
+                    if (dataSnapshot.exists()) {
+                        NGOs n = dataSnapshot.getValue(NGOs.class);
+                        if (n != null) {
+                            session.setNGO(n);
+                            ngos.setText(n.getName());
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    if (listener != null)
+                        reference.child(user.getNgoId()).removeEventListener(listener);
+                }
+            };
+            reference.child(user.getNgoId()).addValueEventListener(listener);
+        } else {
+            ngos.setText(ngo.getName());
+        }
+
         name.setText(user.getFname() + " " + user.getLname());
         email.setText(user.getEmail());
         phone.setText(user.getPhone());
-
     }
 
     @Override
@@ -100,8 +122,12 @@ public class RiderDashboard extends AppCompatActivity implements NavigationView.
                 pager.setCurrentItem(0);
                 break;
             }
-            case R.id.nav_profile: {
+            case R.id.nav_picked_products: {
                 pager.setCurrentItem(1);
+                break;
+            }
+            case R.id.nav_profile: {
+                pager.setCurrentItem(2);
                 break;
             }
             case R.id.nav_logout: {
@@ -132,6 +158,12 @@ public class RiderDashboard extends AppCompatActivity implements NavigationView.
                 case 0: {
                     return myProducts;
                 }
+                case 1: {
+                    return pickedProducts;
+                }
+                case 2: {
+                    return myProfile;
+                }
                 default: {
                     return myProfile;
                 }
@@ -140,8 +172,7 @@ public class RiderDashboard extends AppCompatActivity implements NavigationView.
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
     }
-
 }

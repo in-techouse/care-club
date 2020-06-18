@@ -1,15 +1,15 @@
 package lcwu.fyp.careclub.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -49,7 +49,7 @@ public class MyAssignedProducts extends AppCompatActivity {
         helpers = new Helpers();
         user = session.getSession();
         data = new ArrayList<>();
-        adapter = new ProductsAdapter(MyAssignedProducts.this);
+        adapter = new ProductsAdapter(MyAssignedProducts.this, user.getRole());
         products.setLayoutManager(new LinearLayoutManager(MyAssignedProducts.this));
         products.setAdapter(adapter);
         loadProducts();

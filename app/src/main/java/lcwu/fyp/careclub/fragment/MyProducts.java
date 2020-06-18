@@ -57,7 +57,7 @@ public class MyProducts extends Fragment {
         helpers = new Helpers();
         user = session.getSession();
         data = new ArrayList<>();
-        adapter = new ProductsAdapter(getActivity());
+        adapter = new ProductsAdapter(getActivity(), user.getRole());
         products.setLayoutManager(new LinearLayoutManager(getActivity()));
         products.setAdapter(adapter);
         loadProducts();

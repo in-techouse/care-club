@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 
 import com.google.gson.Gson;
 
+import lcwu.fyp.careclub.model.NGOs;
 import lcwu.fyp.careclub.model.User;
 
 public class Session {
@@ -19,8 +20,14 @@ public class Session {
         editor = preferences.edit();
     }
 
-    public void setSession(User user) {
+    public void setNGO(NGOs ngo) {
+        Gson gson = new Gson();
+        String value = gson.toJson(ngo);
+        editor.putString("ngo", value);
+        editor.apply();
+    }
 
+    public void setSession(User user) {
         Gson gson = new Gson();
         String value = gson.toJson(user);
         editor.putString("user", value);
@@ -29,15 +36,24 @@ public class Session {
 
     public User getSession() {
         String str = preferences.getString("user", "*");
-        if (str != null && str.equals("*"))
+        if (str.equals("*"))
             return null;
         Gson gson = new Gson();
-        User u = gson.fromJson(str, User.class);
-        return u;
+        return gson.fromJson(str, User.class);
+    }
+
+
+    public NGOs getNgo() {
+        String str = preferences.getString("ngo", "*");
+        if (str.equals("*"))
+            return null;
+        Gson gson = new Gson();
+        return gson.fromJson(str, NGOs.class);
     }
 
     public void destroySession() {
         editor.remove("user");
+        editor.remove("ngo");
         editor.apply();
     }
 }

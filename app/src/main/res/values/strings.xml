@@ -58,4 +58,6 @@
     <string name="title_activity_ngodetail">NGO Detail</string>
     <string name="title_activity_product_detail">Product Detail</string>
     <string name="apply">APPLY</string>
+    <string name="assigned_products">Assigned Products</string>
+    <string name="picked_products">Picked Products</string>
 </resources>

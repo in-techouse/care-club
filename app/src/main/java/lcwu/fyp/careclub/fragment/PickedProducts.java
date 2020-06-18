@@ -29,10 +29,7 @@ import lcwu.fyp.careclub.director.Session;
 import lcwu.fyp.careclub.model.Product;
 import lcwu.fyp.careclub.model.User;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class Rider_Product extends Fragment {
+public class PickedProducts extends Fragment {
     private LinearLayout loading;
     private RecyclerView products;
     private TextView noRecordFound;
@@ -42,15 +39,14 @@ public class Rider_Product extends Fragment {
     private DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Products");
     private ProductsAdapter adapter;
 
-    public Rider_Product() {
+    public PickedProducts() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_rider__product, container, false);
+        View root = inflater.inflate(R.layout.fragment_picked_products, container, false);
         loading = root.findViewById(R.id.loading);
         products = root.findViewById(R.id.products);
         noRecordFound = root.findViewById(R.id.noRecordFound);
@@ -62,7 +58,6 @@ public class Rider_Product extends Fragment {
         products.setLayoutManager(new LinearLayoutManager(getActivity()));
         products.setAdapter(adapter);
         loadProducts();
-
         return root;
     }
 
@@ -81,7 +76,7 @@ public class Rider_Product extends Fragment {
                 data.clear();
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
                     Product product = d.getValue(Product.class);
-                    if (product != null && !product.isPicked()) {
+                    if (product != null && product.isPicked()) {
                         data.add(product);
                     }
                 }
